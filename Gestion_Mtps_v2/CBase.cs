@@ -1762,18 +1762,19 @@ namespace Gestion_Mtps
                 string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
 
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
-                m_maconnetionstring = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
+                //m_maconnetionstring = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
                     m_estConnectee = true;
                 }
+                return m_estConnectee;
             }
             catch (OleDbException err)
             {
                 String mesage = err.ToString();
-            }
-            return false;
+                return false;
+            }            
         }
         private bool UsagerExiste(object nomusager)
         {

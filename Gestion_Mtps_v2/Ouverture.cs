@@ -41,6 +41,7 @@ namespace Gestion_Mtps_v2
             TestModifString("Chemin exe");
             ObtenirCheminExe();
             Init_LaBD();
+            ObtenirLesUsagers();
         }
 
         private void Init_LaBD()
@@ -53,7 +54,7 @@ namespace Gestion_Mtps_v2
             {
                 string msg = ex.Message;
             }
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void ObtenirCheminExe()
@@ -64,6 +65,11 @@ namespace Gestion_Mtps_v2
         private void TestModifString(string modifString)
         {
             m_CheminExe = modifString;
+        }
+        private void ObtenirLesUsagers()
+        {
+            List<string> list = new List<string>();
+            list = m_LaBase.ObtenirUsagers();
         }
         #endregion
     }
