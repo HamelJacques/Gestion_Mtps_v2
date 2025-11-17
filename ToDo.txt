@@ -1,9 +1,11 @@
 Créer le dépôt dans Git ................................. ok
 S'assurer d'avoir une branche master .................... ok
 Créer une branche Ouverture_01 .......................... ok
-Ouvrir avec la branche Ouverure_01 ...................... ok
+Ouvrir avec la branche Ouverure_01 ...................... ok 
+Créer une classe Ouverture .............................. ok
+Ajouter les données membres pour le chemin exe et bd
+créer les méthodes pour obtenir ces valeurs
 
-  Créer une classe Ouverture
   Créer une classe CBase (Importer celle qui existe, elle sera nettoyée et modifiée)
   Dans frmOuverture, ajouter une donnée membre CBase
   Ouverture sera ouvert avec CBase en paramètre et initialisera CBase
