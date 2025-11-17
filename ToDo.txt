@@ -1,0 +1,29 @@
+Créer le dépôt dans Git
+S'assurer d'avoir une branche master
+Créer une branche Ouverture_01
+Ouvrir avec la branche Ouverure_01
+  Créer une classe Ouverture
+  Créer une classe CBase (Importer celle qui existe, elle sera nettoyée et modifiée)
+  Dans frmOuverture, ajouter une donnée membre CBase
+  Ouverture sera ouvert avec CBase en paramètre et initialisera CBase
+
+
+
+
+
+SELECT IdSousCatego FROM jctSousCaego WHERE IdUsager = 2 AND IdCatego = 4
+
+Ajouter une ligne avec 
+usager = 2
+idCatego = 4
+idSousCatego = 7
+
+
+git remote add origin https://github.com/HamelJacques/Gestion_Mtps_v2.git
+
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M master
+git remote add origin https://github.com/HamelJacques/Gestion_Mtps_v2.git
+git push -u origin master
