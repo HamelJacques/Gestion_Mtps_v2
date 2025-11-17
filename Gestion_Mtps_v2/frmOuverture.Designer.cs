@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btnFermer = new System.Windows.Forms.Button();
+            this.lblChBD = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnFermer
@@ -38,27 +39,39 @@
             this.btnFermer.Font = new System.Drawing.Font("Arial Unicode MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(20, 114);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(435, 52);
+            this.btnFermer.Size = new System.Drawing.Size(717, 52);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "Fermer";
             this.btnFermer.UseVisualStyleBackColor = true;
             this.btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
             // 
+            // lblChBD
+            // 
+            this.lblChBD.AutoSize = true;
+            this.lblChBD.Location = new System.Drawing.Point(12, 9);
+            this.lblChBD.Name = "lblChBD";
+            this.lblChBD.Size = new System.Drawing.Size(45, 13);
+            this.lblChBD.TabIndex = 1;
+            this.lblChBD.Text = "lblChBD";
+            // 
             // frmOuverture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 178);
+            this.ClientSize = new System.Drawing.Size(760, 178);
+            this.Controls.Add(this.lblChBD);
             this.Controls.Add(this.btnFermer);
             this.Name = "frmOuverture";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button btnFermer;
+        private System.Windows.Forms.Label lblChBD;
     }
 }
 
