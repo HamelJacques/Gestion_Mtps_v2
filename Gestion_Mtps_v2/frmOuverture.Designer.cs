@@ -38,7 +38,7 @@
             this.btnFermer.Font = new System.Drawing.Font("Arial Unicode MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(20, 114);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(435, 52);
+            this.btnFermer.Size = new System.Drawing.Size(717, 52);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "Fermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 178);
+            this.ClientSize = new System.Drawing.Size(760, 178);
             this.Controls.Add(this.btnFermer);
             this.Name = "frmOuverture";
             this.Text = "Form1";

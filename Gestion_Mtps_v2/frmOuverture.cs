@@ -15,6 +15,7 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_Titre;
         #endregion
+        private Ouverture O;
         #region CONSTRUCTEUR
         public frmOuverture()
         {
@@ -28,6 +29,8 @@ namespace Gestion_Mtps_v2
         {
             m_Titre = "Ouverture";
             this.Text = m_Titre;
+            O= new Ouverture();
+            this.Text = string.Concat(m_Titre,"   ", O.ChExe);
         }
         private void btnFermer_Click(object sender, EventArgs e)
         {
