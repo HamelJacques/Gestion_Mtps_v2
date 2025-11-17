@@ -45,6 +45,8 @@ Generated\ Files/
 *.exe
 *.pdb
 *.cache
+/obj/
+
 
 
 # MSTest test Results
