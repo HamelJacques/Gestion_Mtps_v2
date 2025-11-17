@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestion_Mtps;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_CheminExe;
         private string m_Chemin_BD;
+        private CBase m_LaBase;
         private const string NOM_BD = "G_Mtps.accdb";
         #endregion
         #region CONSTRUCTEURS
@@ -38,7 +40,22 @@ namespace Gestion_Mtps_v2
             m_CheminExe = string.Empty;
             TestModifString("Chemin exe");
             ObtenirCheminExe();
+            Init_LaBD();
         }
+
+        private void Init_LaBD()
+        {
+            try
+            {
+                m_LaBase = new CBase(m_Chemin_BD);
+            }
+            catch(Exception ex)
+            {
+                string msg = ex.Message;
+            }
+            throw new NotImplementedException();
+        }
+
         private void ObtenirCheminExe()
         {
             m_CheminExe = AppContext.BaseDirectory;
