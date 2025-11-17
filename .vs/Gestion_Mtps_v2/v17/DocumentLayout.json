@@ -1,12 +1,105 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Developpements\\Gestion_Mtps_v2\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|D:\\Developpements\\Gestion_Mtps_v2\\gestion_mtps_v2\\frmouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|solutionrelative:gestion_mtps_v2\\frmouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|D:\\Developpements\\Gestion_Mtps_v2\\gestion_mtps_v2\\ouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|solutionrelative:gestion_mtps_v2\\ouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|d:\\developpements\\gestion_mtps_v2\\gestion_mtps_v2\\cbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|solutionrelative:gestion_mtps_v2\\cbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Gestion_Mtps_v2||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|D:\\Developpements\\Gestion_Mtps_v2\\gestion_mtps_v2\\frmouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|solutionrelative:gestion_mtps_v2\\frmouverture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB8896A2-25C0-419B-B3F8-264C5263358E}|Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj|d:\\developpements\\gestion_mtps_v2\\gestion_mtps_v2\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Gestion_Mtps_v2",
+              "DocumentMoniker": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj",
+              "RelativeDocumentMoniker": "Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj",
+              "ToolTip": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj",
+              "RelativeToolTip": "Gestion_Mtps_v2\\Gestion_Mtps_v2.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-17T18:14:16.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CBase.cs",
+              "DocumentMoniker": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\CBase.cs",
+              "RelativeDocumentMoniker": "Gestion_Mtps_v2\\CBase.cs",
+              "ToolTip": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\CBase.cs",
+              "RelativeToolTip": "Gestion_Mtps_v2\\CBase.cs",
+              "ViewState": "AgIAABwDAAAAAAAAAAAmwDgDAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T17:38:33.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "frmOuverture.cs [Design]",
+              "DocumentMoniker": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\frmOuverture.cs",
+              "RelativeDocumentMoniker": "Gestion_Mtps_v2\\frmOuverture.cs",
+              "ToolTip": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\frmOuverture.cs [Design]",
+              "RelativeToolTip": "Gestion_Mtps_v2\\frmOuverture.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T16:49:23.634Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Ouverture.cs",
+              "DocumentMoniker": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\Ouverture.cs",
+              "RelativeDocumentMoniker": "Gestion_Mtps_v2\\Ouverture.cs",
+              "ToolTip": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\Ouverture.cs",
+              "RelativeToolTip": "Gestion_Mtps_v2\\Ouverture.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAawBUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T16:23:09.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "frmOuverture.cs",
+              "DocumentMoniker": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\frmOuverture.cs",
+              "RelativeDocumentMoniker": "Gestion_Mtps_v2\\frmOuverture.cs",
+              "ToolTip": "D:\\Developpements\\Gestion_Mtps_v2\\Gestion_Mtps_v2\\frmOuverture.cs",
+              "RelativeToolTip": "Gestion_Mtps_v2\\frmOuverture.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwBcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T14:39:27.025Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
