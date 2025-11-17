@@ -31,6 +31,11 @@ namespace Gestion_Mtps_v2
             this.Text = m_Titre;
             O= new Ouverture();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
+            AjusteCouleurFenere();
+        }
+        private void AjusteCouleurFenere()
+        {
+            this.BackColor = Color.LightPink;
         }
         private void btnFermer_Click(object sender, EventArgs e)
         {

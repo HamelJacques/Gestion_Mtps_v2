@@ -34,8 +34,7 @@ namespace Gestion_Mtps_v2
         }
         private void ObtenirCheminExe()
         {
-            string dossierExe = System.IO.Path.GetDirectoryName( System.Reflection.Assembly.GetExecutingAssembly().Location);
-            m_CheminExe = dossierExe;
+            m_CheminExe = AppContext.BaseDirectory;
         }
         private void TestModifString(string modifString)
         {
