@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btnFermer = new System.Windows.Forms.Button();
+            this.lblChBD = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnFermer
@@ -44,21 +45,33 @@
             this.btnFermer.UseVisualStyleBackColor = true;
             this.btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
             // 
+            // lblChBD
+            // 
+            this.lblChBD.AutoSize = true;
+            this.lblChBD.Location = new System.Drawing.Point(12, 9);
+            this.lblChBD.Name = "lblChBD";
+            this.lblChBD.Size = new System.Drawing.Size(45, 13);
+            this.lblChBD.TabIndex = 1;
+            this.lblChBD.Text = "lblChBD";
+            // 
             // frmOuverture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 178);
+            this.Controls.Add(this.lblChBD);
             this.Controls.Add(this.btnFermer);
             this.Name = "frmOuverture";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button btnFermer;
+        private System.Windows.Forms.Label lblChBD;
     }
 }
 

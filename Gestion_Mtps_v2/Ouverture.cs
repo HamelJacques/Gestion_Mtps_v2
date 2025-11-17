@@ -10,6 +10,8 @@ namespace Gestion_Mtps_v2
     {
         #region DONNÉES MEMBRES
         private string m_CheminExe;
+        private string m_Chemin_BD;
+        private const string NOM_BD = "G_Mtps.accdb";
         #endregion
         #region CONSTRUCTEURS
         public Ouverture() 
@@ -21,6 +23,11 @@ namespace Gestion_Mtps_v2
         {
             get { return m_CheminExe; }
             private set { m_CheminExe = value?.Trim(); } // exemple : on nettoie les espaces
+        }
+        public string ChBD
+        {
+            get { return m_Chemin_BD; }
+            private set { m_Chemin_BD = value?.Trim(); } 
         }
 
         #endregion
@@ -35,6 +42,7 @@ namespace Gestion_Mtps_v2
         private void ObtenirCheminExe()
         {
             m_CheminExe = AppContext.BaseDirectory;
+            m_Chemin_BD = m_CheminExe + NOM_BD;
         }
         private void TestModifString(string modifString)
         {
