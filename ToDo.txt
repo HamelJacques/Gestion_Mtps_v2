@@ -1,3 +1,28 @@
+Procédure de merge:
+# 1. Aller dans le dossier du projet
+cd chemin/vers/ton/projet
+
+# 2. S'assurer que tu es à jour
+git fetch origin
+
+# 3. Passer sur la branche master
+git checkout master
+
+# 4. Mettre à jour master avec la version distante (optionnel mais recommandé)
+git pull origin master
+
+# 5. Fusionner la branche Ajout_Logs dans master
+git merge Ajout_Log
+
+# 6. Résoudre les conflits s’il y en a (Git t’indiquera les fichiers concernés)
+
+# 7. Une fois les conflits résolus, terminer le merge
+git add .
+git commit -m "Fusion de Ajout_Logs dans master"
+
+# 8. Pousser les changements sur GitHub
+git push origin master
+
 Créer le dépôt dans Git ................................. ok
 S'assurer d'avoir une branche master .................... ok
 Créer une branche Ouverture_01 .......................... ok
