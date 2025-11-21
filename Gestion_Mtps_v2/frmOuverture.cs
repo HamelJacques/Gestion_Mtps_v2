@@ -32,6 +32,7 @@ namespace Gestion_Mtps_v2
             m_Titre = "Ouverture";
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
+            btnAjout.Text = "Ajouter";
             m_lesUsagers = new List<string>();
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
@@ -42,7 +43,7 @@ namespace Gestion_Mtps_v2
 
         private void AfficheUsagers()
         {
-            lstUsagers.Items.AddRange (m_lesUsagers.ToArray());
+            lstUsagers.Items.AddRange (O.LstUsagers.ToArray());
         }
 
         private void TitreFenetre()

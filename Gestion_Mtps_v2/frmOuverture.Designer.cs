@@ -33,6 +33,7 @@
             this.lblmessage = new System.Windows.Forms.Label();
             this.lstUsagers = new System.Windows.Forms.ListBox();
             this.lblUsagers = new System.Windows.Forms.Label();
+            this.btnAjout = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnFermer
@@ -85,11 +86,21 @@
             this.lblUsagers.TabIndex = 4;
             this.lblUsagers.Text = "lblUsagers";
             // 
+            // btnAjout
+            // 
+            this.btnAjout.Location = new System.Drawing.Point(301, 55);
+            this.btnAjout.Name = "btnAjout";
+            this.btnAjout.Size = new System.Drawing.Size(141, 23);
+            this.btnAjout.TabIndex = 5;
+            this.btnAjout.Text = "btnAjout";
+            this.btnAjout.UseVisualStyleBackColor = true;
+            // 
             // frmOuverture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 220);
+            this.Controls.Add(this.btnAjout);
             this.Controls.Add(this.lblUsagers);
             this.Controls.Add(this.lstUsagers);
             this.Controls.Add(this.lblmessage);
@@ -109,6 +120,7 @@
         private System.Windows.Forms.Label lblmessage;
         private System.Windows.Forms.ListBox lstUsagers;
         private System.Windows.Forms.Label lblUsagers;
+        private System.Windows.Forms.Button btnAjout;
     }
 }
 
