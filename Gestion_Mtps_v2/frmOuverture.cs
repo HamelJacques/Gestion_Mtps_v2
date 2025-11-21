@@ -15,6 +15,7 @@ namespace Gestion_Mtps_v2
     {
         #region DONNÉES MEMBRES
         private string m_Titre;
+        private List<string> m_lesUsagers;
         #endregion
         private Ouverture O;
         #region CONSTRUCTEUR
@@ -30,11 +31,20 @@ namespace Gestion_Mtps_v2
         {
             m_Titre = "Ouverture";
             this.Text = m_Titre;
+            lblUsagers.Text = "Les usagers inscrits";
+            m_lesUsagers = new List<string>();
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
             lblChBD.Text = O.ChBD;
             AjusteCouleurFenere();
+            AfficheUsagers();
         }
+
+        private void AfficheUsagers()
+        {
+            lstUsagers.Items.AddRange (m_lesUsagers.ToArray());
+        }
+
         private void TitreFenetre()
         {
             //if(O.m)
@@ -47,7 +57,9 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                O = new Ouverture();                
+                O = new Ouverture();
+                List<string> listUsagers = new List<string>();
+                m_lesUsagers = O.LstUsagers;
             }
             catch (Exception ex)
             {

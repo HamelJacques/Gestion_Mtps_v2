@@ -14,6 +14,7 @@ namespace Gestion_Mtps_v2
         private string m_Chemin_BD;
         private CBase m_LaBase;
         private const string NOM_BD = "G_Mtps.accdb";
+        private List<string> m_List_Usagers;
         #endregion
         #region CONSTRUCTEURS
         public Ouverture() 
@@ -31,6 +32,10 @@ namespace Gestion_Mtps_v2
             get { return m_Chemin_BD; }
             private set { m_Chemin_BD = value?.Trim(); } 
         }
+        public List<string> LstUsagers
+        { get { return m_List_Usagers; }
+            private set { m_List_Usagers = value;}
+        }
 
         #endregion
         #endregion
@@ -40,6 +45,7 @@ namespace Gestion_Mtps_v2
             m_CheminExe = string.Empty;
             TestModifString("Chemin exe");
             ObtenirCheminExe();
+            m_List_Usagers = new List<string>();
             Init_LaBD();
             ObtenirLesUsagers();
         }
@@ -68,8 +74,8 @@ namespace Gestion_Mtps_v2
         }
         private void ObtenirLesUsagers()
         {
-            List<string> list = new List<string>();
-            list = m_LaBase.ObtenirUsagers();
+            LstUsagers = m_LaBase.ObtenirUsagers();
+            
         }
         #endregion
     }
