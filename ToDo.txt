@@ -1,3 +1,10 @@
+Dans CorrigeConnexion_BD
+Déclarer mon objet bd dansfrmOuverture
+L'initialiser
+Le passer à Ouverture
+L'objet BD sera alors disponmible pour les ajouts et autrea besoins éventels
+
+
 Procédure de merge:
 # 1. Aller dans le dossier du projet
 cd chemin/vers/ton/projet
