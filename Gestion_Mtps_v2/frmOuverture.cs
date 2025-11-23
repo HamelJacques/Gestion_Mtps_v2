@@ -80,7 +80,7 @@ namespace Gestion_Mtps_v2
         private void AfficheMessErr(string err)
         {
             lblmessage.ForeColor = Color.Blue;
-            lblmessage.Text = "Une erreur s'est produite. Voir application.log dans: ConnectBD()";
+            lblmessage.Text = "Une erreur s'est produite. Voir application.log dans: ConnectBD()" + Environment.NewLine + err;
             //
         }
         private void btnFermer_Click(object sender, EventArgs e)
