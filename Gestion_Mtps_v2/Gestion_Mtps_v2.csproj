@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CBase.cs" />
+    <Compile Include="frmAjouts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAjouts.Designer.cs">
+      <DependentUpon>frmAjouts.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +65,9 @@
     <Compile Include="Ouverture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAjouts.resx">
+      <DependentUpon>frmAjouts.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmOuverture.resx">
       <DependentUpon>frmOuverture.cs</DependentUpon>
     </EmbeddedResource>
