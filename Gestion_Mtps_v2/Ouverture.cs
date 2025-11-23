@@ -77,6 +77,12 @@ namespace Gestion_Mtps_v2
             LstUsagers = m_LaBase.ObtenirUsagers();
             
         }
+
+        internal void AjoutUsager()
+        {
+
+            throw new NotImplementedException();
+        }
         #endregion
     }
 

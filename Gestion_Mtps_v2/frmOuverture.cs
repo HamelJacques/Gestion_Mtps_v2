@@ -78,8 +78,15 @@ namespace Gestion_Mtps_v2
         {
             this.Close();
         }
+
         #endregion
 
-
+        private void btnAjout_Click(object sender, EventArgs e)
+        {
+            frmAjouts A = new frmAjouts("Usager");
+            A.ShowDialog();
+            //O.AjoutUsager();
+            //MessageBox.Show("En développement","Ajout d'un usager",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        }
     }
 }

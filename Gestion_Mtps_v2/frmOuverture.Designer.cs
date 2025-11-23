@@ -94,6 +94,7 @@
             this.btnAjout.TabIndex = 5;
             this.btnAjout.Text = "btnAjout";
             this.btnAjout.UseVisualStyleBackColor = true;
+            this.btnAjout.Click += new System.EventHandler(this.btnAjout_Click);
             // 
             // frmOuverture
             // 
