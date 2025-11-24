@@ -15,6 +15,10 @@ namespace Gestion_Mtps_v2
     {
         #region DONNÉES MEMBRES
         private string m_Titre;
+        //private CBase m_LaBase;
+        //private string m_CheminExe;
+        //private string m_Chemin_BD;
+        //private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_lesUsagers;
         #endregion
         private Ouverture O;
@@ -40,7 +44,11 @@ namespace Gestion_Mtps_v2
             AjusteCouleurFenere();
             AfficheUsagers();
         }
-
+        //private void ObtenirCheminExe()
+        //{
+        //    m_CheminExe = AppContext.BaseDirectory;
+        //    m_Chemin_BD = m_CheminExe + NOM_BD;
+        //}
         private void AfficheUsagers()
         {
             lstUsagers.Items.AddRange (O.LstUsagers.ToArray());
@@ -59,6 +67,7 @@ namespace Gestion_Mtps_v2
             try
             {
                 O = new Ouverture();
+                //m_LaBase = new CBase(m_Chemin_BD);
                 List<string> listUsagers = new List<string>();
                 m_lesUsagers = O.LstUsagers;
             }
@@ -71,7 +80,7 @@ namespace Gestion_Mtps_v2
         private void AfficheMessErr(string err)
         {
             lblmessage.ForeColor = Color.Blue;
-            lblmessage.Text = "Une erreur s'est produite. Voir application.log dans: " + O.ChExe;
+            lblmessage.Text = "Une erreur s'est produite. Voir application.log dans: ConnectBD()" + Environment.NewLine + err;
             //
         }
         private void btnFermer_Click(object sender, EventArgs e)
@@ -83,8 +92,8 @@ namespace Gestion_Mtps_v2
 
         private void btnAjout_Click(object sender, EventArgs e)
         {
-            frmAjouts A = new frmAjouts("Usager");
-            A.ShowDialog();
+            //frmAjouts A = new frmAjouts("Usager");
+            //A.ShowDialog();
             //O.AjoutUsager();
             //MessageBox.Show("En développement","Ajout d'un usager",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }

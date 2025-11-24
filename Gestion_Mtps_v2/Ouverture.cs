@@ -36,6 +36,11 @@ namespace Gestion_Mtps_v2
         { get { return m_List_Usagers; }
             private set { m_List_Usagers = value;}
         }
+        public CBase LaBase
+        {
+            get { return m_LaBase; }
+        }
+
 
         #endregion
         #endregion
