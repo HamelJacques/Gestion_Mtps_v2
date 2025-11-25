@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ajouts.cs" />
     <Compile Include="CBase.cs" />
     <Compile Include="frmAjouts.cs">
       <SubType>Form</SubType>
