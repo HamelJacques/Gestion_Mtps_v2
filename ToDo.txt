@@ -1,8 +1,9 @@
-Dans CorrigeConnexion_BD
-Déclarer mon objet bd dansfrmOuverture
-L'initialiser
-Le passer à Ouverture
-L'objet BD sera alors disponmible pour les ajouts et autrea besoins éventels
+Dans frmOuverture, 
+   grossir la police
+   Colorer les boutons  
+Dans frmAjouter
+   Ouvrir avec le bouton ajouter enable false jusqu'à ce qu'il y at du teste dans la nouvelle valeur
+   Colorer les boutons
 
 
 Procédure de merge:
