@@ -1,11 +1,16 @@
+*********** TODO **********
+Faire une partie pour metre un mot de passe
+Refaire l'ajout d'un usager et forcer à mettre un mot de passe
+Arranger Ouverture pour demander le mot de passe avant d'ouvrir la prochaine fenêtre
+
 Dans frmOuverture, 
    - Grossir la police
    - Colorer les boutons  
 Dans frmAjouter
-   - Ouvrir avec le bouton ajouter enable false jusqu'à ce qu'il y at du teste dans la nouvelle valeur
+   - Ouvrir avec le bouton ajouter enable false jusqu'à ce qu'il y ait du texte dans la nouvelle valeur
    - Colorer les boutons
 
-
+///////////////////////////////////////////////// BASH ///////////////////////////////////////
 Procédure de merge:
 # 1. Aller dans le dossier du projet
 cd chemin/vers/ton/projet
