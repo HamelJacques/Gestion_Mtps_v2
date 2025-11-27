@@ -17,7 +17,7 @@ namespace TestEncription
             List<char> lettres = mot.ToList();
 
             // Créer une deuxième liste avec les codes ASCII
-            List<int> codesAscii = lettres.Select(c => (int)c - 30).ToList();
+            List<int> codesAscii = lettres.Select(co => (int)co - 30).ToList();
 
             // La liste sera transformée en string pour être sauvegardée
             string asciiString = string.Join("", codesAscii);
