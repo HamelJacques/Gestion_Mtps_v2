@@ -77,10 +77,14 @@ namespace Gestion_Mtps_v2
         {
             this.Width = 600;
             this.Height = 300;
+
+            grbxMotPasseUsager.Text = "Mot de passe";
+            btnFermer.Top = grbxMotPasseUsager.Top + grbxMotPasseUsager.Height+10;
             btnFermer.Left = txtNouvelleValeur.Left;
             btnFermer.Width = 500;
-            btnFermer.Top = 150;
-            btnAjouter.Text = "Ajouter";
+            btnFermer.Text = "Fermer";
+            
+            btnAjouter.Text = "Ajouter ";
             this.BackColor = Color.LightSeaGreen;
         }
         #endregion
@@ -107,6 +111,22 @@ namespace Gestion_Mtps_v2
             }
 
                 MessageBox.Show("En développement");
+        }
+
+        private void txtNouvelleValeur_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        private void txtNouvelleValeur_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void txtNouvelleValeur_KeyUp(object sender, KeyEventArgs e)
+        {
+            //grbxMotPasseUsager.Text = txtNouvelleValeur.TextLength.ToString();
+            btnAjouter.Text = "Ajouter " + txtNouvelleValeur.Text;
         }
     }
 }
