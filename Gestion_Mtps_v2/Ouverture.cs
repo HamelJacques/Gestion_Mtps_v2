@@ -1,6 +1,7 @@
 ﻿using Gestion_Mtps;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,7 +72,18 @@ namespace Gestion_Mtps_v2
         private void ObtenirCheminExe()
         {
             m_CheminExe = AppContext.BaseDirectory;
-            m_Chemin_BD = m_CheminExe + NOM_BD;
+
+            // On remonte d'un niveau (Debug)
+            string cheminBase = Directory.GetParent(m_CheminExe).FullName;
+            cheminBase = Directory.GetParent(cheminBase).FullName;
+            cheminBase = Path.Combine(cheminBase, "Base\\");
+
+            //// On remonte d'un niveau (Debug) et on concatène "Base"
+            //cheminBase = Path.Combine(
+            //Directory.GetParent(m_CheminExe).FullName, "Base\\");
+
+
+            m_Chemin_BD = cheminBase + NOM_BD;
         }
         private void TestModifString(string modifString)
         {
