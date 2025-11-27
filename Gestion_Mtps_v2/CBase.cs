@@ -733,6 +733,33 @@ namespace Gestion_Mtps
             return false;
         }
 
+        public bool AjouterUsager_v2(string nouveauNom)
+        {
+            //MessageBox.Show("En développement");
+            bool retour = false;
+            try
+            {
+                // Vérifier si l'usager existe
+                if (!UsagerExiste(nouveauNom)) // si esiste pas, ajouter
+                {
+                    // obtenir le prochain numéro unique disponible
+                    Int32 num = ProchainIdUsager() + 1;
+
+                    //string szInsert = "INSERT INTO tblUsagers VALUES ('" + nouveauNom + "', " + num + ")";
+
+                    string sql = "INSERT INTO tblUsagers  VALUES (" + num + ", '" + nouveauNom + "'" +  ")";
+                    OleDbCommand command = new OleDbCommand(sql, m_cnADONetConnection);
+                    command.ExecuteNonQuery();
+                    retour = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                retour = false;
+            }
+            return retour;
+        }
         public bool AjouterUsager(string nouveauNom)
         {
             //MessageBox.Show("En développement");
@@ -752,11 +779,11 @@ namespace Gestion_Mtps
                     command.ExecuteNonQuery();
                     retour = true;
                 }
-
             }
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                retour = false;
             }
             return retour;
         }
@@ -1954,6 +1981,11 @@ namespace Gestion_Mtps
                 string mess = ex.ToString();
                 // Tu peux aussi logger ou afficher le message ici
             }
+        }
+
+        internal int Ajouter(string m_Type, string text)
+        {
+            return 0;
         }
 
         #endregion

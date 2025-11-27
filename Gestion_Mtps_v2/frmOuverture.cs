@@ -51,6 +51,7 @@ namespace Gestion_Mtps_v2
         //}
         private void AfficheUsagers()
         {
+            lstUsagers.Items.Clear();
             lstUsagers.Items.AddRange (O.LstUsagers.ToArray());
         }
 
@@ -92,11 +93,9 @@ namespace Gestion_Mtps_v2
 
         private void btnAjout_Click(object sender, EventArgs e)
         {
-            frmAjouts A = new frmAjouts("Usager", O.LaBase);
+            frmAjouts A = new frmAjouts("Usager", O.LaBase, ref m_lesUsagers);
             A.ShowDialog();
             AfficheUsagers();
-            //O.AjoutUsager();
-            //MessageBox.Show("En développement","Ajout d'un usager",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
     }
 }

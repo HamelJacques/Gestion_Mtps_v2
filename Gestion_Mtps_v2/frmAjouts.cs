@@ -13,6 +13,11 @@ namespace Gestion_Mtps_v2
 {
     public partial class frmAjouts : Form
     {
+        #region DONNÉES MEMBRES
+        private List<string> m_items = new List<string>();
+        private CBase m_maBD;
+        private string m_Type;
+        #endregion
         #region CONSTRUCTEURS
         public frmAjouts()
         {
@@ -31,17 +36,32 @@ namespace Gestion_Mtps_v2
             {
                 case "Usager":
                     InitAjouts(type);
-                    ObtenirLesUsagers();
+                    //ObtenirLesUsagers();
                     break;
             }
             
         }
+        public frmAjouts(string type, CBase bd, ref List<string> lst)
+        {
+            InitializeComponent();
+            m_maBD = bd;
+            m_Type = type;
+            this.Text = type + " avec un objet BD";
+            m_items = lst;
+            switch (type)
+            {
+                case "Usager":
+                    InitAjouts(type);
+                    //ObtenirLesUsagers();
+                    break;
+            }
+        }
         #endregion
         #region MÉTHODES PRIVÉES
-        private void ObtenirLesUsagers()
-        {
-            Int32 nbU = 0;
-        }
+        //private void ObtenirLesUsagers()
+        //{
+        //    Int32 nbU = 0;
+        //}
         private void InitAjouts(string type)
         {
             switch (type)
@@ -57,14 +77,36 @@ namespace Gestion_Mtps_v2
         {
             this.Width = 600;
             this.Height = 300;
+            btnFermer.Left = txtNouvelleValeur.Left;
             btnFermer.Width = 500;
             btnFermer.Top = 150;
+            btnAjouter.Text = "Ajouter";
             this.BackColor = Color.LightSeaGreen;
         }
         #endregion
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnAjouter_Click(object sender, EventArgs e)
+        {
+            // vérifier si la valeur existe déjà dans la liste
+
+            bool valeurExiste = m_items.Contains(txtNouvelleValeur.Text);
+            // Récolter la valeur et faire un trim pour elnever les espaces
+            string nom = txtNouvelleValeur.Text;
+
+            // appeler la Classe Ajouts avec la valeur
+            if (!valeurExiste)
+            {
+            Ajouts ajouts = new Ajouts(ref m_maBD); //, m_Type,txtNouvelleValeur.Text);
+            // La vérification se fera dans Ajouts et retournera un code
+
+            Int32 ret = ajouts.Ajouter(m_Type, txtNouvelleValeur.Text);
+            }
+
+                MessageBox.Show("En développement");
         }
     }
 }
