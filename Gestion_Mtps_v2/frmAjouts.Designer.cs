@@ -32,16 +32,19 @@
             this.lblTypeAjout = new System.Windows.Forms.Label();
             this.txtNouvelleValeur = new System.Windows.Forms.TextBox();
             this.btnAjouter = new System.Windows.Forms.Button();
+            this.grbxMotPasseUsager = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.grbxMotPasseUsager.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnFermer
             // 
-            this.btnFermer.Location = new System.Drawing.Point(-5, 206);
+            this.btnFermer.Location = new System.Drawing.Point(13, 195);
             this.btnFermer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(550, 63);
+            this.btnFermer.Size = new System.Drawing.Size(561, 63);
             this.btnFermer.TabIndex = 0;
-            this.btnFermer.Text = "button1";
+            this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
             this.btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
             // 
@@ -62,22 +65,44 @@
             this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 26);
             this.txtNouvelleValeur.TabIndex = 2;
             this.txtNouvelleValeur.Text = "txtNouvelleValeur";
+            this.txtNouvelleValeur.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNouvelleValeur_KeyDown);
+            this.txtNouvelleValeur.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNouvelleValeur_KeyPress);
+            this.txtNouvelleValeur.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNouvelleValeur_KeyUp);
             // 
             // btnAjouter
             // 
-            this.btnAjouter.Location = new System.Drawing.Point(369, 55);
+            this.btnAjouter.Location = new System.Drawing.Point(321, 48);
             this.btnAjouter.Name = "btnAjouter";
-            this.btnAjouter.Size = new System.Drawing.Size(114, 33);
+            this.btnAjouter.Size = new System.Drawing.Size(224, 33);
             this.btnAjouter.TabIndex = 3;
             this.btnAjouter.Text = "btnAjouter";
             this.btnAjouter.UseVisualStyleBackColor = true;
             this.btnAjouter.Click += new System.EventHandler(this.btnAjouter_Click);
+            // 
+            // grbxMotPasseUsager
+            // 
+            this.grbxMotPasseUsager.BackColor = System.Drawing.Color.PapayaWhip;
+            this.grbxMotPasseUsager.Controls.Add(this.textBox1);
+            this.grbxMotPasseUsager.Location = new System.Drawing.Point(56, 87);
+            this.grbxMotPasseUsager.Name = "grbxMotPasseUsager";
+            this.grbxMotPasseUsager.Size = new System.Drawing.Size(489, 68);
+            this.grbxMotPasseUsager.TabIndex = 4;
+            this.grbxMotPasseUsager.TabStop = false;
+            this.grbxMotPasseUsager.Text = "grbxMotPasseUsager";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 25);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(477, 26);
+            this.textBox1.TabIndex = 0;
             // 
             // frmAjouts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 294);
+            this.Controls.Add(this.grbxMotPasseUsager);
             this.Controls.Add(this.btnAjouter);
             this.Controls.Add(this.txtNouvelleValeur);
             this.Controls.Add(this.lblTypeAjout);
@@ -86,6 +111,8 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmAjouts";
             this.Text = "frmAjouts";
+            this.grbxMotPasseUsager.ResumeLayout(false);
+            this.grbxMotPasseUsager.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,5 +124,7 @@
         private System.Windows.Forms.Label lblTypeAjout;
         private System.Windows.Forms.TextBox txtNouvelleValeur;
         private System.Windows.Forms.Button btnAjouter;
+        private System.Windows.Forms.GroupBox grbxMotPasseUsager;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
