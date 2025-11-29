@@ -97,9 +97,7 @@ namespace Gestion_Mtps_v2
 
         internal int ObtenirIdUsager(string selection)
         {
-            int id = 0;
-            id = m_LaBase.ObtenirIdUsager(selection);
-            return id;
+            return m_LaBase.ObtenirIdUsager(selection);
         }
         #endregion
     }

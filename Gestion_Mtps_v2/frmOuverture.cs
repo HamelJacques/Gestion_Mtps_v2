@@ -20,7 +20,7 @@ namespace Gestion_Mtps_v2
         //private string m_Chemin_BD;
         //private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_lesUsagers;
-        private Usager_v2 m_UsagerSelectionne;
+        public Usager_v2 m_UsagerSelectionne;
         #endregion
         private Ouverture O;
         #region CONSTRUCTEUR
@@ -112,8 +112,11 @@ namespace Gestion_Mtps_v2
             else
             {
                 m_UsagerSelectionne.IdUsager = isselect;
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase);
+                // Ouvrir la nouvelle fenêtre de choix
+                fen.ShowDialog();
             }
-                MessageBox.Show("En développement" + Environment.NewLine + selection);
+                //MessageBox.Show("En développement" + Environment.NewLine + selection);
         }
     }
 }

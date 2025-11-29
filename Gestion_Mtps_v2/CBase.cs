@@ -36,7 +36,7 @@ namespace Gestion_Mtps
         //public CBase(string CheminBD, string table)//, string table
         //{
         //    m_LaBase = CheminBD;
-
+        
         //    //InitCBase();
         //    //Connection();
         //    //lg = new Logger();

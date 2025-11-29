@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gestion_Mtps_v2
 {
-    internal class Usager_v2
+    public class Usager_v2
     {
         #region DONNÉES MEMBRES
         private int m_IdUsager;
