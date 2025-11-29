@@ -67,6 +67,7 @@
     <Compile Include="Ouverture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usager_v2.cs" />
     <EmbeddedResource Include="frmAjouts.resx">
       <DependentUpon>frmAjouts.cs</DependentUpon>
     </EmbeddedResource>

@@ -71,23 +71,28 @@
             // 
             // lstUsagers
             // 
+            this.lstUsagers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstUsagers.FormattingEnabled = true;
+            this.lstUsagers.ItemHeight = 18;
             this.lstUsagers.Location = new System.Drawing.Point(34, 55);
             this.lstUsagers.Name = "lstUsagers";
-            this.lstUsagers.Size = new System.Drawing.Size(241, 56);
+            this.lstUsagers.Size = new System.Drawing.Size(241, 40);
             this.lstUsagers.TabIndex = 3;
+            this.lstUsagers.DoubleClick += new System.EventHandler(this.lstUsagers_DoubleClick);
             // 
             // lblUsagers
             // 
             this.lblUsagers.AutoSize = true;
-            this.lblUsagers.Location = new System.Drawing.Point(36, 39);
+            this.lblUsagers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsagers.Location = new System.Drawing.Point(36, 36);
             this.lblUsagers.Name = "lblUsagers";
-            this.lblUsagers.Size = new System.Drawing.Size(56, 13);
+            this.lblUsagers.Size = new System.Drawing.Size(78, 18);
             this.lblUsagers.TabIndex = 4;
             this.lblUsagers.Text = "lblUsagers";
             // 
             // btnAjout
             // 
+            this.btnAjout.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAjout.Location = new System.Drawing.Point(301, 55);
             this.btnAjout.Name = "btnAjout";
             this.btnAjout.Size = new System.Drawing.Size(141, 23);

@@ -20,6 +20,7 @@ namespace Gestion_Mtps_v2
         //private string m_Chemin_BD;
         //private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_lesUsagers;
+        private Usager_v2 m_UsagerSelectionne;
         #endregion
         private Ouverture O;
         #region CONSTRUCTEUR
@@ -33,6 +34,7 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES
         private void InitForm()
         {
+            m_UsagerSelectionne = new Usager_v2();
             m_Titre = "Ouverture";
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
@@ -96,6 +98,22 @@ namespace Gestion_Mtps_v2
             frmAjouts A = new frmAjouts("Usager", O.LaBase, ref m_lesUsagers);
             A.ShowDialog();
             AfficheUsagers();
+        }
+
+        private void lstUsagers_DoubleClick(object sender, EventArgs e)
+        {
+            string selection = lstUsagers.SelectedItems[0].ToString();
+            // Obtenir le id de la sélection
+            Int32 isselect = O.ObtenirIdUsager(selection);
+            if (isselect == 0)
+            {
+                MessageBox.Show("Faites un choix d'usager"); 
+            }
+            else
+            {
+                m_UsagerSelectionne.IdUsager = isselect;
+            }
+                MessageBox.Show("En développement" + Environment.NewLine + selection);
         }
     }
 }
