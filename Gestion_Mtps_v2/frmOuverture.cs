@@ -34,6 +34,7 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES
         private void InitForm()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
             m_UsagerSelectionne = new Usager_v2();
             m_Titre = "Ouverture";
             this.Text = m_Titre;
