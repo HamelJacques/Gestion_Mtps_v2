@@ -45,6 +45,7 @@ namespace Gestion_Mtps_v2
             grbxCategories.BackColor = Color.LightBlue;
             btnAjoutCatego.BackColor = Color.LightGreen;
             btnAjoutCatego.Text = "Ajout";
+            ListerCategories();
         }
         private string ObtenirNomUsager()
         {
@@ -54,6 +55,7 @@ namespace Gestion_Mtps_v2
         private List<string> ListerCategories()
         {
             List<string> lst = new List<string>();
+            lst = m_Choix.ObtenirListeCategries(m_usager);
             return lst;
         }
         #endregion#

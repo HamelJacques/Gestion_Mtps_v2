@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestion_Mtps_v2;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Gestion_Mtps
 {
@@ -1628,59 +1630,59 @@ namespace Gestion_Mtps
                 string szmess = ex.ToString();
             }
         }
-        ///// <summary>
-        ///// Retourne la liste des catégories
-        /////  Pas associées à un usager si associe = false
-        /////  Sinon returne la liste pour l'associé en cours
-        ///// </summary>
-        ///// <param name="lstCategories"></param>
-        ///// <param name="U"></param>
-        ///// <param name="associe"></param>
-        //internal void ObtenirCategories(ref List<string> lstCategories, Usager U, bool associe = true)
-        //{
-        //    int i = 0;
-        //    string inPasIn = " IN";
-        //    string szSelect;
-        //    //string szSelectJoin = string.Empty;
-        //    //string szWhere;
-        //    string szWHERE = string.Empty;
-        //    string szFROM = string.Empty;
-        //    string egal = string.Empty;
-        //    if (!associe) egal = " Not ";
-        //    //if (!associe) inPasIn = " NOT IN ";
+        /// <summary>
+        /// Retourne la liste des catégories
+        ///  Pas associées à un usager si associe = false
+        ///  Sinon returne la liste pour l'associé en cours
+        /// </summary>
+        /// <param name="lstCategories"></param>
+        /// <param name="U"></param>
+        /// <param name="associe"></param>
+        internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
+        {
+            int i = 0;
+            string inPasIn = " IN";
+            string szSelect;
+            //string szSelectJoin = string.Empty;
+            //string szWhere;
+            string szWHERE = string.Empty;
+            string szFROM = string.Empty;
+            string egal = string.Empty;
+            if (!associe) egal = " Not ";
+            //if (!associe) inPasIn = " NOT IN ";
 
-        //    //szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C "+
-        //    //"WHERE(((C.NoCatego) " + inPasIn  + "(SELECT distinct Cb.NoCatego  FROM tblCategories Cb " +
-        //    //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
+            //szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C "+
+            //"WHERE(((C.NoCatego) " + inPasIn  + "(SELECT distinct Cb.NoCatego  FROM tblCategories Cb " +
+            //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
 
-        //    szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C ";
-        //    //szFROM = " FROM jctUsagerCatgo INNER JOIN tblCategories ON jctUsagerCatgo.IdCatego = tblCategories.NoCatego";
-        //    szWHERE = " WHERE ((" + egal +" (C.IdUsager) = " + U.m_IdUsager + "))";
-        //    szSelect += szWHERE;
+            szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
+            szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN tblUsagerCategorie ON tblCategories.IdCategorie = tblUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = tblUsagerCategorie.IdUsager";
+            szWHERE = " WHERE (((tblUsagers.IdUsager) = " + U.IdUsager + "))";
+            szSelect += szFROM + szWHERE;
 
-        //    try
-        //        {
-        //        m_DataTable = new DataTable();
-        //        m_DataTable.Clear();
-        //        m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-        //        OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-        //        m_dataAdatper.Fill(m_DataTable);
-        //        i = m_DataTable.Rows.Count;
-        //        //lstCategories.Add("Ajouter une catégorie");
-        //        if (i >0)
-        //        {
-        //            for (i = 0; i < m_DataTable.Rows.Count; i++)
-        //            {
-        //                lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string szmess = ex.ToString();
-        //    }
-        //    //throw new NotImplementedException();
-        //}
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                //lstCategories.Add("Ajouter une catégorie");
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+            }
+            //throw new NotImplementedException();
+        }
         internal void ObtenirListeCategories(ref List<string> lstSites)
         {
             int i = 0;

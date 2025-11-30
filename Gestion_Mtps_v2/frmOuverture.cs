@@ -105,14 +105,14 @@ namespace Gestion_Mtps_v2
         {
             string selection = lstUsagers.SelectedItems[0].ToString();
             // Obtenir le id de la sélection
-            Int32 isselect = O.ObtenirIdUsager(selection);
-            if (isselect == 0)
+            Int32 iSelect = O.ObtenirIdUsager(selection);
+            if (iSelect == 0)
             {
                 MessageBox.Show("Faites un choix d'usager"); 
             }
             else
             {
-                m_UsagerSelectionne.IdUsager = isselect;
+                m_UsagerSelectionne.IdUsager = iSelect;
                 frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase);
                 // Ouvrir la nouvelle fenêtre de choix
                 fen.ShowDialog();

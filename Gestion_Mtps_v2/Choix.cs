@@ -25,6 +25,12 @@ namespace Gestion_Mtps_v2
         {
             return m_maBD.ObtenirNomUsager(id);
         }
+        public List<string> ObtenirListeCategries(Usager_v2 U)
+        {
+            List<string> lst = new List<string>();
+            m_maBD.ObtenirCategories(ref lst, U);
+            return lst;
+        }
         #endregion
     }
 }

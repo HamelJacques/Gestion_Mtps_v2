@@ -10,6 +10,7 @@ namespace Gestion_Mtps_v2
     {
         #region DONNÉES MEMBRES
         private int m_IdUsager;
+        private int m_IdCategorie;
         #endregion
         #region CONSTRUCTEURS
         public Usager_v2()
@@ -21,6 +22,7 @@ namespace Gestion_Mtps_v2
         #endregion
         #region PROPRIÉTÉS
         public int IdUsager { get => m_IdUsager; set => m_IdUsager = value; }
+        public int IdCategorie { get => m_IdCategorie; set => m_IdCategorie = value; }
         #endregion
     }
 }
