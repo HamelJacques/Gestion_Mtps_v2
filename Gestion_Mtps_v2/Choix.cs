@@ -31,6 +31,12 @@ namespace Gestion_Mtps_v2
             m_maBD.ObtenirCategories(ref lst, U);
             return lst;
         }
+
+        internal void AjouterUneCategorie(Usager_v2 m_usager)
+        {
+            
+            //throw new NotImplementedException();
+        }
         #endregion
     }
 }

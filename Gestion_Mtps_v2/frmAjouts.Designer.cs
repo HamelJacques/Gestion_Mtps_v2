@@ -65,8 +65,6 @@
             this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 26);
             this.txtNouvelleValeur.TabIndex = 2;
             this.txtNouvelleValeur.Text = "txtNouvelleValeur";
-            this.txtNouvelleValeur.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNouvelleValeur_KeyDown);
-            this.txtNouvelleValeur.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNouvelleValeur_KeyPress);
             this.txtNouvelleValeur.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNouvelleValeur_KeyUp);
             // 
             // btnAjouter
@@ -83,9 +81,9 @@
             // 
             this.grbxMotPasseUsager.BackColor = System.Drawing.Color.PapayaWhip;
             this.grbxMotPasseUsager.Controls.Add(this.textBox1);
-            this.grbxMotPasseUsager.Location = new System.Drawing.Point(56, 87);
+            this.grbxMotPasseUsager.Location = new System.Drawing.Point(679, 101);
             this.grbxMotPasseUsager.Name = "grbxMotPasseUsager";
-            this.grbxMotPasseUsager.Size = new System.Drawing.Size(489, 68);
+            this.grbxMotPasseUsager.Size = new System.Drawing.Size(272, 68);
             this.grbxMotPasseUsager.TabIndex = 4;
             this.grbxMotPasseUsager.TabStop = false;
             this.grbxMotPasseUsager.Text = "grbxMotPasseUsager";
@@ -101,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 294);
+            this.ClientSize = new System.Drawing.Size(1002, 295);
             this.Controls.Add(this.grbxMotPasseUsager);
             this.Controls.Add(this.btnAjouter);
             this.Controls.Add(this.txtNouvelleValeur);

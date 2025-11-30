@@ -481,19 +481,20 @@ namespace Gestion_Mtps
         //    //throw new NotImplementedException();
         //}
 
-        public bool AjouterCategorie(string nouveauNom, int idusager, int idexiste = 0)
+        public bool AjouterCategorie_v2(string nouveauNom, int idusager, int idexiste = 0)
         {
             bool retour = false;
-            int num = 0;
+            int idCategorie = 0;
             try
-            {
+            {//vérifier si la valeur existe déjà
+                bool present = VerifierPresenceCombinaison(idusager, nouveauNom);
                 if (idexiste > 0)
                 {
-                    num = idexiste;
+                    idCategorie = idexiste;
                 }
                 else
                 {
-                    num = ProchainNoCategorie();
+                    idCategorie = ProchainNoCategorie();
                 }
                 using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
                 {
@@ -512,13 +513,13 @@ namespace Gestion_Mtps
                         if (idexiste == 0)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ")";
+                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
+                            command.CommandText = "INSERT INTO tblCategories VALUES ( idCategorie + '" + nouveauNom + "', " + ")";
                             command.ExecuteNonQuery();
                         }
 
                         // Assign transaction object for a pending local transaction.
-                        command.CommandText = "INSERT INTO jctUsagerCatgo VALUES (" + idusager + ", " + num + ")";
+                        command.CommandText = "INSERT INTO jctUsagerCatgories VALUES (" + idusager + ", " + idCategorie + ")";
                         command.ExecuteNonQuery();
 
                         // Commit the transaction.
@@ -1198,10 +1199,10 @@ namespace Gestion_Mtps
         {
             bool presence = false;
             string szSelect;
-            szSelect = "SELECT COUNT(NomCatego) FROM tblCategories "// where IdUsager = " + IdUsager
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
-                       + "WHERE jctUsagerCatgo.IdUsager = " + IdUsager
-                + " and tblCategories.NomCatego = '" + nomCatego + "'";
+            szSelect = "SELECT COUNT(NomCategorie) FROM tblCategories "// where IdUsager = " + IdUsager
+                       + "LEFT JOIN jctUsagerCatgorie ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
+                       + "WHERE tblCategories.NomCategorie = '" + nomCatego + "'";
+                //+ " and tblCategories.NomCategorie = '" + nomCatego + "'";
                 //+ " and IdSousCategorie = " + IdSousCatego                //+ " and IdSite = " + IdSite                //+ " and Len(AdresseSite) > 0"                //+ " and Len(MotPass) > 0";
             m_DataTable = new DataTable();
             m_DataTable.Clear();

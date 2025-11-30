@@ -1,5 +1,6 @@
 ﻿using Gestion_Mtps;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,7 @@ namespace Gestion_Mtps_v2
         private Usager_v2 m_usager;
         private Choix m_Choix;
         private CBase m_maBD;
+        private Ajouts m_Ajouts;
         #endregion
         #region CONSTRUCTEURS
         public frmChoix(ref Usager_v2 U, CBase bd)
@@ -32,6 +34,7 @@ namespace Gestion_Mtps_v2
         private void InitChoix()
         {
             m_Choix = new Choix(ref m_maBD);
+            m_Ajouts = new Ajouts();
             this.Text = " Choix pour " + ObtenirNomUsager();
             this.BackColor = Color.LightPink;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -67,8 +70,10 @@ namespace Gestion_Mtps_v2
 
         private void btnAjoutCatego_Click(object sender, EventArgs e)
         {
-            // passer par la classe Choix pour ajouter une catégorie
-
+            List<string> lst = new List<string>();
+            // passer par la classe Ajouts pour ajouter une catégorie
+            frmAjouts aj = new frmAjouts("Categorie", m_maBD,ref lst, ref m_usager);
+            aj.ShowDialog();
         }
     }
 }

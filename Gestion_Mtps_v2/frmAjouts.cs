@@ -16,6 +16,7 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private List<string> m_items = new List<string>();
         private CBase m_maBD;
+        private Usager_v2 m_Usager;
         private string m_Type;
         #endregion
         #region CONSTRUCTEURS
@@ -56,6 +57,25 @@ namespace Gestion_Mtps_v2
                     break;
             }
         }
+        public frmAjouts(string type, CBase bd, ref List<string> lst, ref Usager_v2 U)
+        {
+            InitializeComponent();
+            m_maBD = bd;
+            m_Type = type;
+            m_Usager = U;
+            this.Text = type + " avec un objet BD";
+            m_items = lst;
+
+            InitAjouts(type);
+
+            //switch (type)
+            //{
+            //    case "Usager":
+            //        InitAjouts(type);
+            //        //ObtenirLesUsagers();
+            //        break;
+            //}
+        }
         #endregion
         #region MÉTHODES PRIVÉES
         //private void ObtenirLesUsagers()
@@ -64,14 +84,18 @@ namespace Gestion_Mtps_v2
         //}
         private void InitAjouts(string type)
         {
+            lblTypeAjout.Text = type;
             switch (type)
             {
                 case "Usager":
-                    lblTypeAjout.Text = type;
                     AjusteFenetreUsager();
+                    break;
+                case "Categorie":
+                    AjusteFenetreCategories();
                     break;
             }
             txtNouvelleValeur.Text = "";
+            btnFermer.Text = "Fermer";
         }
         private void AjusteFenetreUsager()
         {
@@ -86,6 +110,13 @@ namespace Gestion_Mtps_v2
             
             btnAjouter.Text = "Ajouter ";
             this.BackColor = Color.LightSeaGreen;
+        }
+        private void AjusteFenetreCategories()
+        {
+            this.Width = 600;
+            this.Height = 300;
+            grbxMotPasseUsager.Visible = false;
+            BackColor = Color.LightSeaGreen;
         }
         #endregion
         private void btnFermer_Click(object sender, EventArgs e)
