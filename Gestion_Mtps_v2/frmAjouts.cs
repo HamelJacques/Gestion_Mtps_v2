@@ -112,6 +112,7 @@ namespace Gestion_Mtps_v2
             grbxMotPasseUsager.Visible = false;
             BackColor = Color.LightYellow;
             txtNouvelleValeur.Focus();
+            txtNouvelleValeur.Select();
         }
         #endregion
         private void btnFermer_Click(object sender, EventArgs e)

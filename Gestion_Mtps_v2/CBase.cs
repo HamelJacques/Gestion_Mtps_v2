@@ -1674,7 +1674,7 @@ namespace Gestion_Mtps
                 {
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstCategories.Add(m_DataTable.Rows[i]["NomCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
                     }
                 }
             }

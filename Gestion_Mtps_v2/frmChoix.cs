@@ -55,11 +55,12 @@ namespace Gestion_Mtps_v2
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
         }
 
-        private List<string> ListerCategories()
+        private void ListerCategories()
         {
             List<string> lst = new List<string>();
             lst = m_Choix.ObtenirListeCategries(m_usager);
-            return lst;
+            lstBxCategories.Items.AddRange(lst.ToArray());
+            //return lst;
         }
         #endregion#
 
