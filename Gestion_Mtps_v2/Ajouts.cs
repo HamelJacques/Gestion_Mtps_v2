@@ -42,7 +42,7 @@ namespace Gestion_Mtps_v2
                     ret = maBD.AjouterCategorie_v2(text,U.IdUsager);
                     break;
             }
-            return 0;
+            return Convert.ToInt32(ret);
         }
         #endregion
         #region MÉTHODES PUBLIQUES

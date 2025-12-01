@@ -514,12 +514,12 @@ namespace Gestion_Mtps
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            command.CommandText = "INSERT INTO tblCategories VALUES ( idCategorie + '" + nouveauNom + "', " + ")";
+                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + nouveauNom + "')";
                             command.ExecuteNonQuery();
                         }
 
                         // Assign transaction object for a pending local transaction.
-                        command.CommandText = "INSERT INTO jctUsagerCatgories VALUES (" + idusager + ", " + idCategorie + ")";
+                        command.CommandText = "INSERT INTO jctUsagerCategorie VALUES (" + idusager + ", " + idCategorie + ")";
                         command.ExecuteNonQuery();
 
                         // Commit the transaction.
@@ -1200,7 +1200,7 @@ namespace Gestion_Mtps
             bool presence = false;
             string szSelect;
             szSelect = "SELECT COUNT(NomCategorie) FROM tblCategories "// where IdUsager = " + IdUsager
-                       + "LEFT JOIN jctUsagerCatgorie ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
+                       + "LEFT JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie "
                        + "WHERE tblCategories.NomCategorie = '" + nomCatego + "'";
                 //+ " and tblCategories.NomCategorie = '" + nomCatego + "'";
                 //+ " and IdSousCategorie = " + IdSousCatego                //+ " and IdSite = " + IdSite                //+ " and Len(AdresseSite) > 0"                //+ " and Len(MotPass) > 0";
@@ -1657,7 +1657,7 @@ namespace Gestion_Mtps
             //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
 
             szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
-            szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN tblUsagerCategorie ON tblCategories.IdCategorie = tblUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = tblUsagerCategorie.IdUsager";
+            szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager";
             szWHERE = " WHERE (((tblUsagers.IdUsager) = " + U.IdUsager + "))";
             szSelect += szFROM + szWHERE;
 
@@ -1792,7 +1792,7 @@ namespace Gestion_Mtps
                 string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
 
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
-                //m_maconnetionstring = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
+                m_maconnetionstring = connectionString;
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
@@ -1844,7 +1844,7 @@ namespace Gestion_Mtps
         public  Int32 ProchainNoCategorie()
         {
             string szSelect;
-            szSelect = "SELECT IIf(MAX(NoCatego) Is Null, 0, MAX(NoCatego)) FROM tblCategories where NoCatego is not null or NoCatego > 0";
+            szSelect = "SELECT IIf(MAX(IdCategorie) Is Null, 0, MAX(IdCategorie)) FROM tblCategories where IdCategorie is not null or IdCategorie > 0";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

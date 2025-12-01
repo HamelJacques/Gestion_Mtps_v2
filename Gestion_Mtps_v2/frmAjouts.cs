@@ -89,6 +89,7 @@ namespace Gestion_Mtps_v2
             }
             txtNouvelleValeur.Text = "";
             btnFermer.Text = "Fermer";
+            btnAjouter.Text = "Ajouter";
         }
         private void AjusteFenetreUsager()
         {
@@ -110,6 +111,7 @@ namespace Gestion_Mtps_v2
             this.Height = 300;
             grbxMotPasseUsager.Visible = false;
             BackColor = Color.LightYellow;
+            txtNouvelleValeur.Focus();
         }
         #endregion
         private void btnFermer_Click(object sender, EventArgs e)
