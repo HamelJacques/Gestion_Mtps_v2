@@ -30,13 +30,17 @@ namespace Gestion_Mtps_v2
             this.text = text;
         }
 
-        internal int Ajouter(string type, string text)
+        internal int Ajouter(string type, string text, ref Usager_v2 U)
         {
+            bool ret = false;
             switch (type)
             {
                 case "Usager":
-                    bool ret =  maBD.AjouterUsager_v2(text);
-                    return 0;
+                    ret =  maBD.AjouterUsager_v2(text);
+                    break;  
+                case "Categorie":
+                    ret = maBD.AjouterCategorie_v2(text,U.IdUsager);
+                    break;
             }
             return 0;
         }

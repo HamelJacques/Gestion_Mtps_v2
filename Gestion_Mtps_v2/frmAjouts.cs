@@ -68,13 +68,6 @@ namespace Gestion_Mtps_v2
 
             InitAjouts(type);
 
-            //switch (type)
-            //{
-            //    case "Usager":
-            //        InitAjouts(type);
-            //        //ObtenirLesUsagers();
-            //        break;
-            //}
         }
         #endregion
         #region MÉTHODES PRIVÉES
@@ -116,7 +109,7 @@ namespace Gestion_Mtps_v2
             this.Width = 600;
             this.Height = 300;
             grbxMotPasseUsager.Visible = false;
-            BackColor = Color.LightSeaGreen;
+            BackColor = Color.LightYellow;
         }
         #endregion
         private void btnFermer_Click(object sender, EventArgs e)
@@ -138,7 +131,7 @@ namespace Gestion_Mtps_v2
             Ajouts ajouts = new Ajouts(ref m_maBD); //, m_Type,txtNouvelleValeur.Text);
             // La vérification se fera dans Ajouts et retournera un code
 
-            Int32 ret = ajouts.Ajouter(m_Type, txtNouvelleValeur.Text);
+            Int32 ret = ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
             }
 
                 MessageBox.Show("En développement");
