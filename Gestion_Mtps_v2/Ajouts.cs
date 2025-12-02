@@ -30,6 +30,7 @@ namespace Gestion_Mtps_v2
             this.text = text;
         }
 
+
         internal int Ajouter(string type, string text, ref Usager_v2 U)
         {
             bool ret = false;
