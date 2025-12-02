@@ -1,0 +1,80 @@
+﻿using Gestion_Mtps;
+using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Gestion_Mtps_v2
+{
+    public partial class frmChoix : Form
+    {
+        #region DONNÉES MEMBRES
+        private Usager_v2 m_usager;
+        private Choix m_Choix;
+        private CBase m_maBD;
+        private Ajouts m_Ajouts;
+        #endregion
+        #region CONSTRUCTEURS
+        public frmChoix(ref Usager_v2 U, CBase bd)
+        {
+            InitializeComponent();
+            m_usager = new Usager_v2();
+            m_usager = U;
+            m_maBD = bd;
+            InitChoix();
+        }
+        #endregion
+        #region MÉTHODES PRIVÉES
+        private void InitChoix()
+        {
+            m_Choix = new Choix(ref m_maBD);
+            m_Ajouts = new Ajouts();
+            this.Text = " Choix pour " + ObtenirNomUsager();
+            this.BackColor = Color.LightPink;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            btnFermer.BackColor = Color.LightGreen;
+            btnFermer.Text = "Fermer - retour à Ouverture - Changer d'usager";
+            InitCategories();
+        }
+        private void InitCategories()
+        {
+            grbxCategories.Text = "Categories";
+            grbxCategories.BackColor = Color.LightBlue;
+            btnAjoutCatego.BackColor = Color.LightGreen;
+            btnAjoutCatego.Text = "Ajout";
+            ListerCategories();
+        }
+        private string ObtenirNomUsager()
+        {
+            return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
+        }
+
+        private void ListerCategories()
+        {
+            List<string> lst = new List<string>();
+            lst = m_Choix.ObtenirListeCategries(m_usager);
+            lstBxCategories.Items.AddRange(lst.ToArray());
+            //return lst;
+        }
+        #endregion#
+
+        private void btnFermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnAjoutCatego_Click(object sender, EventArgs e)
+        {
+            List<string> lst = new List<string>();
+            // passer par la classe Ajouts pour ajouter une catégorie
+            frmAjouts aj = new frmAjouts("Categorie", m_maBD,ref lst, ref m_usager);
+            aj.ShowDialog();
+        }
+    }
+}

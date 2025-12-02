@@ -95,10 +95,9 @@ namespace Gestion_Mtps_v2
             
         }
 
-        internal void AjoutUsager()
+        internal int ObtenirIdUsager(string selection)
         {
-
-            throw new NotImplementedException();
+            return m_LaBase.ObtenirIdUsager(selection);
         }
         #endregion
     }

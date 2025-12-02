@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestion_Mtps_v2;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Gestion_Mtps
 {
@@ -36,7 +38,7 @@ namespace Gestion_Mtps
         //public CBase(string CheminBD, string table)//, string table
         //{
         //    m_LaBase = CheminBD;
-
+        
         //    //InitCBase();
         //    //Connection();
         //    //lg = new Logger();
@@ -479,19 +481,20 @@ namespace Gestion_Mtps
         //    //throw new NotImplementedException();
         //}
 
-        public bool AjouterCategorie(string nouveauNom, int idusager, int idexiste = 0)
+        public bool AjouterCategorie_v2(string nouveauNom, int idusager, int idexiste = 0)
         {
             bool retour = false;
-            int num = 0;
+            int idCategorie = 0;
             try
-            {
+            {//vérifier si la valeur existe déjà
+                bool present = VerifierPresenceCombinaison(idusager, nouveauNom);
                 if (idexiste > 0)
                 {
-                    num = idexiste;
+                    idCategorie = idexiste;
                 }
                 else
                 {
-                    num = ProchainNoCategorie();
+                    idCategorie = ProchainNoCategorie();
                 }
                 using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
                 {
@@ -510,13 +513,13 @@ namespace Gestion_Mtps
                         if (idexiste == 0)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ")";
+                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
+                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + nouveauNom + "')";
                             command.ExecuteNonQuery();
                         }
 
                         // Assign transaction object for a pending local transaction.
-                        command.CommandText = "INSERT INTO jctUsagerCatgo VALUES (" + idusager + ", " + num + ")";
+                        command.CommandText = "INSERT INTO jctUsagerCategorie VALUES (" + idusager + ", " + idCategorie + ")";
                         command.ExecuteNonQuery();
 
                         // Commit the transaction.
@@ -1196,10 +1199,10 @@ namespace Gestion_Mtps
         {
             bool presence = false;
             string szSelect;
-            szSelect = "SELECT COUNT(NomCatego) FROM tblCategories "// where IdUsager = " + IdUsager
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
-                       + "WHERE jctUsagerCatgo.IdUsager = " + IdUsager
-                + " and tblCategories.NomCatego = '" + nomCatego + "'";
+            szSelect = "SELECT COUNT(NomCategorie) FROM tblCategories "// where IdUsager = " + IdUsager
+                       + "LEFT JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie "
+                       + "WHERE tblCategories.NomCategorie = '" + nomCatego + "'";
+                //+ " and tblCategories.NomCategorie = '" + nomCatego + "'";
                 //+ " and IdSousCategorie = " + IdSousCatego                //+ " and IdSite = " + IdSite                //+ " and Len(AdresseSite) > 0"                //+ " and Len(MotPass) > 0";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
@@ -1628,59 +1631,59 @@ namespace Gestion_Mtps
                 string szmess = ex.ToString();
             }
         }
-        ///// <summary>
-        ///// Retourne la liste des catégories
-        /////  Pas associées à un usager si associe = false
-        /////  Sinon returne la liste pour l'associé en cours
-        ///// </summary>
-        ///// <param name="lstCategories"></param>
-        ///// <param name="U"></param>
-        ///// <param name="associe"></param>
-        //internal void ObtenirCategories(ref List<string> lstCategories, Usager U, bool associe = true)
-        //{
-        //    int i = 0;
-        //    string inPasIn = " IN";
-        //    string szSelect;
-        //    //string szSelectJoin = string.Empty;
-        //    //string szWhere;
-        //    string szWHERE = string.Empty;
-        //    string szFROM = string.Empty;
-        //    string egal = string.Empty;
-        //    if (!associe) egal = " Not ";
-        //    //if (!associe) inPasIn = " NOT IN ";
+        /// <summary>
+        /// Retourne la liste des catégories
+        ///  Pas associées à un usager si associe = false
+        ///  Sinon returne la liste pour l'associé en cours
+        /// </summary>
+        /// <param name="lstCategories"></param>
+        /// <param name="U"></param>
+        /// <param name="associe"></param>
+        internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
+        {
+            int i = 0;
+            string inPasIn = " IN";
+            string szSelect;
+            //string szSelectJoin = string.Empty;
+            //string szWhere;
+            string szWHERE = string.Empty;
+            string szFROM = string.Empty;
+            string egal = string.Empty;
+            if (!associe) egal = " Not ";
+            //if (!associe) inPasIn = " NOT IN ";
 
-        //    //szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C "+
-        //    //"WHERE(((C.NoCatego) " + inPasIn  + "(SELECT distinct Cb.NoCatego  FROM tblCategories Cb " +
-        //    //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
+            //szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C "+
+            //"WHERE(((C.NoCatego) " + inPasIn  + "(SELECT distinct Cb.NoCatego  FROM tblCategories Cb " +
+            //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
 
-        //    szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C ";
-        //    //szFROM = " FROM jctUsagerCatgo INNER JOIN tblCategories ON jctUsagerCatgo.IdCatego = tblCategories.NoCatego";
-        //    szWHERE = " WHERE ((" + egal +" (C.IdUsager) = " + U.m_IdUsager + "))";
-        //    szSelect += szWHERE;
+            szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
+            szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager";
+            szWHERE = " WHERE (((tblUsagers.IdUsager) = " + U.IdUsager + "))";
+            szSelect += szFROM + szWHERE;
 
-        //    try
-        //        {
-        //        m_DataTable = new DataTable();
-        //        m_DataTable.Clear();
-        //        m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-        //        OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-        //        m_dataAdatper.Fill(m_DataTable);
-        //        i = m_DataTable.Rows.Count;
-        //        //lstCategories.Add("Ajouter une catégorie");
-        //        if (i >0)
-        //        {
-        //            for (i = 0; i < m_DataTable.Rows.Count; i++)
-        //            {
-        //                lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string szmess = ex.ToString();
-        //    }
-        //    //throw new NotImplementedException();
-        //}
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                //lstCategories.Add("Ajouter une catégorie");
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstCategories.Add(m_DataTable.Rows[i]["NomCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+            }
+            //throw new NotImplementedException();
+        }
         internal void ObtenirListeCategories(ref List<string> lstSites)
         {
             int i = 0;
@@ -1789,7 +1792,7 @@ namespace Gestion_Mtps
                 string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
 
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
-                //m_maconnetionstring = @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
+                m_maconnetionstring = connectionString;
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
@@ -1841,7 +1844,7 @@ namespace Gestion_Mtps
         public  Int32 ProchainNoCategorie()
         {
             string szSelect;
-            szSelect = "SELECT IIf(MAX(NoCatego) Is Null, 0, MAX(NoCatego)) FROM tblCategories where NoCatego is not null or NoCatego > 0";
+            szSelect = "SELECT IIf(MAX(IdCategorie) Is Null, 0, MAX(IdCategorie)) FROM tblCategories where IdCategorie is not null or IdCategorie > 0";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

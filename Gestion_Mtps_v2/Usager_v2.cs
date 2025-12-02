@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Gestion_Mtps_v2
+{
+    public class Usager_v2
+    {
+        #region DONNÉES MEMBRES
+        private int m_IdUsager;
+        private int m_IdCategorie;
+        #endregion
+        #region CONSTRUCTEURS
+        public Usager_v2()
+        {
+            IdUsager = 0;
+        }
+
+
+        #endregion
+        #region PROPRIÉTÉS
+        public int IdUsager { get => m_IdUsager; set => m_IdUsager = value; }
+        public int IdCategorie { get => m_IdCategorie; set => m_IdCategorie = value; }
+        #endregion
+    }
+}
