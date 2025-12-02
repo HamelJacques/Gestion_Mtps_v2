@@ -34,6 +34,7 @@
             this.btnAjouter = new System.Windows.Forms.Button();
             this.grbxMotPasseUsager = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.grbxLstValsDispo = new System.Windows.Forms.GroupBox();
             this.grbxMotPasseUsager.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,11 +96,21 @@
             this.textBox1.Size = new System.Drawing.Size(477, 26);
             this.textBox1.TabIndex = 0;
             // 
+            // grbxLstValsDispo
+            // 
+            this.grbxLstValsDispo.Location = new System.Drawing.Point(392, 87);
+            this.grbxLstValsDispo.Name = "grbxLstValsDispo";
+            this.grbxLstValsDispo.Size = new System.Drawing.Size(200, 100);
+            this.grbxLstValsDispo.TabIndex = 5;
+            this.grbxLstValsDispo.TabStop = false;
+            this.grbxLstValsDispo.Text = "grbxLstValsDispo";
+            // 
             // frmAjouts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 295);
+            this.Controls.Add(this.grbxLstValsDispo);
             this.Controls.Add(this.grbxMotPasseUsager);
             this.Controls.Add(this.btnAjouter);
             this.Controls.Add(this.txtNouvelleValeur);
@@ -124,5 +135,6 @@
         private System.Windows.Forms.Button btnAjouter;
         private System.Windows.Forms.GroupBox grbxMotPasseUsager;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox grbxLstValsDispo;
     }
 }
