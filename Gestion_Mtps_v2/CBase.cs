@@ -1642,23 +1642,15 @@ namespace Gestion_Mtps
         internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
         {
             int i = 0;
-            string inPasIn = " IN";
             string szSelect;
-            //string szSelectJoin = string.Empty;
-            //string szWhere;
             string szWHERE = string.Empty;
             string szFROM = string.Empty;
-            string egal = string.Empty;
-            if (!associe) egal = " Not ";
-            //if (!associe) inPasIn = " NOT IN ";
-
-            //szSelect = "SELECT DISTINCT C.NomCatego FROM tblCategories C "+
-            //"WHERE(((C.NoCatego) " + inPasIn  + "(SELECT distinct Cb.NoCatego  FROM tblCategories Cb " +
-            //    "LEFT JOIN jctUsagerCatgo UC ON Cb.NoCatego = UC.IdCatego )))"; //  WHERE CbIdUsager =" + U.m_IdUsager + "  )
+            string egal = " = ";
+            if (!associe) egal = " <> ";
 
             szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
             szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager";
-            szWHERE = " WHERE (((tblUsagers.IdUsager) = " + U.IdUsager + "))";
+            szWHERE = " WHERE (((tblUsagers.IdUsager)" + egal + U.IdUsager + "))";
             szSelect += szFROM + szWHERE;
 
             try
@@ -1669,7 +1661,6 @@ namespace Gestion_Mtps
                 OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
                 m_dataAdatper.Fill(m_DataTable);
                 i = m_DataTable.Rows.Count;
-                //lstCategories.Add("Ajouter une catégorie");
                 if (i > 0)
                 {
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
@@ -1682,7 +1673,6 @@ namespace Gestion_Mtps
             {
                 string szmess = ex.ToString();
             }
-            //throw new NotImplementedException();
         }
         internal void ObtenirListeCategories(ref List<string> lstSites)
         {

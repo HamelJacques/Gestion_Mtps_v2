@@ -93,6 +93,12 @@ namespace Gestion_Mtps_v2
                     break;
                 case "Categorie":
                     AjusteFenetreCategories();
+                    // Obtenir la liste des catégories des autres usager pour afficher dans les choix possibes
+                    // CBase a déjà une fonction internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
+                    // CBase accessible à partir de Ajouts.cs
+                    //List<string> lst = new List<string>();
+                    m_Ajouts.ObtenirListeCategories(ref m_items, ref m_Usager, false);
+                    AfficherListeItems();
                     break;
             }
             txtNouvelleValeur.Text = "";
@@ -100,6 +106,13 @@ namespace Gestion_Mtps_v2
             btnAjouter.Text = "Ajouter";
             btnAjouter.Enabled = false;
         }
+
+        private void AfficherListeItems()
+        {
+            lstValsDispo.Items.Clear();
+            lstValsDispo.Items.AddRange(m_items.ToArray());
+        }
+
         private void AjusteFenetreUsager()
         {
             this.Width = 600;
@@ -203,8 +216,12 @@ namespace Gestion_Mtps_v2
             btnAjouter.Enabled = txtNouvelleValeur.Text.Length > 0;
         }
 
+
         #endregion
 
-
+        private void lstValsDispo_DoubleClick(object sender, EventArgs e)
+        {
+            txtNouvelleValeur.Text = (string)lstValsDispo.SelectedItem;
+        }
     }
 }

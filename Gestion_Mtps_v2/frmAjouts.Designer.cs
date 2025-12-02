@@ -57,7 +57,7 @@
             this.lblTypeAjout.Location = new System.Drawing.Point(14, 12);
             this.lblTypeAjout.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTypeAjout.Name = "lblTypeAjout";
-            this.lblTypeAjout.Size = new System.Drawing.Size(95, 20);
+            this.lblTypeAjout.Size = new System.Drawing.Size(121, 25);
             this.lblTypeAjout.TabIndex = 1;
             this.lblTypeAjout.Text = "lblTypeAjout";
             // 
@@ -65,7 +65,7 @@
             // 
             this.txtNouvelleValeur.Location = new System.Drawing.Point(18, 35);
             this.txtNouvelleValeur.Name = "txtNouvelleValeur";
-            this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 26);
+            this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 30);
             this.txtNouvelleValeur.TabIndex = 2;
             this.txtNouvelleValeur.Text = "txtNouvelleValeur";
             this.txtNouvelleValeur.TextChanged += new System.EventHandler(this.txtNouvelleValeur_TextChanged);
@@ -96,7 +96,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 25);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(477, 26);
+            this.textBox1.Size = new System.Drawing.Size(477, 30);
             this.textBox1.TabIndex = 0;
             // 
             // grbxLstValsDispo
@@ -104,7 +104,7 @@
             this.grbxLstValsDispo.Controls.Add(this.lstValsDispo);
             this.grbxLstValsDispo.Location = new System.Drawing.Point(320, 21);
             this.grbxLstValsDispo.Name = "grbxLstValsDispo";
-            this.grbxLstValsDispo.Size = new System.Drawing.Size(242, 111);
+            this.grbxLstValsDispo.Size = new System.Drawing.Size(242, 119);
             this.grbxLstValsDispo.TabIndex = 5;
             this.grbxLstValsDispo.TabStop = false;
             this.grbxLstValsDispo.Text = "grbxLstValsDispo";
@@ -112,15 +112,16 @@
             // lstValsDispo
             // 
             this.lstValsDispo.FormattingEnabled = true;
-            this.lstValsDispo.ItemHeight = 20;
-            this.lstValsDispo.Location = new System.Drawing.Point(51, 28);
+            this.lstValsDispo.ItemHeight = 25;
+            this.lstValsDispo.Location = new System.Drawing.Point(14, 28);
             this.lstValsDispo.Name = "lstValsDispo";
-            this.lstValsDispo.Size = new System.Drawing.Size(185, 64);
+            this.lstValsDispo.Size = new System.Drawing.Size(210, 79);
             this.lstValsDispo.TabIndex = 0;
+            this.lstValsDispo.DoubleClick += new System.EventHandler(this.lstValsDispo_DoubleClick);
             // 
             // frmAjouts
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 295);
             this.Controls.Add(this.grbxLstValsDispo);
