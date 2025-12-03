@@ -30,9 +30,13 @@
         {
             this.btnFermer = new System.Windows.Forms.Button();
             this.grbxCategories = new System.Windows.Forms.GroupBox();
-            this.lstBxCategories = new System.Windows.Forms.ListBox();
             this.btnAjoutCatego = new System.Windows.Forms.Button();
+            this.lstBxCategories = new System.Windows.Forms.ListBox();
+            this.grbxSousCategories = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lstBxSousCategories = new System.Windows.Forms.ListBox();
             this.grbxCategories.SuspendLayout();
+            this.grbxSousCategories.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnFermer
@@ -61,6 +65,16 @@
             this.grbxCategories.TabStop = false;
             this.grbxCategories.Text = "grbxCategories";
             // 
+            // btnAjoutCatego
+            // 
+            this.btnAjoutCatego.Location = new System.Drawing.Point(200, 23);
+            this.btnAjoutCatego.Name = "btnAjoutCatego";
+            this.btnAjoutCatego.Size = new System.Drawing.Size(87, 38);
+            this.btnAjoutCatego.TabIndex = 3;
+            this.btnAjoutCatego.Text = "btnAjoutCatego";
+            this.btnAjoutCatego.UseVisualStyleBackColor = true;
+            this.btnAjoutCatego.Click += new System.EventHandler(this.btnAjoutCatego_Click);
+            // 
             // lstBxCategories
             // 
             this.lstBxCategories.FormattingEnabled = true;
@@ -70,26 +84,48 @@
             this.lstBxCategories.Size = new System.Drawing.Size(184, 130);
             this.lstBxCategories.TabIndex = 2;
             // 
-            // btnAjoutCatego
+            // grbxSousCategories
             // 
-            this.btnAjoutCatego.Location = new System.Drawing.Point(200, 23);
-            this.btnAjoutCatego.Name = "btnAjoutCatego";
-            this.btnAjoutCatego.Size = new System.Drawing.Size(87, 27);
-            this.btnAjoutCatego.TabIndex = 3;
-            this.btnAjoutCatego.Text = "btnAjoutCatego";
-            this.btnAjoutCatego.UseVisualStyleBackColor = true;
-            this.btnAjoutCatego.Click += new System.EventHandler(this.btnAjoutCatego_Click);
+            this.grbxSousCategories.Controls.Add(this.button1);
+            this.grbxSousCategories.Controls.Add(this.lstBxSousCategories);
+            this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grbxSousCategories.Location = new System.Drawing.Point(311, 12);
+            this.grbxSousCategories.Name = "grbxSousCategories";
+            this.grbxSousCategories.Size = new System.Drawing.Size(293, 159);
+            this.grbxSousCategories.TabIndex = 2;
+            this.grbxSousCategories.TabStop = false;
+            this.grbxSousCategories.Text = "grbxSousCategories";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(200, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(87, 38);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // lstBxSousCategories
+            // 
+            this.lstBxSousCategories.FormattingEnabled = true;
+            this.lstBxSousCategories.ItemHeight = 18;
+            this.lstBxSousCategories.Location = new System.Drawing.Point(10, 23);
+            this.lstBxSousCategories.Name = "lstBxSousCategories";
+            this.lstBxSousCategories.Size = new System.Drawing.Size(184, 130);
+            this.lstBxSousCategories.TabIndex = 2;
             // 
             // frmChoix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 358);
+            this.Controls.Add(this.grbxSousCategories);
             this.Controls.Add(this.grbxCategories);
             this.Controls.Add(this.btnFermer);
             this.Name = "frmChoix";
             this.Text = "frmChoix";
             this.grbxCategories.ResumeLayout(false);
+            this.grbxSousCategories.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -100,5 +136,8 @@
         private System.Windows.Forms.GroupBox grbxCategories;
         private System.Windows.Forms.ListBox lstBxCategories;
         private System.Windows.Forms.Button btnAjoutCatego;
+        private System.Windows.Forms.GroupBox grbxSousCategories;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListBox lstBxSousCategories;
     }
 }
