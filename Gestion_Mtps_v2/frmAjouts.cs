@@ -196,12 +196,16 @@ namespace Gestion_Mtps_v2
             string nom = txtNouvelleValeur.Text;
 
             // appeler la Classe Ajouts avec la valeur
-            if (!valeurExiste)
-            {
-                // La vérification se fera dans Ajouts et retournera un code
+            // La vérification se fera dans Ajouts et retournera un code
 
-                Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
-            }
+            Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
+
+            //if (!valeurExiste)
+            //{
+            //    // La vérification se fera dans Ajouts et retournera un code
+
+            //    Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
+            //}
 
             MessageBox.Show("En développement");
         }

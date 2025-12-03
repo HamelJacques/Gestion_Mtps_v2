@@ -70,9 +70,9 @@ namespace Gestion_Mtps
             int idusager = 2;
 
             szSelect = "SELECT tblCategories.NomCatego FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
+                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
                        + "WHERE jctUsagerCatgo.IdUsager = " + idusager
-                       + " ORDER BY tblCategories.NomCatego";
+                       + " ORDER BY tblCategories.NomCategorie";
 
             try
             {
@@ -488,9 +488,11 @@ namespace Gestion_Mtps
             try
             {//vérifier si la valeur existe déjà
                 bool present = VerifierPresenceCombinaison(idusager, nouveauNom);
-                if (idexiste > 0)
+                if (present)
                 {
-                    idCategorie = idexiste;
+                    // Obtenir l'Id de la catégorie en question
+                    Int32 unid = ObtenirIdCategorie(nouveauNom);
+                    idCategorie = unid;
                 }
                 else
                 {
@@ -510,7 +512,7 @@ namespace Gestion_Mtps
                         // Assign transaction object for a pending local transaction.
                         command.Transaction = transaction;
 
-                        if (idexiste == 0)
+                        if (!present)
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
@@ -1044,7 +1046,7 @@ namespace Gestion_Mtps
             string retour = string.Empty;
             string szSelect;
 
-            szSelect = "SELECT NomCatego " + " FROM tblCategories where NoCatego = " + idcategorie;
+            szSelect = "SELECT NomCategorie " + " FROM tblCategories where IdCategorie = " + idcategorie;
             try
             {
                 m_DataTable = new DataTable();
@@ -1166,7 +1168,7 @@ namespace Gestion_Mtps
             string szSelect;
             if (string.IsNullOrWhiteSpace(nom_Categorie)) return i;
 
-            szSelect = "SELECT NoCatego" + " FROM tblCategories where NomCatego = '" + nom_Categorie + "'";
+            szSelect = "SELECT IdCategorie" + " FROM tblCategories where NomCategorie = '" + nom_Categorie + "'";
 
             try
             {
@@ -1187,7 +1189,7 @@ namespace Gestion_Mtps
                 string mess = ex.ToString();
             }
 
-            return (Int32 ) m_DataTable.Rows[0]["NoCatego"];
+            return (Int32 ) m_DataTable.Rows[0]["IdCategorie"];
 
             throw new NotImplementedException();
         }
@@ -1475,10 +1477,10 @@ namespace Gestion_Mtps
             int i = 0;
             //string szWhere = string.Empty;
             // Obenir une liste de idcategories pour l'usager
-            szSelect = "SELECT tblCategories.NoCatego FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
+            szSelect = "SELECT tblCategories.IdCategorie FROM tblCategories "
+                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgo.IdCategorie "
                        + "WHERE jctUsagerCatgo.IdUsager = " + idusager
-                       + " ORDER BY tblCategories.NomCatego";
+                       + " ORDER BY tblCategories.NomCategorie";
             try
             {
                 m_DataTable = new DataTable();
@@ -1493,7 +1495,7 @@ namespace Gestion_Mtps
                     //lstSousCategories.Add("Ajouter une sous catégorie");
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstSousCategoriesID.Add(m_DataTable.Rows[i]["NoCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstSousCategoriesID.Add(m_DataTable.Rows[i]["IdCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
                     }
                 }
             }
@@ -1559,8 +1561,8 @@ namespace Gestion_Mtps
             ObtenirListeIdCategoriesPourUsager(ref lstCategoriesID, idusager);
 
             szSelect = "SELECT tblSousCatego.NomSousCatego FROM tblSousCatego "
-                       + "WHERE tblSousCatego.IdCategorie in (SELECT tblCategories.NoCatego FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
+                       + "WHERE tblSousCatego.IdCategorie in (SELECT tblCategories.IdCategorie FROM tblCategories "
+                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgo.IdCatego "
                        + "WHERE jctUsagerCatgo.IdUsager = " + idusager
                        + " ORDER BY tblCategories.NomCatego)";
 
@@ -1604,10 +1606,10 @@ namespace Gestion_Mtps
             string szSelect;
             //int idusager = 2;
 
-            szSelect = "SELECT tblCategories.NomCatego FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.NoCatego = jctUsagerCatgo.IdCatego "
-                       + "WHERE jctUsagerCatgo.IdUsager = " + idusager
-                       + " ORDER BY tblCategories.NomCatego";
+            szSelect = "SELECT tblCategories.NomCategorie FROM tblCategories "
+                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
+                       + "WHERE jctUsagerCatgorie.IdUsager = " + idusager
+                       + " ORDER BY tblCategories.NomCategorie";
 
             try
             {
