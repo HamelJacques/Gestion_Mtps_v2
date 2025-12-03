@@ -30,16 +30,17 @@ namespace Gestion_Mtps_v2
             this.text = text;
         }
 
+
         internal int Ajouter(string type, string text, ref Usager_v2 U)
         {
             bool ret = false;
             switch (type)
             {
                 case "Usager":
-                    ret =  maBD.AjouterUsager_v2(text);
-                    break;  
+                    ret = maBD.AjouterUsager_v2(text);
+                    break;
                 case "Categorie":
-                    ret = maBD.AjouterCategorie_v2(text,U.IdUsager);
+                    ret = maBD.AjouterCategorie_v2(text, U.IdUsager);
                     break;
             }
             return Convert.ToInt32(ret);
@@ -47,6 +48,11 @@ namespace Gestion_Mtps_v2
         #endregion
         #region MÉTHODES PUBLIQUES
 
+        public void ObtenirListeCategories(ref List<string> lst, ref Usager_v2 U,  bool Moimeme = true)
+        {
+            //List<string> lst = new List<string>();
+            maBD.ObtenirCategories(ref lst, U, Moimeme);
+        }
         #endregion
     }
 }

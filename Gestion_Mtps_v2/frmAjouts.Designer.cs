@@ -35,12 +35,14 @@
             this.grbxMotPasseUsager = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.grbxLstValsDispo = new System.Windows.Forms.GroupBox();
+            this.lstValsDispo = new System.Windows.Forms.ListBox();
             this.grbxMotPasseUsager.SuspendLayout();
+            this.grbxLstValsDispo.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnFermer
             // 
-            this.btnFermer.Location = new System.Drawing.Point(13, 195);
+            this.btnFermer.Location = new System.Drawing.Point(13, 211);
             this.btnFermer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFermer.Name = "btnFermer";
             this.btnFermer.Size = new System.Drawing.Size(561, 63);
@@ -52,25 +54,26 @@
             // lblTypeAjout
             // 
             this.lblTypeAjout.AutoSize = true;
-            this.lblTypeAjout.Location = new System.Drawing.Point(52, 32);
+            this.lblTypeAjout.Location = new System.Drawing.Point(14, 12);
             this.lblTypeAjout.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTypeAjout.Name = "lblTypeAjout";
-            this.lblTypeAjout.Size = new System.Drawing.Size(95, 20);
+            this.lblTypeAjout.Size = new System.Drawing.Size(121, 25);
             this.lblTypeAjout.TabIndex = 1;
             this.lblTypeAjout.Text = "lblTypeAjout";
             // 
             // txtNouvelleValeur
             // 
-            this.txtNouvelleValeur.Location = new System.Drawing.Point(56, 55);
+            this.txtNouvelleValeur.Location = new System.Drawing.Point(18, 35);
             this.txtNouvelleValeur.Name = "txtNouvelleValeur";
-            this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 26);
+            this.txtNouvelleValeur.Size = new System.Drawing.Size(259, 30);
             this.txtNouvelleValeur.TabIndex = 2;
             this.txtNouvelleValeur.Text = "txtNouvelleValeur";
+            this.txtNouvelleValeur.TextChanged += new System.EventHandler(this.txtNouvelleValeur_TextChanged);
             this.txtNouvelleValeur.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNouvelleValeur_KeyUp);
             // 
             // btnAjouter
             // 
-            this.btnAjouter.Location = new System.Drawing.Point(321, 48);
+            this.btnAjouter.Location = new System.Drawing.Point(13, 170);
             this.btnAjouter.Name = "btnAjouter";
             this.btnAjouter.Size = new System.Drawing.Size(224, 33);
             this.btnAjouter.TabIndex = 3;
@@ -82,7 +85,7 @@
             // 
             this.grbxMotPasseUsager.BackColor = System.Drawing.Color.PapayaWhip;
             this.grbxMotPasseUsager.Controls.Add(this.textBox1);
-            this.grbxMotPasseUsager.Location = new System.Drawing.Point(679, 101);
+            this.grbxMotPasseUsager.Location = new System.Drawing.Point(604, 32);
             this.grbxMotPasseUsager.Name = "grbxMotPasseUsager";
             this.grbxMotPasseUsager.Size = new System.Drawing.Size(272, 68);
             this.grbxMotPasseUsager.TabIndex = 4;
@@ -93,21 +96,32 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 25);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(477, 26);
+            this.textBox1.Size = new System.Drawing.Size(477, 30);
             this.textBox1.TabIndex = 0;
             // 
             // grbxLstValsDispo
             // 
-            this.grbxLstValsDispo.Location = new System.Drawing.Point(392, 87);
+            this.grbxLstValsDispo.Controls.Add(this.lstValsDispo);
+            this.grbxLstValsDispo.Location = new System.Drawing.Point(320, 21);
             this.grbxLstValsDispo.Name = "grbxLstValsDispo";
-            this.grbxLstValsDispo.Size = new System.Drawing.Size(200, 100);
+            this.grbxLstValsDispo.Size = new System.Drawing.Size(242, 119);
             this.grbxLstValsDispo.TabIndex = 5;
             this.grbxLstValsDispo.TabStop = false;
             this.grbxLstValsDispo.Text = "grbxLstValsDispo";
             // 
+            // lstValsDispo
+            // 
+            this.lstValsDispo.FormattingEnabled = true;
+            this.lstValsDispo.ItemHeight = 25;
+            this.lstValsDispo.Location = new System.Drawing.Point(14, 28);
+            this.lstValsDispo.Name = "lstValsDispo";
+            this.lstValsDispo.Size = new System.Drawing.Size(210, 79);
+            this.lstValsDispo.TabIndex = 0;
+            this.lstValsDispo.DoubleClick += new System.EventHandler(this.lstValsDispo_DoubleClick);
+            // 
             // frmAjouts
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 295);
             this.Controls.Add(this.grbxLstValsDispo);
@@ -119,9 +133,11 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmAjouts";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmAjouts";
             this.grbxMotPasseUsager.ResumeLayout(false);
             this.grbxMotPasseUsager.PerformLayout();
+            this.grbxLstValsDispo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +152,6 @@
         private System.Windows.Forms.GroupBox grbxMotPasseUsager;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox grbxLstValsDispo;
+        private System.Windows.Forms.ListBox lstValsDispo;
     }
 }

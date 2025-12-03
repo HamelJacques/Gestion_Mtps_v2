@@ -19,6 +19,12 @@ namespace Gestion_Mtps_v2
         private Usager_v2 m_Usager;
         private string m_Type;
         private Ajouts m_Ajouts;
+        private enum UneDonnee 
+        {
+            Usager =1,
+            Categorie
+        }
+
         #endregion
         #region CONSTRUCTEURS
         public frmAjouts()
@@ -87,18 +93,31 @@ namespace Gestion_Mtps_v2
                     break;
                 case "Categorie":
                     AjusteFenetreCategories();
+                    // Obtenir la liste des catégories des autres usager pour afficher dans les choix possibes
+                    // CBase a déjà une fonction internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
+                    // CBase accessible à partir de Ajouts.cs
+                    //List<string> lst = new List<string>();
+                    m_Ajouts.ObtenirListeCategories(ref m_items, ref m_Usager, false);
+                    AfficherListeItems();
                     break;
             }
             txtNouvelleValeur.Text = "";
             btnFermer.Text = "Fermer";
             btnAjouter.Text = "Ajouter";
+            btnAjouter.Enabled = false;
         }
+
+        private void AfficherListeItems()
+        {
+            lstValsDispo.Items.Clear();
+            lstValsDispo.Items.AddRange(m_items.ToArray());
+        }
+
         private void AjusteFenetreUsager()
         {
             this.Width = 600;
-            this.Height = 300;
-            grbxLstValsDispo.Visible = false;
-            grbxMotPasseUsager.Text = "Mot de passe";
+            this.Height = 300;            
+            
             btnFermer.Top = grbxMotPasseUsager.Top + grbxMotPasseUsager.Height+10;
             btnFermer.Left = txtNouvelleValeur.Left;
             btnFermer.Width = 500;
@@ -106,24 +125,68 @@ namespace Gestion_Mtps_v2
             
             btnAjouter.Text = "Ajouter ";
             this.BackColor = Color.LightSeaGreen;
+
+            txtNouvelleValeur.Focus();
+            txtNouvelleValeur.Select();
+
+            PlaceGroupBoxes(UneDonnee.Usager);
+            PlaceBoutons(UneDonnee.Usager);
+        }
+
+        private void PlaceGroupBoxes(UneDonnee donnee)
+        {
+            switch (donnee) 
+            { 
+                case (UneDonnee)1:
+                    grbxLstValsDispo.Visible = false;
+                    grbxMotPasseUsager.Text = "Mot de passe";
+                    break;
+                    case (UneDonnee)2:
+                    grbxMotPasseUsager.Visible = false;
+                    grbxLstValsDispo.Text = "Valeurs disponibles";
+                    grbxLstValsDispo.BackColor = Color.LightSkyBlue;
+                    break;
+            }
+        }
+        private void AlimenteGroupBox(UneDonnee donnee)
+        {
+            switch (donnee)
+            {
+                case (UneDonnee)1:
+                    break;
+                    case (UneDonnee)2:
+                    m_items.Clear();
+                    //Ajouts.ObtenirDonneesAutres(donnee, ref m_items);
+                    break;
+            }
+        }
+        private void PlaceBoutons(UneDonnee quoi)
+        {
+            btnAjouter.Left = txtNouvelleValeur.Left;
+            btnAjouter.Top = txtNouvelleValeur.Top + 100;
+            btnFermer.Left = btnAjouter.Left;
+            btnFermer.Top = btnAjouter.Top + btnAjouter.Height + 15;
+            btnAjouter.BackColor = Color.LightGreen;
+            btnFermer.BackColor = Color.LightGreen;
         }
         private void AjusteFenetreCategories()
         {
             this.Width = 600;
             this.Height = 300;
-            grbxMotPasseUsager.Visible = false;
-            grbxLstValsDispo.Text = "Valeurs disponibles";
-            grbxLstValsDispo.BackColor = Color.LightSkyBlue;
+            
             BackColor = Color.LightYellow;
             txtNouvelleValeur.Focus();
             txtNouvelleValeur.Select();
+
+            AlimenteGroupBox(UneDonnee.Categorie);
+            PlaceGroupBoxes(UneDonnee.Categorie);
+            PlaceBoutons(UneDonnee.Categorie);
         }
-        #endregion
+
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void btnAjouter_Click(object sender, EventArgs e)
         {
             // vérifier si la valeur existe déjà dans la liste
@@ -133,30 +196,36 @@ namespace Gestion_Mtps_v2
             string nom = txtNouvelleValeur.Text;
 
             // appeler la Classe Ajouts avec la valeur
-            if (!valeurExiste)
-            {
             // La vérification se fera dans Ajouts et retournera un code
 
             Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
-            }
 
-                MessageBox.Show("En développement");
-        }
+            //if (!valeurExiste)
+            //{
+            //    // La vérification se fera dans Ajouts et retournera un code
 
-        private void txtNouvelleValeur_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            
-        }
+            //    Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
+            //}
 
-        private void txtNouvelleValeur_KeyDown(object sender, KeyEventArgs e)
-        {
-            
+            MessageBox.Show("En développement");
         }
 
         private void txtNouvelleValeur_KeyUp(object sender, KeyEventArgs e)
         {
             //grbxMotPasseUsager.Text = txtNouvelleValeur.TextLength.ToString();
             btnAjouter.Text = "Ajouter " + txtNouvelleValeur.Text;
+        }
+        private void txtNouvelleValeur_TextChanged(object sender, EventArgs e)
+        {
+            btnAjouter.Enabled = txtNouvelleValeur.Text.Length > 0;
+        }
+
+
+        #endregion
+
+        private void lstValsDispo_DoubleClick(object sender, EventArgs e)
+        {
+            txtNouvelleValeur.Text = (string)lstValsDispo.SelectedItem;
         }
     }
 }
