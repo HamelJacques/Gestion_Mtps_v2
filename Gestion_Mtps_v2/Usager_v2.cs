@@ -11,11 +11,14 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private int m_IdUsager;
         private int m_IdCategorie;
+        private int m_IdSousCategorie;
         #endregion
         #region CONSTRUCTEURS
         public Usager_v2()
         {
             IdUsager = 0;
+            IdCategorie = 0;
+            IdSousCategorie = 0;
         }
 
 
@@ -23,6 +26,7 @@ namespace Gestion_Mtps_v2
         #region PROPRIÉTÉS
         public int IdUsager { get => m_IdUsager; set => m_IdUsager = value; }
         public int IdCategorie { get => m_IdCategorie; set => m_IdCategorie = value; }
+        public int IdSousCategorie { get => m_IdSousCategorie; set => m_IdSousCategorie = value; }
         #endregion
     }
 }

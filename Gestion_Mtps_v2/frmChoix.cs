@@ -41,6 +41,13 @@ namespace Gestion_Mtps_v2
             btnFermer.BackColor = Color.LightGreen;
             btnFermer.Text = "Fermer - retour à Ouverture - Changer d'usager";
             InitCategories();
+            InitSousCategories();
+        }
+        private void InitSousCategories()
+        {
+            grbxSousCategories.Text = "Sous catégories";
+            grbxSousCategories.BackColor = Color.LightBlue;
+            ListerSousCategories();
         }
         private void InitCategories()
         {
@@ -55,10 +62,18 @@ namespace Gestion_Mtps_v2
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
         }
 
+        private void ListerSousCategories()
+        {
+            List<string> lst = new List<string>();
+            lst = m_Choix.ObtenirListeSousCategories(m_usager);
+            lstBxSousCategories.Items.Clear();
+            lstBxSousCategories.Items.AddRange(lst.ToArray());
+        }
         private void ListerCategories()
         {
             List<string> lst = new List<string>();
             lst = m_Choix.ObtenirListeCategries(m_usager);
+            lstBxCategories.Items.Clear();
             lstBxCategories.Items.AddRange(lst.ToArray());
             //return lst;
         }

@@ -1555,22 +1555,27 @@ namespace Gestion_Mtps
         {
             int i = 0;
             List<string> lstCategoriesID = new List<string>();
-            string szSelect;
-            string szWhere = string.Empty;
-            // Obenir une liste de idcategories pour l'usager
-            ObtenirListeIdCategoriesPourUsager(ref lstCategoriesID, idusager);
+            string szSelect, szFrom, szjctSousCategorie, szjctUsager;
+            string szWhere = szFrom = szjctSousCategorie = szjctUsager= string.Empty;
 
-            szSelect = "SELECT tblSousCatego.NomSousCatego FROM tblSousCatego "
-                       + "WHERE tblSousCatego.IdCategorie in (SELECT tblCategories.IdCategorie FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgo.IdCatego "
-                       + "WHERE jctUsagerCatgo.IdUsager = " + idusager
-                       + " ORDER BY tblCategories.NomCatego)";
+            //            SELECT tblSousCategories.NomSousCategorie, jctUsagerCategorie.IdUsager
+            //FROM(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie)
+            ////INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
+            //WHERE(((jctUsagerCategorie.IdUsager) = 1));
 
-            if (categorie > 0)
-            {
-                szWhere = " where IdCategorie = " + categorie;
-                szSelect += szWhere;
-            }
+            szSelect = "SELECT tblSousCategories.NomSousCategorie, jctUsagerCategorie.IdUsager ";
+            szFrom = "FROM(tblSousCategories ";
+            szjctSousCategorie = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
+            szjctUsager = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
+            szWhere = "WHERE(((jctUsagerCategorie.IdUsager) = " + idusager + "))";
+
+            szSelect += szFrom + szjctSousCategorie + szjctUsager + szWhere;
+
+            //if (categorie > 0)
+            //{
+            //    szWhere = " where IdCategorie = " + categorie;
+            //    szSelect += szWhere;
+            //}
             try
             {
                 m_DataTable = new DataTable();
@@ -1585,7 +1590,7 @@ namespace Gestion_Mtps
                     //lstSousCategories.Add("Ajouter une sous catégorie");
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
                     }
                 }
             }
