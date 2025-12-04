@@ -41,6 +41,21 @@ namespace Gestion_Mtps_v2
         {            
             //throw new NotImplementedException();
         }
+
+        internal int ObtenirIdCategorie(string lecture)
+        {
+            try
+            {
+                int id = 0;
+                id = m_maBD.ObtenirIdCategorie(lecture);
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Logger l'erreur
+                return -1;
+            }
+        }
         #endregion
     }
 }

@@ -47,6 +47,8 @@ namespace Gestion_Mtps_v2
         {
             grbxSousCategories.Text = "Sous catégories";
             grbxSousCategories.BackColor = Color.LightBlue;
+            btnAjoutSousCatego.Text = "Ajouter";
+            btnAjoutSousCatego.BackColor = Color.LightGreen;
             ListerSousCategories();
         }
         private void InitCategories()
@@ -90,6 +92,30 @@ namespace Gestion_Mtps_v2
             // passer par la classe Ajouts pour ajouter une catégorie
             frmAjouts aj = new frmAjouts("Categorie", m_maBD,ref lst, ref m_usager);
             aj.ShowDialog();
+        }
+
+        private void btnAjoutSousCatego_Click(object sender, EventArgs e)
+        {
+            // Vérifier si une catégorie est sélectionnée, forcer la sélection
+            bool selectione = lstBxCategories.SelectedIndex >= 0;
+            if(lstBxCategories.SelectedIndex >= 0)
+            {
+                List<string> lst = new List<string>();
+                frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
+                aj.ShowDialog();
+                return;
+            }
+
+            MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void lstBxCategories_Click(object sender, EventArgs e)
+        {
+            // lire la sélection
+            string lecture = lstBxCategories.SelectedItem.ToString();
+            m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+            // obtenir l'id de la sélection
+            // Mettre l'id dans l'objet Usager
         }
     }
 }

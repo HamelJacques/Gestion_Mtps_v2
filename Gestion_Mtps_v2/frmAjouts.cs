@@ -22,7 +22,8 @@ namespace Gestion_Mtps_v2
         private enum UneDonnee 
         {
             Usager =1,
-            Categorie
+            Categorie,
+            SousCategorie
         }
 
         #endregion
@@ -93,11 +94,12 @@ namespace Gestion_Mtps_v2
                     break;
                 case "Categorie":
                     AjusteFenetreCategories();
-                    // Obtenir la liste des catégories des autres usager pour afficher dans les choix possibes
-                    // CBase a déjà une fonction internal void ObtenirCategories(ref List<string> lstCategories, Usager_v2 U, bool associe = true)
-                    // CBase accessible à partir de Ajouts.cs
-                    //List<string> lst = new List<string>();
                     m_Ajouts.ObtenirListeCategories(ref m_items, ref m_Usager, false);
+                    AfficherListeItems();
+                    break;
+                case "SousCategorie":
+                    AjusteFenetreSousCategories();
+                    m_Ajouts.ObtenirListeSousCategories(ref m_items,ref m_Usager, false);
                     AfficherListeItems();
                     break;
             }
@@ -112,7 +114,6 @@ namespace Gestion_Mtps_v2
             lstValsDispo.Items.Clear();
             lstValsDispo.Items.AddRange(m_items.ToArray());
         }
-
         private void AjusteFenetreUsager()
         {
             this.Width = 600;
@@ -132,7 +133,6 @@ namespace Gestion_Mtps_v2
             PlaceGroupBoxes(UneDonnee.Usager);
             PlaceBoutons(UneDonnee.Usager);
         }
-
         private void PlaceGroupBoxes(UneDonnee donnee)
         {
             switch (donnee) 
@@ -182,6 +182,12 @@ namespace Gestion_Mtps_v2
             PlaceGroupBoxes(UneDonnee.Categorie);
             PlaceBoutons(UneDonnee.Categorie);
         }
+        private void AjusteFenetreSousCategories()
+        {
+            this.Width = 600;
+            this.Height = 300;
+            BackColor = Color.LightCyan;
+        }
 
         private void btnFermer_Click(object sender, EventArgs e)
         {
@@ -207,7 +213,7 @@ namespace Gestion_Mtps_v2
             //    Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
             //}
 
-            MessageBox.Show("En développement");
+            //MessageBox.Show("En développement");
         }
 
         private void txtNouvelleValeur_KeyUp(object sender, KeyEventArgs e)

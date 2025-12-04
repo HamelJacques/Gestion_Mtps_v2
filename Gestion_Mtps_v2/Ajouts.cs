@@ -12,12 +12,14 @@ namespace Gestion_Mtps_v2
         private readonly CBase maBD;
         private readonly string type;
         private string text;
+        public string messageRetour;
         #region CONSTRUCTEURS
         public Ajouts() { }
 
         public Ajouts(ref CBase maBD)
         {
             this.maBD = maBD;
+            messageRetour = string.Empty;
         }
 
         public Ajouts(ref CBase maBD, string type) : this(ref maBD)
@@ -42,6 +44,9 @@ namespace Gestion_Mtps_v2
                 case "Categorie":
                     ret = maBD.AjouterCategorie_v2(text, U.IdUsager);
                     break;
+                case "SousCategorie":
+                    ret = maBD.ajouterSousCatgorie_v2(text, ref U, ref messageRetour);                    
+                    break;
             }
             return Convert.ToInt32(ret);
         }
@@ -52,6 +57,12 @@ namespace Gestion_Mtps_v2
         {
             //List<string> lst = new List<string>();
             maBD.ObtenirCategories(ref lst, U, Moimeme);
+        }
+        public void ObtenirListeSousCategories(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
+        {
+            //List<string> lst = new List<string>();
+            //maBD.ObtenirSousCategories(ref lst, U, Moimeme);
+            maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
         }
         #endregion
     }
