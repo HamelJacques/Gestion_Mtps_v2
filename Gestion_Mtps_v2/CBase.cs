@@ -1106,7 +1106,7 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
-            szSelect = "SELECT IdSousCatego " + " FROM tblSousCatego where NomSousCatego = '" + mSousCategorie + "'";
+            szSelect = "SELECT IdSousCategorie " + " FROM tblSousCategories where NomSousCategorie = '" + mSousCategorie + "'";
             try
             {
                 m_DataTable = new DataTable();
@@ -1118,8 +1118,7 @@ namespace Gestion_Mtps
 
                 if (i > 0)
                 {
-                    //lstSousCategories.Add("Ajouter une catégorie");
-                    return (Int32)m_DataTable.Rows[0]["IdSousCatego"];
+                    return (Int32)m_DataTable.Rows[0]["IdSousCategorie"];
                 }
                 else
                 {
@@ -1923,9 +1922,9 @@ namespace Gestion_Mtps
         {
             string szSelect = string.Empty;
             string szWhere = string.Empty;
-            szWhere = " WHERE IdSousCatego > 0";
+            szWhere = " WHERE IdSousCatgorie > 0";
 
-            szSelect = "SELECT COUNT (IdSousCatego) FROM tblSousCatego" + szWhere;
+            szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories" + szWhere;
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
@@ -1945,7 +1944,7 @@ namespace Gestion_Mtps
             //{
                 m_DataTable.Clear();
                 //szSelect = "SELECT MAX(IdSousCatego) as N FROM tblSousCatego";// where IdSousCatego > 0";
-                szSelect = "SELECT IIf(MAX(IdSousCatego) Is Null, 0, MAX(IdSousCatego)) FROM tblSousCatego where IdSousCatego is not null or IdSousCatego > 0";
+                szSelect = "SELECT IIf(MAX(IdSousCategorie) Is Null, 0, MAX(IdSousCategorie)) FROM tblSousCategories where IdSousCategorie is not null or IdSousCategorie > 0";
                 m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
                  m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
                 m_dataAdatper.Fill(m_DataTable);
@@ -2029,14 +2028,71 @@ namespace Gestion_Mtps
         {
             string szSelect;
             bool retour = false;
+            int idSousCategorie = 0;
             try
             {//vérifier si la valeur existe déjà
                 bool present = VerifierPresenceSousCategorie(ref u, text);
-                if (present) {
+                if (present)
+                {
+                    // Obtenir l'Id de la sous catégorie en question
+                    Int32 unid = ObtenirIdSousCategorie(text);
+                    idSousCategorie = unid;  
                     message = "Cette sous catégorie est déjà présente";
                     //on ajoute la sous catégorie, et on s'assure des jounctions
-            }
-                return retour;
+                }
+                else
+                {
+                    idSousCategorie = ProchainNoSousCategorie();
+                }
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        if (!present)
+                        {
+                            // Execute the commands.
+                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctCategorieSousCategorie VALUES (" + u.IdCategorie + ", " + idSousCategorie + ")";
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                    }
+                    catch (Exception transEx)
+                    {
+                        #region catch
+                        string err = string.Empty;
+                        err = transEx.ToString();
+                        try
+                        {
+                            // Attempt to roll back the transaction.
+                            transaction?.Rollback();
+                        }
+                        catch
+                        {
+                            // Handle any errors that may have occurred during the rollback.
+                            return false;
+                        }
+
+                    }
+                    return retour;
+                }
             }
             catch (Exception ex)
             {
@@ -2051,3 +2107,4 @@ namespace Gestion_Mtps
 
     }
 }
+#endregion
