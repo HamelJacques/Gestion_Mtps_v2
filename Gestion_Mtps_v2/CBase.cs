@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1579,53 +1580,68 @@ namespace Gestion_Mtps
                 mess = ex.ToString();
             }
         }
-        //internal void ObtenirSousCategories(ref List<string> lstSousCategories, Usager usager, bool luimeme = true)
-        //{
-        //    int i = 0;
-        //    List<string> lstCategoriesID = new List<string>();
-        //    string szSelect;
-        //    string szWhere = string.Empty;
-        //    string szAND = string.Empty;
-            
-        //    string szLuimeme = " = ";
-        //    if (!luimeme)
-        //    {
-        //        szLuimeme = " <> ";
-        //    }
+        internal void ObtenirListeSousCategories(ref List<string> lstSousCategories, Usager_v2 usager, bool luimeme = true)
+        {
+            int i = 0;
+            List<string> lstCategoriesID = new List<string>();
+            string szSelect;
+            string szFROM = string.Empty;
+            string szJOIN1 = string.Empty;
+            string szJOIN2 = string.Empty;
+            string szWhere = string.Empty;
+            string szAND = string.Empty;
 
-        //    szAND = " AND ((jctSousCatego.IdCatego) " + szLuimeme;
+            szSelect = " SELECT tblSousCategories.NomSousCategorie ";
+            szFROM = "FROM tblUsagers ";
+            szJOIN1 = "INNER JOIN ((tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
+            szJOIN2 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager ";
+            szWhere = "WHERE (((tblUsagers.IdUsager)= " + usager.IdUsager + ") ";
+            szAND = ")";
+            if (usager.IdCategorie > 0)
+            {
+                szAND = "AND ((jctUsagerCategorie.IdCategorie)= " + usager.IdCategorie + "))";
+            }
+                        
+            //string szLuimeme = " = ";
+            //if (!luimeme)
+            //{
+            //    szLuimeme = " <> ";
+            //}
 
-        //    szWhere = " WHERE(((jctSousCatego.IdUsager)" + szLuimeme + usager.m_IdUsager;
+            //szAND = " AND ((jctSousCatego.IdCatego) " + szLuimeme;
+            //szWhere = " WHERE(((jctSousCatego.IdUsager)" + szLuimeme + usager.m_IdUsager;
+            //szSelect = " tblSousCategories.NomSousCategorie "
+            //            + "FROM tblSousCatego INNER JOIN jctSousCatego ON tblSousCatego.IdSousCatego = jctSousCatego.IdSousCatego"
+            //            + " WHERE(((jctSousCatego.IdUsager) " + szLuimeme + usager.m_IdUsager;
+            //if (usager.m_IdCategorie > 0) szSelect += szAND + usager.m_IdCategorie + ")";
+            //szSelect += "))";
 
-        //    szSelect = " SELECT tblSousCatego.NomSousCatego "
-        //                + "FROM tblSousCatego INNER JOIN jctSousCatego ON tblSousCatego.IdSousCatego = jctSousCatego.IdSousCatego"
-        //                + " WHERE(((jctSousCatego.IdUsager) " + szLuimeme + usager.m_IdUsager;
-        //                if (usager.m_IdCategorie > 0) szSelect += szAND + usager.m_IdCategorie + ")";
-        //                szSelect += "))";
-        //    szSelect += " ORDER BY tblSousCatego.NomSousCatego";
-        //    try
-        //    {
-        //        m_DataTable = new DataTable();
-        //        m_DataTable.Clear();
-        //        m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-        //        OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-        //        m_dataAdatper.Fill(m_DataTable);
-        //        i = m_DataTable.Rows.Count;
+            szSelect += szFROM + szJOIN1 + szJOIN2 + szWhere + szAND;
 
-        //        if (i > 0)
-        //        {
-        //            for (i = 0; i < m_DataTable.Rows.Count; i++)
-        //            {
-        //                lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string mess = ex.ToString();
-        //    }
-        //}
-        
+            szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCategorie"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+        }
+
         /// <summary>
         /// Retourne la liste des catégories associées à un usager en particulier
         /// </summary>

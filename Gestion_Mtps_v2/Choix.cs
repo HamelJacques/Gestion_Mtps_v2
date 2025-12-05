@@ -34,7 +34,8 @@ namespace Gestion_Mtps_v2
         public List<string> ObtenirListeSousCategories(Usager_v2 U)
         {
             List<string> lst = new List<string>();
-            m_maBD.ObtenirSousCategories(ref lst, U.IdUsager);
+            m_maBD.ObtenirListeSousCategories (ref lst, U);
+            //m_maBD.ObtenirSousCategories(ref lst, U.IdUsager);
             return lst;
         }
         internal void AjouterUneCategorie(Usager_v2 m_usager)
