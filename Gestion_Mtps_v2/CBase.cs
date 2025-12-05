@@ -1680,13 +1680,22 @@ namespace Gestion_Mtps
             string szSelect;
             string szWHERE = string.Empty;
             string szFROM = string.Empty;
+            string szAND = string.Empty;
             string egal = " = ";
-            if (!associe) egal = " <> ";
+            if (!associe)                
+            { 
+                egal = " <> ";
+                szAND = " AND tblCategories.NomCategorie not in(SELECT tblCategories.NomCategorie FROM tblUsagers " + 
+                    "INNER JOIN (tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) " + 
+                    "ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager " +
+                    "WHERE (((tblUsagers.IdUsager)= " + U.IdUsager + ")))";
+            }
 
             szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
             szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager";
             szWHERE = " WHERE (((tblUsagers.IdUsager)" + egal + U.IdUsager + "))";
-            szSelect += szFROM + szWHERE;
+
+            szSelect += szFROM + szWHERE + szAND;
 
             try
             {

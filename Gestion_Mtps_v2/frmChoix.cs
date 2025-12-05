@@ -112,8 +112,15 @@ namespace Gestion_Mtps_v2
         private void lstBxCategories_Click(object sender, EventArgs e)
         {
             // lire la sélection
-            string lecture = lstBxCategories.SelectedItem.ToString();
-            m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+            try
+            {
+                string lecture = lstBxCategories.SelectedItem.ToString();
+                m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+            }
+            catch(Exception ex) { string msg = ex.Message.ToString(); }
+                
+                
+            
             // obtenir l'id de la sélection
             // Mettre l'id dans l'objet Usager
         }
