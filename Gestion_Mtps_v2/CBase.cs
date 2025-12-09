@@ -1165,6 +1165,38 @@ namespace Gestion_Mtps
 
             throw new NotImplementedException();
         }
+        internal int ObtenirIdCategorie_UsagerSousCatego(Usager_v2 u)
+        {
+            int i = 0;
+            int id = 0;
+
+            string szSelect, szFROM, szWHERE;
+            //            SELECT jctUsagerCategorie.IdCategorie
+            //FROM jctCategorieSousCategorie INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
+            //WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
+
+            szSelect = "SELECT jctUsagerCategorie.IdCategorie ";
+            szFROM = "FROM jctCategorieSousCategorie INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
+            szWHERE = "WHERE (((jctUsagerCategorie.IdUsager)=" + u.IdUsager + ") AND ((jctCategorieSousCategorie.IdSousCategorie)=" + u.IdSousCategorie + "))";
+            szSelect += szFROM + szWHERE;
+
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+
+            return (Int32)m_DataTable.Rows[0][0];
+        }
+
         internal int ValeurUtiliseeParPlusieurs()
         {
             return -1;
@@ -1542,7 +1574,10 @@ namespace Gestion_Mtps
                 string mess = ex.ToString();
             }
         }
+        internal void ObtenirSites(ref List<string> lstSites, Usager_v2 U, bool moimeme = true)
+        {
 
+        }
 
 
 
@@ -1975,38 +2010,76 @@ namespace Gestion_Mtps
         // retourne le prochain id de sous catégorie associé à une catégorie
         private int ProchainNoSousCategorie()
         {
-            string szSelect = string.Empty;
-            string szWhere = string.Empty;
-            szWhere = " WHERE IdSousCatgorie > 0";
+            string szSelect;
 
-            szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories" + szWhere;
+            szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
             OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
             m_dataAdatper.Fill(m_DataTable);
-            if (m_DataTable.Rows.Count == 1)
+
+            if (m_DataTable.Rows.Count == 0)
             {
-                Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
-                if (nb == 0)
-                {
-                    return  1;
-                }
-                else
-                    //return 0;
-            //}
-            //else
-            //{
-                m_DataTable.Clear();
-                //szSelect = "SELECT MAX(IdSousCatego) as N FROM tblSousCatego";// where IdSousCatego > 0";
-                szSelect = "SELECT IIf(MAX(IdSousCategorie) Is Null, 0, MAX(IdSousCategorie)) FROM tblSousCategories where IdSousCategorie is not null or IdSousCategorie > 0";
-                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-                 m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-                m_dataAdatper.Fill(m_DataTable);
-                nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
-                return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+                
+                return 1;
             }
-            return 0;
+            else
+            {
+                m_DataTable.Clear();
+                szSelect = "SELECT MAX(IdSousCatgorie) FROM tblSousCategories";// where IdSousCatgorie > 0";
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+                return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+                //throw new NotImplementedException();
+            }
+
+            //return 0;
+
+            //int nb;
+            //string szSelect = string.Empty;
+            //string szWhere = string.Empty;
+            //szWhere = " WHERE IdSousCatgorie > 0";
+            //szSelect = "SELECT Max(tblSousCategories.IdSousCatgorie) FROM tblSousCategories";
+            //m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+
+            //OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            //m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            //m_dataAdatper.Fill(m_DataTable);
+            //nb = Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+            //nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+            //return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+
+            //szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories" + szWhere;
+            //m_DataTable = new DataTable();
+            //m_DataTable.Clear();
+            //m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            //OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            //m_dataAdatper.Fill(m_DataTable);
+            //if (m_DataTable.Rows.Count == 1)
+            //{
+            //    Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+            //    if (nb == 0)
+            //    {
+            //        return  1;
+            //    }
+            //    else
+            //        //return 0;
+            ////}
+            ////else
+            ////{
+            //    m_DataTable.Clear();
+            //    //szSelect = "SELECT MAX(IdSousCatego) as N FROM tblSousCatego";// where IdSousCatego > 0";
+            //    szSelect = "SELECT IIf(MAX(IdSousCategorie) Is Null, 0, MAX(IdSousCategorie)) FROM tblSousCategories where IdSousCategorie is not null or IdSousCategorie > 0";
+            //    m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            //     m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            //    m_dataAdatper.Fill(m_DataTable);
+            //    nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+            //    return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+            //}
+            //return 0;
             //throw new NotImplementedException();
         }
 
@@ -2118,12 +2191,12 @@ namespace Gestion_Mtps
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + u.IdUsager + "," + idSousCategorie + ", '" + text + "')";
                             command.ExecuteNonQuery();
                         }
 
                         // Assign transaction object for a pending local transaction.
-                        command.CommandText = "INSERT INTO jctCategorieSousCategorie VALUES (" + u.IdCategorie + ", " + idSousCategorie + ")";
+                        command.CommandText = "INSERT INTO jctCategorieSousCategorie VALUES (" + u.IdUsager + "," + u.IdCategorie + ", " + idSousCategorie + ")";
                         command.ExecuteNonQuery();
 
                         // Commit the transaction.
@@ -2157,6 +2230,8 @@ namespace Gestion_Mtps
         }
 
         
+
+
 
 
 

@@ -78,6 +78,7 @@ namespace Gestion_Mtps_v2
             List<string> lst = new List<string>();
             lstBxSites.Items.Clear();
             lst = m_Choix.ObtenirListeSites(m_usager);
+            lstBxSites.Items.AddRange(lst.ToArray());
         }
         private void ListerSousCategories()
         {
@@ -123,6 +124,18 @@ namespace Gestion_Mtps_v2
 
             MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        private void btnAjoutSite_Click(object sender, EventArgs e)
+        {
+            // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
+            bool selectione = lstBxSousCategories.SelectedIndex >= 0;
+            if (lstBxSousCategories.SelectedIndex >= 0)
+            {
+                List<string> lst = new List<string>();
+
+                frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+                aj.ShowDialog();
+            }
+        }
         #endregion
         #region LES LISTBOXES
         private void lstBxCategories_Click(object sender, EventArgs e)
@@ -138,29 +151,35 @@ namespace Gestion_Mtps_v2
                 ListerLesSites();
             }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
-            // obtenir l'id de la sélection
-            // Mettre l'id dans l'objet Usager
         }
-
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
             // lire la sélection
             try
             {
-                string lecture = lstBxSousCategories.SelectedItem.ToString();
-                m_usager.IdCategorie = m_Choix.ObtenirIdSousCategorie(lecture);
-
-                // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
-                ListerSousCategories();
-                ListerLesSites();
+                if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
+                {
+                    string lecture = lstBxSousCategories.SelectedItem.ToString();
+                    //string lecture = lstBxSousCategories.SelectedItem.ToString();
+                    m_usager.IdSousCategorie = m_Choix.ObtenirIdSousCategorie(lecture);
+                    // vérifier si une catégorie est sélectionnée
+                    // si non, déterminer à quelle catégorie appartient cette sous catégorie pour cet usager
+                    if (m_usager.IdCategorie == 0)
+                    {
+                        m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
+                    }
+                    ListerLesSites();
+                }                
             }
+            catch (NullReferenceException nre) { return; }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
+
+
         #endregion
+
         #endregion
 
-
-
-
+        
     }
 }

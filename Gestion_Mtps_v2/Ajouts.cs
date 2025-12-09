@@ -64,6 +64,11 @@ namespace Gestion_Mtps_v2
             //maBD.ObtenirSousCategories(ref lst, U, Moimeme);
             maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
         }
+        public void ObtenirListeSites(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
+        {
+            //List<string> lst = new List<string>();
+            maBD.ObtenirSites(ref lst, U, Moimeme);
+        }
         #endregion
     }
 }

@@ -23,7 +23,8 @@ namespace Gestion_Mtps_v2
         {
             Usager =1,
             Categorie,
-            SousCategorie
+            SousCategorie,
+            Site
         }
 
         #endregion
@@ -102,6 +103,9 @@ namespace Gestion_Mtps_v2
                     m_Ajouts.ObtenirListeSousCategories(ref m_items,ref m_Usager, false);
                     AfficherListeItems();
                     break;
+                case "Site":
+                    AjusteFenetreSite();
+                    break;
             }
             txtNouvelleValeur.Text = "";
             btnFermer.Text = "Fermer";
@@ -146,6 +150,11 @@ namespace Gestion_Mtps_v2
                     grbxLstValsDispo.Text = "Valeurs disponibles";
                     grbxLstValsDispo.BackColor = Color.LightSkyBlue;
                     break;
+                    case(UneDonnee)3:
+                    grbxMotPasseUsager.Visible = false;
+                    grbxLstValsDispo.Text = "Valeurs disponibles";
+                    grbxLstValsDispo.BackColor = Color.LightSalmon;
+                    break;
             }
         }
         private void AlimenteGroupBox(UneDonnee donnee)
@@ -156,7 +165,9 @@ namespace Gestion_Mtps_v2
                     break;
                     case (UneDonnee)2:
                     m_items.Clear();
-                    //Ajouts.ObtenirDonneesAutres(donnee, ref m_items);
+                    break;
+                case (UneDonnee)3:
+                    m_items.Clear();
                     break;
             }
         }
@@ -184,9 +195,23 @@ namespace Gestion_Mtps_v2
         }
         private void AjusteFenetreSousCategories()
         {
+            this.Width = 600;  
+            this.Height = 300;                              
+            BackColor = Color.LightCyan;
+
+            txtNouvelleValeur.Select();
+
+            AlimenteGroupBox(UneDonnee.SousCategorie);
+            PlaceGroupBoxes(UneDonnee.SousCategorie);
+            PlaceBoutons(UneDonnee.SousCategorie);
+        }
+        private void AjusteFenetreSite()
+        {
             this.Width = 600;
             this.Height = 300;
-            BackColor = Color.LightCyan;
+            BackColor = Color.Yellow;
+
+            txtNouvelleValeur.Select();
         }
 
         private void btnFermer_Click(object sender, EventArgs e)

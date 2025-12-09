@@ -80,6 +80,21 @@ namespace Gestion_Mtps_v2
             }
         }
 
+        internal int ObtenirIdCategorie_UsagerSousCatego(Usager_v2 U)
+        {
+            try
+            {
+                int id = 0;
+                id = m_maBD.ObtenirIdCategorie_UsagerSousCatego(U);
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Logger l'erreur
+                return -1;
+            }
+        }
+
         #endregion
     }
 }
