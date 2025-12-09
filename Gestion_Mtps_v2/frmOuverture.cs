@@ -103,6 +103,7 @@ namespace Gestion_Mtps_v2
 
         private void lstUsagers_DoubleClick(object sender, EventArgs e)
         {
+            m_UsagerSelectionne = new Usager_v2();
             string selection = lstUsagers.SelectedItems[0].ToString();
             // Obtenir le id de la sélection
             Int32 iSelect = O.ObtenirIdUsager(selection);

@@ -1592,25 +1592,26 @@ namespace Gestion_Mtps
             string szAND = string.Empty;
 
             szSelect = " SELECT tblSousCategories.NomSousCategorie ";
-            szFROM = "FROM tblSousCategories ";
+            szFROM = "FROM (tblSousCategories ";
             
             szJOIN1 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
-            //szJOIN2 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
-            //if(usager.IdUsager > 0) { szWhere = "WHERE (((jctUsagerCategorie.IdUsager)= " + usager.IdUsager + ")"; }
-            //szWhere = "WHERE (((tblUsagers.IdUsager)= " + usager.IdUsager + ") ";
-            //szAND = ")";
-            //if (usager.IdCategorie > 0)
-            //{
-            //    szAND = "AND ((jctUsagerCategorie.IdCategorie)= " + usager.IdCategorie + ")";
-            //}
+            szJOIN2 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
+            szWhere = "WHERE (((jctUsagerCategorie.IdUsager)= " + usager.IdUsager + ") ";
+
+            
+            if (usager.IdCategorie > 0)
+            {
+                szAND = ")";
+                szAND = "AND ((jctUsagerCategorie.IdCategorie)= " + usager.IdCategorie + ")";
+            }
 
 
-//            SELECT tblSousCategories.NomSousCategorie
-//FROM(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
-//WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
+            //            SELECT tblSousCategories.NomSousCategorie
+            //FROM(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
+            //WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
 
             szSelect += szFROM + szJOIN1 + szJOIN2 + szWhere + szAND;
-            //szSelect += ")";
+            szSelect += ")";
 
             szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
             try

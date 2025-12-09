@@ -51,6 +51,7 @@ namespace Gestion_Mtps_v2
             grbxCategories.BackColor = Color.LightBlue;
             btnAjoutCatego.BackColor = Color.LightGreen;
             btnAjoutCatego.Text = "Ajout";
+            m_usager.IdSousCategorie = 0;
             ListerCategories();
         }
         private void InitSousCategories()
