@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -554,6 +555,10 @@ namespace Gestion_Mtps
 #endregion
             return retour;
         }
+        public bool AjouterSousCategorie_v2(string nouveauNom, ref Usager_v2 U, int idexiste = 0)
+        {
+            return false;
+        }
 
         //private bool ModifierUnNomDeSite(Usager m_Usager)
         //{
@@ -645,7 +650,7 @@ namespace Gestion_Mtps
         //            }
         //        }
         //    }
-            
+
         //    return success;
         //    throw new NotImplementedException();
         //}       
@@ -896,39 +901,7 @@ namespace Gestion_Mtps
         //    return lstCatego;
         //}
         //ObtenirSousCategories
-        public List<string> ObtenirSousCategories()
-        {
-
-            int i = 0;
-            string szSelect; //, szWHERE;
-            List<string> lstSousCatego = new List<string>();
-
-            szSelect = "SELECT distinct NomSousCatego " + " FROM tblSousCatego ORDER BY 1";
-            try
-            {
-                m_DataTable = new DataTable();
-                m_DataTable.Clear();
-                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-                m_dataAdatper.Fill(m_DataTable);
-                i = m_DataTable.Rows.Count;
-                for (i = 0; i < m_DataTable.Rows.Count; i++)
-                {
-                    lstSousCatego.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
-                }
-            }
-            catch (Exception ex)
-            {
-                string mess = ex.ToString();
-            }
-            finally
-            {
-                m_DataTable.Clear();
-                m_DataTable.Dispose();
-                m_dataAdatper.Dispose();
-            }
-            return lstSousCatego;
-        }
+        
 
         public int ObtenirIdUsager(string nomUsager)
         {
@@ -1134,7 +1107,7 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
-            szSelect = "SELECT IdSousCatego " + " FROM tblSousCatego where NomSousCatego = '" + mSousCategorie + "'";
+            szSelect = "SELECT IdSousCatgorie " + " FROM tblSousCategories where NomSousCategorie = '" + mSousCategorie + "'";
             try
             {
                 m_DataTable = new DataTable();
@@ -1146,8 +1119,7 @@ namespace Gestion_Mtps
 
                 if (i > 0)
                 {
-                    //lstSousCategories.Add("Ajouter une catégorie");
-                    return (Int32)m_DataTable.Rows[0]["IdSousCatego"];
+                    return (Int32)m_DataTable.Rows[0]["IdSousCatgorie"];
                 }
                 else
                 {
@@ -1219,6 +1191,26 @@ namespace Gestion_Mtps
             return presence;
             //throw new NotImplementedException();
         }
+        private bool VerifierPresenceSousCategorie(ref Usager_v2 u, string text)
+        {
+            bool presence = false;
+            string szSelect;
+            szSelect = "SELECT COUNT(NomSousCategorie) FROM tblSousCategories ";
+            szSelect += "WHERE tblSousCategories.NomSousCategorie = '" + text + "'";
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+
+            if ((Int32)m_DataTable.Rows[0][0] >= 1)
+            {
+                presence = true;
+            }
+            return presence;
+
+        }
+
         internal bool VerifierPresenceCombinaison(int IdUsager, int IdCatego, int IdSousCatego, int IdSite)
         {
             bool presence = false;
@@ -1386,6 +1378,42 @@ namespace Gestion_Mtps
                 + " and IdSousCategorie = " + IdSousCatego
                 + " and IdSite = " + IdSite;
         }
+        
+
+
+        public List<string> ObtenirSousCategories()
+        {
+
+            int i = 0;
+            string szSelect; //, szWHERE;
+            List<string> lstSousCatego = new List<string>();
+
+            szSelect = "SELECT distinct NomSousCatego " + " FROM tblSousCatego ORDER BY 1";
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                for (i = 0; i < m_DataTable.Rows.Count; i++)
+                {
+                    lstSousCatego.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+            finally
+            {
+                m_DataTable.Clear();
+                m_DataTable.Dispose();
+                m_dataAdatper.Dispose();
+            }
+            return lstSousCatego;
+        }
         internal void ObtenirSousCategoriesParUsager(ref List<string> lstSousCategories, int usager)
         {
             string szSelect;
@@ -1433,8 +1461,6 @@ namespace Gestion_Mtps
 
 
         }
-
-
         internal void ObtenirSousCategories(List<string> lstSousCategories, int categorie = 0)
         {
             int i = 0;
@@ -1471,6 +1497,55 @@ namespace Gestion_Mtps
             }
             //throw new NotImplementedException();
         }
+        internal void ObtenirSousCategories(ref List<string> lstSousCategories, int idusager, int categorie = 0, bool moimeme = true)
+        {
+            int i = 0;
+            List<string> lstCategoriesID = new List<string>();
+            string szSelect, szFrom, szjctSousCategorie, szjctUsager;
+            string szWhere = szFrom = szjctSousCategorie = szjctUsager = string.Empty;
+            string szegaloupas = "= ";
+            if (!moimeme) szegaloupas = "<> ";
+
+            szSelect = "SELECT tblSousCategories.NomSousCategorie, jctUsagerCategorie.IdUsager ";
+            szFrom = "FROM(tblSousCategories ";
+            szjctSousCategorie = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
+            szjctUsager = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
+            szWhere = "WHERE(((jctUsagerCategorie.IdUsager) " + szegaloupas  + idusager + "))";
+
+            szSelect += szFrom + szjctSousCategorie + szjctUsager + szWhere;
+
+            //if (categorie > 0)
+            //{
+            //    szWhere = " where IdCategorie = " + categorie;
+            //    szSelect += szWhere;
+            //}
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+
+                if (i > 0)
+                {
+                    //lstSousCategories.Add("Ajouter une sous catégorie");
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+        }
+
+
+
+
         private void ObtenirListeIdCategoriesPourUsager(ref List<string> lstSousCategoriesID, int idusager)
         {
             string szSelect;
@@ -1505,72 +1580,40 @@ namespace Gestion_Mtps
                 mess = ex.ToString();
             }
         }
-        //internal void ObtenirSousCategories(ref List<string> lstSousCategories, Usager usager, bool luimeme = true)
-        //{
-        //    int i = 0;
-        //    List<string> lstCategoriesID = new List<string>();
-        //    string szSelect;
-        //    string szWhere = string.Empty;
-        //    string szAND = string.Empty;
-            
-        //    string szLuimeme = " = ";
-        //    if (!luimeme)
-        //    {
-        //        szLuimeme = " <> ";
-        //    }
-
-        //    szAND = " AND ((jctSousCatego.IdCatego) " + szLuimeme;
-
-        //    szWhere = " WHERE(((jctSousCatego.IdUsager)" + szLuimeme + usager.m_IdUsager;
-
-        //    szSelect = " SELECT tblSousCatego.NomSousCatego "
-        //                + "FROM tblSousCatego INNER JOIN jctSousCatego ON tblSousCatego.IdSousCatego = jctSousCatego.IdSousCatego"
-        //                + " WHERE(((jctSousCatego.IdUsager) " + szLuimeme + usager.m_IdUsager;
-        //                if (usager.m_IdCategorie > 0) szSelect += szAND + usager.m_IdCategorie + ")";
-        //                szSelect += "))";
-        //    szSelect += " ORDER BY tblSousCatego.NomSousCatego";
-        //    try
-        //    {
-        //        m_DataTable = new DataTable();
-        //        m_DataTable.Clear();
-        //        m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
-        //        OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
-        //        m_dataAdatper.Fill(m_DataTable);
-        //        i = m_DataTable.Rows.Count;
-
-        //        if (i > 0)
-        //        {
-        //            for (i = 0; i < m_DataTable.Rows.Count; i++)
-        //            {
-        //                lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string mess = ex.ToString();
-        //    }
-        //}
-        internal void ObtenirSousCategories(ref List<string> lstSousCategories, int idusager, int categorie = 0)
+        internal void ObtenirListeSousCategories(ref List<string> lstSousCategories, Usager_v2 usager, bool luimeme = true)
         {
             int i = 0;
             List<string> lstCategoriesID = new List<string>();
             string szSelect;
+            string szFROM = string.Empty;
+            string szJOIN1 = string.Empty;
+            string szJOIN2 = string.Empty;
             string szWhere = string.Empty;
-            // Obenir une liste de idcategories pour l'usager
-            ObtenirListeIdCategoriesPourUsager(ref lstCategoriesID, idusager);
+            string szAND = string.Empty;
 
-            szSelect = "SELECT tblSousCatego.NomSousCatego FROM tblSousCatego "
-                       + "WHERE tblSousCatego.IdCategorie in (SELECT tblCategories.IdCategorie FROM tblCategories "
-                       + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgo.IdCatego "
-                       + "WHERE jctUsagerCatgo.IdUsager = " + idusager
-                       + " ORDER BY tblCategories.NomCatego)";
+            szSelect = " SELECT tblSousCategories.NomSousCategorie ";
+            szFROM = "FROM (tblSousCategories ";
+            
+            szJOIN1 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
+            szJOIN2 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
+            szWhere = "WHERE (((jctUsagerCategorie.IdUsager)= " + usager.IdUsager + ") ";
 
-            if (categorie > 0)
+            
+            if (usager.IdCategorie > 0)
             {
-                szWhere = " where IdCategorie = " + categorie;
-                szSelect += szWhere;
+                szAND = ")";
+                szAND = "AND ((jctUsagerCategorie.IdCategorie)= " + usager.IdCategorie + ")";
             }
+
+
+            //            SELECT tblSousCategories.NomSousCategorie
+            //FROM(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
+            //WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
+
+            szSelect += szFROM + szJOIN1 + szJOIN2 + szWhere + szAND;
+            szSelect += ")";
+
+            szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
             try
             {
                 m_DataTable = new DataTable();
@@ -1582,10 +1625,9 @@ namespace Gestion_Mtps
 
                 if (i > 0)
                 {
-                    //lstSousCategories.Add("Ajouter une sous catégorie");
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCategorie"].ToString());
                     }
                 }
             }
@@ -1594,6 +1636,7 @@ namespace Gestion_Mtps
                 string mess = ex.ToString();
             }
         }
+
         /// <summary>
         /// Retourne la liste des catégories associées à un usager en particulier
         /// </summary>
@@ -1647,13 +1690,22 @@ namespace Gestion_Mtps
             string szSelect;
             string szWHERE = string.Empty;
             string szFROM = string.Empty;
+            string szAND = string.Empty;
             string egal = " = ";
-            if (!associe) egal = " <> ";
+            if (!associe)                
+            { 
+                egal = " <> ";
+                szAND = " AND tblCategories.NomCategorie not in(SELECT tblCategories.NomCategorie FROM tblUsagers " + 
+                    "INNER JOIN (tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) " + 
+                    "ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager " +
+                    "WHERE (((tblUsagers.IdUsager)= " + U.IdUsager + ")))";
+            }
 
             szSelect = "SELECT DISTINCT tblCategories.NomCategorie";
             szFROM = " FROM tblUsagers INNER JOIN(tblCategories INNER JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager";
             szWHERE = " WHERE (((tblUsagers.IdUsager)" + egal + U.IdUsager + "))";
-            szSelect += szFROM + szWHERE;
+
+            szSelect += szFROM + szWHERE + szAND;
 
             try
             {
@@ -1747,9 +1799,7 @@ namespace Gestion_Mtps
         internal void ObtenirListeSites(ref List<string> lstSites)
         {
             int i = 0;
-            string szSelect;
-            szSelect = "SELECT DISTINCT NomSite " + " FROM tblSites";
-
+            string szSelect = string.Empty;
             try
             {
                 m_DataTable = new DataTable();
@@ -1764,6 +1814,49 @@ namespace Gestion_Mtps
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
                         lstSites.Add(m_DataTable.Rows[i]["NomSite"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+            }
+        }
+        internal void ObtenirListeSites(ref List<string> lst, Usager_v2 m_usager)
+        {
+            int i = 0;
+            string szSelect;
+            string JOINT1, JOINT2, JOINT3;
+            string szWHEREUsager, szWHERECategorie, szWHERESouscategorie;
+
+            szSelect = "SELECT DISTINCT NomSite " + " FROM tblUsagers ";
+            szWHEREUsager = szWHERECategorie = szWHERESouscategorie = string.Empty;
+            //            SELECT tblSites.NomSite
+            //FROM tblUsagers INNER JOIN((jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager;
+            JOINT1 = "INNER JOIN ((jctCategorieSousCategorie ";
+            JOINT2 = "INNER JOIN (tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie )";
+            JOINT3 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager ";
+            
+
+            if(m_usager.IdUsager != 0) { szWHEREUsager = "WHERE (((tblUsagers.IdUsager)=1 )"; }
+            if(m_usager.IdCategorie != 0) { szWHERECategorie = "AND ((jctUsagerCategorie.IdCategorie)=1)"; }
+
+            szSelect += JOINT1 + JOINT2 + JOINT3 + szWHEREUsager + szWHERECategorie;
+            szSelect += ")";
+
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lst.Add(m_DataTable.Rows[i]["NomSite"].ToString());
                     }
                 }
             }
@@ -1881,9 +1974,9 @@ namespace Gestion_Mtps
         {
             string szSelect = string.Empty;
             string szWhere = string.Empty;
-            szWhere = " WHERE IdSousCatego > 0";
+            szWhere = " WHERE IdSousCatgorie > 0";
 
-            szSelect = "SELECT COUNT (IdSousCatego) FROM tblSousCatego" + szWhere;
+            szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories" + szWhere;
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
@@ -1903,7 +1996,7 @@ namespace Gestion_Mtps
             //{
                 m_DataTable.Clear();
                 //szSelect = "SELECT MAX(IdSousCatego) as N FROM tblSousCatego";// where IdSousCatego > 0";
-                szSelect = "SELECT IIf(MAX(IdSousCatego) Is Null, 0, MAX(IdSousCatego)) FROM tblSousCatego where IdSousCatego is not null or IdSousCatego > 0";
+                szSelect = "SELECT IIf(MAX(IdSousCategorie) Is Null, 0, MAX(IdSousCategorie)) FROM tblSousCategories where IdSousCategorie is not null or IdSousCategorie > 0";
                 m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
                  m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
                 m_dataAdatper.Fill(m_DataTable);
@@ -1983,7 +2076,91 @@ namespace Gestion_Mtps
             return 0;
         }
 
+        internal bool ajouterSousCatgorie_v2(string text, ref Usager_v2 u, ref string message)
+        {
+            string szSelect;
+            bool retour = false;
+            int idSousCategorie = 0;
+            try
+            {//vérifier si la valeur existe déjà
+                bool present = VerifierPresenceSousCategorie(ref u, text);
+                if (present)
+                {
+                    // Obtenir l'Id de la sous catégorie en question
+                    Int32 unid = ObtenirIdSousCategorie(text);
+                    idSousCategorie = unid;  
+                    message = "Cette sous catégorie est déjà présente";
+                    //on ajoute la sous catégorie, et on s'assure des jounctions
+                }
+                else
+                {
+                    idSousCategorie = ProchainNoSousCategorie();
+                }
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        if (!present)
+                        {
+                            // Execute the commands.
+                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctCategorieSousCategorie VALUES (" + u.IdCategorie + ", " + idSousCategorie + ")";
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                    }
+                    catch (Exception transEx)
+                    {
+                        #region catch
+                        string err = string.Empty;
+                        err = transEx.ToString();
+                        try
+                        {
+                            // Attempt to roll back the transaction.
+                            transaction?.Rollback();
+                        }
+                        catch
+                        {
+                            // Handle any errors that may have occurred during the rollback.
+                            return false;
+                        }
+
+                    }
+                    return retour;
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString() ;
+                throw(new Exception(mess));
+            }
+        }
+
+        
+
+
+
+
+
         #endregion
 
     }
 }
+#endregion
