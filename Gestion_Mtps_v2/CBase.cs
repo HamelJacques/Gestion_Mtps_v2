@@ -1826,22 +1826,25 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
+            string szFROM;
+            string szAND;
             string JOINT1, JOINT2, JOINT3;
-            string szWHEREUsager, szWHERECategorie, szWHERESouscategorie;
+            string szWHERE, szWHEREUsager, szWHERECategorie, szWHERESouscategorie;
 
-            szSelect = "SELECT DISTINCT NomSite " + " FROM tblUsagers ";
-            szWHEREUsager = szWHERECategorie = szWHERESouscategorie = string.Empty;
-            //            SELECT tblSites.NomSite
-            //FROM tblUsagers INNER JOIN((jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager;
-            JOINT1 = "INNER JOIN ((jctCategorieSousCategorie ";
-            JOINT2 = "INNER JOIN (tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie )";
-            JOINT3 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie) ON tblUsagers.IdUsager = jctUsagerCategorie.IdUsager ";
+            szSelect = "SELECT DISTINCT tblSites.NomSite ";
+            szFROM = "FROM (jctCategorieSousCategorie ";
             
+            JOINT1 = "INNER JOIN (tblSites ";
+            JOINT2 = "INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ";
+            JOINT3 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
 
-            if(m_usager.IdUsager != 0) { szWHEREUsager = "WHERE (((tblUsagers.IdUsager)=1 )"; }
-            if(m_usager.IdCategorie != 0) { szWHERECategorie = "AND ((jctUsagerCategorie.IdCategorie)=1)"; }
+            szWHERE = "WHERE (((jctUsagerCategorie.IdUsager)=" + m_usager.IdUsager +")";
+            //szWHEREUsager = szWHERECategorie = szWHERESouscategorie = string.Empty;
 
-            szSelect += JOINT1 + JOINT2 + JOINT3 + szWHEREUsager + szWHERECategorie;
+            //if (m_usager.IdUsager != 0) { szWHEREUsager = "WHERE (((tblUsagers.IdUsager)=1 )"; }
+            //if(m_usager.IdCategorie != 0) { szWHERECategorie = "AND ((jctUsagerCategorie.IdCategorie)=1)"; }
+
+            szSelect += szFROM + JOINT1 + JOINT2 + JOINT3 + szWHERE;        
             szSelect += ")";
 
             try

@@ -42,9 +42,8 @@ namespace Gestion_Mtps_v2
             btnFermer.Text = "Fermer - retour à Ouverture - Changer d'usager";
             InitCategories();
             InitSousCategories();
-            //InitSites();
-        }
-       
+            InitSites();
+        }       
         private void InitCategories()
         {
             grbxCategories.Text = "Categories";
@@ -65,7 +64,7 @@ namespace Gestion_Mtps_v2
         private void InitSites()
         {
             grbxSites.Text = "Sites";
-            grbxSites.BackColor = Color.LightYellow;
+            grbxSites.BackColor = Color.LavenderBlush;
             btnAjoutSite.Text = "Ajouter";
             btnAjoutSite.BackColor = Color.LightGreen;
             ListerLesSites();
@@ -74,7 +73,6 @@ namespace Gestion_Mtps_v2
         {
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
         }
-
         private void ListerLesSites()
         {
             List<string> lst = new List<string>();
@@ -96,8 +94,8 @@ namespace Gestion_Mtps_v2
             lstBxCategories.Items.AddRange(lst.ToArray());
             //return lst;
         }
-        #endregion#
 
+        #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -107,7 +105,7 @@ namespace Gestion_Mtps_v2
         {
             List<string> lst = new List<string>();
             // passer par la classe Ajouts pour ajouter une catégorie
-            frmAjouts aj = new frmAjouts("Categorie", m_maBD,ref lst, ref m_usager);
+            frmAjouts aj = new frmAjouts("Categorie", m_maBD, ref lst, ref m_usager);
             aj.ShowDialog();
         }
 
@@ -115,7 +113,7 @@ namespace Gestion_Mtps_v2
         {
             // Vérifier si une catégorie est sélectionnée, forcer la sélection
             bool selectione = lstBxCategories.SelectedIndex >= 0;
-            if(lstBxCategories.SelectedIndex >= 0)
+            if (lstBxCategories.SelectedIndex >= 0)
             {
                 List<string> lst = new List<string>();
                 frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
@@ -125,7 +123,8 @@ namespace Gestion_Mtps_v2
 
             MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        #endregion
+        #region LES LISTBOXES
         private void lstBxCategories_Click(object sender, EventArgs e)
         {
             // lire la sélection
@@ -138,7 +137,7 @@ namespace Gestion_Mtps_v2
                 ListerSousCategories();
                 ListerLesSites();
             }
-            catch(Exception ex) { string msg = ex.Message.ToString(); }
+            catch (Exception ex) { string msg = ex.Message.ToString(); }
             // obtenir l'id de la sélection
             // Mettre l'id dans l'objet Usager
         }
@@ -157,5 +156,11 @@ namespace Gestion_Mtps_v2
             }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
+        #endregion
+        #endregion
+
+
+
+
     }
 }
