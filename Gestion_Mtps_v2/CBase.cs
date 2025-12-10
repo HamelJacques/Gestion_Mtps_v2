@@ -1168,12 +1168,8 @@ namespace Gestion_Mtps
         internal int ObtenirIdCategorie_UsagerSousCatego(Usager_v2 u)
         {
             int i = 0;
-            int id = 0;
 
             string szSelect, szFROM, szWHERE;
-            //            SELECT jctUsagerCategorie.IdCategorie
-            //FROM jctCategorieSousCategorie INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
-            //WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
 
             szSelect = "SELECT jctUsagerCategorie.IdCategorie ";
             szFROM = "FROM jctCategorieSousCategorie INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
@@ -1205,11 +1201,10 @@ namespace Gestion_Mtps
         {
             bool presence = false;
             string szSelect;
-            szSelect = "SELECT COUNT(NomCategorie) FROM tblCategories "// where IdUsager = " + IdUsager
+            szSelect = "SELECT COUNT(NomCategorie) FROM tblCategories "
                        + "LEFT JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie "
                        + "WHERE tblCategories.NomCategorie = '" + nomCatego + "'";
-                //+ " and tblCategories.NomCategorie = '" + nomCatego + "'";
-                //+ " and IdSousCategorie = " + IdSousCatego                //+ " and IdSite = " + IdSite                //+ " and Len(AdresseSite) > 0"                //+ " and Len(MotPass) > 0";
+            
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
@@ -1221,7 +1216,6 @@ namespace Gestion_Mtps
                 presence = true;
             }
             return presence;
-            //throw new NotImplementedException();
         }
         private bool VerifierPresenceSousCategorie(ref Usager_v2 u, string text)
         {
@@ -1240,7 +1234,6 @@ namespace Gestion_Mtps
                 presence = true;
             }
             return presence;
-
         }
 
         internal bool VerifierPresenceCombinaison(int IdUsager, int IdCatego, int IdSousCatego, int IdSite)
@@ -1626,24 +1619,23 @@ namespace Gestion_Mtps
             string szWhere = string.Empty;
             string szAND = string.Empty;
 
-            szSelect = " SELECT tblSousCategories.NomSousCategorie ";
-            szFROM = "FROM (tblSousCategories ";
-            
-            szJOIN1 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ";
-            szJOIN2 = "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie ";
-            szWhere = "WHERE (((jctUsagerCategorie.IdUsager)= " + usager.IdUsager + ") ";
+//            SELECT tblSousCategories.NomSousCategorie, jctCategorieSousCategorie.IdUsager
+//FROM jctUsagerCategorie INNER JOIN(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
+//WHERE(((jctCategorieSousCategorie.IdUsager) = 2));
 
+
+            szSelect = " SELECT tblSousCategories.NomSousCategorie ";
+            szFROM = "FROM jctUsagerCategorie ";
             
+            szJOIN1 = "INNER JOIN(tblSousCategories ";
+            szJOIN2 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
+            szWhere = "WHERE(((jctCategorieSousCategorie.IdUsager) = " + usager.IdUsager + ")";
+
             if (usager.IdCategorie > 0)
             {
                 szAND = ")";
                 szAND = "AND ((jctUsagerCategorie.IdCategorie)= " + usager.IdCategorie + ")";
             }
-
-
-            //            SELECT tblSousCategories.NomSousCategorie
-            //FROM(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie
-            //WHERE(((jctUsagerCategorie.IdUsager) = 1) AND((jctCategorieSousCategorie.IdSousCategorie) = 1));
 
             szSelect += szFROM + szJOIN1 + szJOIN2 + szWhere + szAND;
             szSelect += ")";
@@ -2193,7 +2185,6 @@ namespace Gestion_Mtps
                         if (!present)
                         {
                             // Execute the commands.
-                            //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
                             command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
                             command.ExecuteNonQuery();
                         }
@@ -2220,7 +2211,6 @@ namespace Gestion_Mtps
                             // Handle any errors that may have occurred during the rollback.
                             return false;
                         }
-
                     }
                     return retour;
                 }
@@ -2233,15 +2223,7 @@ namespace Gestion_Mtps
         }
 
         
-
-
-
-
-
-
-
         #endregion
-
     }
 }
 #endregion
