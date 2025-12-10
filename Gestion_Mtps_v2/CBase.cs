@@ -2031,8 +2031,11 @@ namespace Gestion_Mtps
                 m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
                 m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
                 m_dataAdatper.Fill(m_DataTable);
-                Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
-                return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
+                object val = m_DataTable.Rows[0][0];
+                int nb = val == DBNull.Value ? 0 : Convert.ToInt32(val);
+
+                //Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+                return Convert.ToInt32(nb) + 1;
                 //throw new NotImplementedException();
             }
 
@@ -2191,7 +2194,7 @@ namespace Gestion_Mtps
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + u.IdUsager + "," + idSousCategorie + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
                             command.ExecuteNonQuery();
                         }
 
