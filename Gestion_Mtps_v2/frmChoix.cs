@@ -108,6 +108,10 @@ namespace Gestion_Mtps_v2
             // passer par la classe Ajouts pour ajouter une catégorie
             frmAjouts aj = new frmAjouts("Categorie", m_maBD, ref lst, ref m_usager);
             aj.ShowDialog();
+            if(aj.AjoutOk)
+            {
+                ListerCategories();
+            }
         }
 
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
@@ -119,6 +123,11 @@ namespace Gestion_Mtps_v2
                 List<string> lst = new List<string>();
                 frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
                 aj.ShowDialog();
+
+                if (aj.AjoutOk)
+                {
+                    ListerSousCategories();
+                }
                 return;
             }
 

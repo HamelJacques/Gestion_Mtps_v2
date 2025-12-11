@@ -19,6 +19,7 @@ namespace Gestion_Mtps_v2
         private Usager_v2 m_Usager;
         private string m_Type;
         private Ajouts m_Ajouts;
+        public bool AjoutOk = false; 
         private enum UneDonnee 
         {
             Usager =1,
@@ -229,16 +230,8 @@ namespace Gestion_Mtps_v2
             // appeler la Classe Ajouts avec la valeur
             // La vérification se fera dans Ajouts et retournera un code
 
-            Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
-
-            //if (!valeurExiste)
-            //{
-            //    // La vérification se fera dans Ajouts et retournera un code
-
-            //    Int32 ret = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
-            //}
-
-            //MessageBox.Show("En développement");
+            AjoutOk = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
+            if (AjoutOk) { this.Close(); }
         }
 
         private void txtNouvelleValeur_KeyUp(object sender, KeyEventArgs e)

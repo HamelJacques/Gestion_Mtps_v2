@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Gestion_Mtps
 {
@@ -17,17 +19,19 @@ namespace Gestion_Mtps
     {
         #region DONNEES MEMBRES
         private string m_LaBase;
+        private string m_cheminLog;
         private string m_maconnetionstring;
         private OleDbConnection m_cnADONetConnection;
         private OleDbDataAdapter m_dataAdatper;
         private DataTable m_DataTable;
+       
         //public DataTable pDataTable;
         ////private OleDbDataReader m_datareader;
         //private OleDbCommand m_cmCommand;
         //private OleDbCommandBuilder m_cbCommandBuilder;
         //private DataSet m_ds;
         //public string m_TableChoisie;// la table de la base de donnée
-        //private Logger lg;
+        //private Logger /*lg*/;
 
         private bool m_estConnectee;
         #endregion
@@ -1913,6 +1917,14 @@ namespace Gestion_Mtps
                 {
                     m_estConnectee = true;
                 }
+                string cheminexe = connectionString;
+                // Récupère le dossier parent
+                string parent = AppContext.BaseDirectory;
+                m_cheminLog = parent + "application.log";
+
+                Console.WriteLine(m_cheminLog);
+                // Résultat : D:\Develop\Gestion\Gestion\bin
+
                 return m_estConnectee;
             }
             catch (OleDbException err)
@@ -2195,21 +2207,24 @@ namespace Gestion_Mtps
 
                         // Commit the transaction.
                         transaction.Commit();
+                        retour = true;
                     }
                     catch (Exception transEx)
                     {
                         #region catch
                         string err = string.Empty;
                         err = transEx.ToString();
+                        Logger lg = new Logger(err, m_cheminLog);
                         try
                         {
                             // Attempt to roll back the transaction.
                             transaction?.Rollback();
+                            return retour;
                         }
                         catch
                         {
                             // Handle any errors that may have occurred during the rollback.
-                            return false;
+                            return retour;
                         }
                     }
                     return retour;

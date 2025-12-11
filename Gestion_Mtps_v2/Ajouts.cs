@@ -33,7 +33,7 @@ namespace Gestion_Mtps_v2
         }
 
 
-        internal int Ajouter(string type, string text, ref Usager_v2 U)
+        internal bool Ajouter(string type, string text, ref Usager_v2 U)
         {
             bool ret = false;
             switch (type)
@@ -48,7 +48,7 @@ namespace Gestion_Mtps_v2
                     ret = maBD.ajouterSousCatgorie_v2(text, ref U, ref messageRetour);                    
                     break;
             }
-            return Convert.ToInt32(ret);
+            return ret;
         }
         #endregion
         #region MÉTHODES PUBLIQUES
