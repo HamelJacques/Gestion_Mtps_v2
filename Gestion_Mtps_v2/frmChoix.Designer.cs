@@ -49,9 +49,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFermer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFermer.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFermer.Location = new System.Drawing.Point(22, 314);
+            this.btnFermer.Location = new System.Drawing.Point(29, 386);
+            this.btnFermer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(909, 32);
+            this.btnFermer.Size = new System.Drawing.Size(1212, 39);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -62,18 +63,21 @@
             this.grbxCategories.Controls.Add(this.btnAjoutCatego);
             this.grbxCategories.Controls.Add(this.lstBxCategories);
             this.grbxCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxCategories.Location = new System.Drawing.Point(12, 12);
+            this.grbxCategories.Location = new System.Drawing.Point(16, 15);
+            this.grbxCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grbxCategories.Name = "grbxCategories";
-            this.grbxCategories.Size = new System.Drawing.Size(293, 159);
+            this.grbxCategories.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grbxCategories.Size = new System.Drawing.Size(391, 196);
             this.grbxCategories.TabIndex = 1;
             this.grbxCategories.TabStop = false;
             this.grbxCategories.Text = "grbxCategories";
             // 
             // btnAjoutCatego
             // 
-            this.btnAjoutCatego.Location = new System.Drawing.Point(200, 23);
+            this.btnAjoutCatego.Location = new System.Drawing.Point(267, 28);
+            this.btnAjoutCatego.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAjoutCatego.Name = "btnAjoutCatego";
-            this.btnAjoutCatego.Size = new System.Drawing.Size(87, 38);
+            this.btnAjoutCatego.Size = new System.Drawing.Size(116, 47);
             this.btnAjoutCatego.TabIndex = 3;
             this.btnAjoutCatego.Text = "btnAjoutCatego";
             this.btnAjoutCatego.UseVisualStyleBackColor = true;
@@ -82,10 +86,11 @@
             // lstBxCategories
             // 
             this.lstBxCategories.FormattingEnabled = true;
-            this.lstBxCategories.ItemHeight = 18;
-            this.lstBxCategories.Location = new System.Drawing.Point(10, 23);
+            this.lstBxCategories.ItemHeight = 24;
+            this.lstBxCategories.Location = new System.Drawing.Point(13, 28);
+            this.lstBxCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstBxCategories.Name = "lstBxCategories";
-            this.lstBxCategories.Size = new System.Drawing.Size(184, 112);
+            this.lstBxCategories.Size = new System.Drawing.Size(244, 124);
             this.lstBxCategories.TabIndex = 2;
             this.lstBxCategories.Click += new System.EventHandler(this.lstBxCategories_Click);
             // 
@@ -94,18 +99,21 @@
             this.grbxSousCategories.Controls.Add(this.btnAjoutSousCatego);
             this.grbxSousCategories.Controls.Add(this.lstBxSousCategories);
             this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxSousCategories.Location = new System.Drawing.Point(311, 12);
+            this.grbxSousCategories.Location = new System.Drawing.Point(415, 15);
+            this.grbxSousCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grbxSousCategories.Name = "grbxSousCategories";
-            this.grbxSousCategories.Size = new System.Drawing.Size(293, 159);
+            this.grbxSousCategories.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grbxSousCategories.Size = new System.Drawing.Size(391, 196);
             this.grbxSousCategories.TabIndex = 2;
             this.grbxSousCategories.TabStop = false;
             this.grbxSousCategories.Text = "grbxSousCategories";
             // 
             // btnAjoutSousCatego
             // 
-            this.btnAjoutSousCatego.Location = new System.Drawing.Point(200, 23);
+            this.btnAjoutSousCatego.Location = new System.Drawing.Point(267, 28);
+            this.btnAjoutSousCatego.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAjoutSousCatego.Name = "btnAjoutSousCatego";
-            this.btnAjoutSousCatego.Size = new System.Drawing.Size(87, 38);
+            this.btnAjoutSousCatego.Size = new System.Drawing.Size(116, 47);
             this.btnAjoutSousCatego.TabIndex = 3;
             this.btnAjoutSousCatego.Text = "btnAjoutSousCatego";
             this.btnAjoutSousCatego.UseVisualStyleBackColor = true;
@@ -114,10 +122,11 @@
             // lstBxSousCategories
             // 
             this.lstBxSousCategories.FormattingEnabled = true;
-            this.lstBxSousCategories.ItemHeight = 18;
-            this.lstBxSousCategories.Location = new System.Drawing.Point(10, 23);
+            this.lstBxSousCategories.ItemHeight = 24;
+            this.lstBxSousCategories.Location = new System.Drawing.Point(13, 28);
+            this.lstBxSousCategories.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstBxSousCategories.Name = "lstBxSousCategories";
-            this.lstBxSousCategories.Size = new System.Drawing.Size(184, 112);
+            this.lstBxSousCategories.Size = new System.Drawing.Size(244, 124);
             this.lstBxSousCategories.TabIndex = 2;
             this.lstBxSousCategories.Click += new System.EventHandler(this.lstBxSousCategories_Click);
             // 
@@ -126,40 +135,46 @@
             this.grbxSites.Controls.Add(this.btnAjoutSite);
             this.grbxSites.Controls.Add(this.lstBxSites);
             this.grbxSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxSites.Location = new System.Drawing.Point(610, 12);
+            this.grbxSites.Location = new System.Drawing.Point(813, 15);
+            this.grbxSites.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grbxSites.Name = "grbxSites";
-            this.grbxSites.Size = new System.Drawing.Size(293, 159);
+            this.grbxSites.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grbxSites.Size = new System.Drawing.Size(391, 196);
             this.grbxSites.TabIndex = 4;
             this.grbxSites.TabStop = false;
             this.grbxSites.Text = "grbxSites";
             // 
             // btnAjoutSite
             // 
-            this.btnAjoutSite.Location = new System.Drawing.Point(200, 23);
+            this.btnAjoutSite.Location = new System.Drawing.Point(267, 28);
+            this.btnAjoutSite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAjoutSite.Name = "btnAjoutSite";
-            this.btnAjoutSite.Size = new System.Drawing.Size(87, 38);
+            this.btnAjoutSite.Size = new System.Drawing.Size(116, 47);
             this.btnAjoutSite.TabIndex = 3;
             this.btnAjoutSite.Text = "btnAjoutSite";
             this.btnAjoutSite.UseVisualStyleBackColor = true;
+            this.btnAjoutSite.Click += new System.EventHandler(this.btnAjoutSite_Click);
             // 
             // lstBxSites
             // 
             this.lstBxSites.FormattingEnabled = true;
-            this.lstBxSites.ItemHeight = 18;
-            this.lstBxSites.Location = new System.Drawing.Point(10, 23);
+            this.lstBxSites.ItemHeight = 24;
+            this.lstBxSites.Location = new System.Drawing.Point(13, 28);
+            this.lstBxSites.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstBxSites.Name = "lstBxSites";
-            this.lstBxSites.Size = new System.Drawing.Size(184, 112);
+            this.lstBxSites.Size = new System.Drawing.Size(244, 124);
             this.lstBxSites.TabIndex = 2;
             // 
             // frmChoix
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(961, 358);
+            this.ClientSize = new System.Drawing.Size(1281, 441);
             this.Controls.Add(this.grbxSites);
             this.Controls.Add(this.grbxSousCategories);
             this.Controls.Add(this.grbxCategories);
             this.Controls.Add(this.btnFermer);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmChoix";
             this.Text = "frmChoix";
             this.grbxCategories.ResumeLayout(false);

@@ -42,9 +42,8 @@ namespace Gestion_Mtps_v2
             btnFermer.Text = "Fermer - retour à Ouverture - Changer d'usager";
             InitCategories();
             InitSousCategories();
-            //InitSites();
-        }
-       
+            InitSites();
+        }       
         private void InitCategories()
         {
             grbxCategories.Text = "Categories";
@@ -65,7 +64,7 @@ namespace Gestion_Mtps_v2
         private void InitSites()
         {
             grbxSites.Text = "Sites";
-            grbxSites.BackColor = Color.LightYellow;
+            grbxSites.BackColor = Color.LavenderBlush;
             btnAjoutSite.Text = "Ajouter";
             btnAjoutSite.BackColor = Color.LightGreen;
             ListerLesSites();
@@ -74,12 +73,12 @@ namespace Gestion_Mtps_v2
         {
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
         }
-
         private void ListerLesSites()
         {
             List<string> lst = new List<string>();
             lstBxSites.Items.Clear();
             lst = m_Choix.ObtenirListeSites(m_usager);
+            lstBxSites.Items.AddRange(lst.ToArray());
         }
         private void ListerSousCategories()
         {
@@ -96,8 +95,8 @@ namespace Gestion_Mtps_v2
             lstBxCategories.Items.AddRange(lst.ToArray());
             //return lst;
         }
-        #endregion#
 
+        #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -107,25 +106,47 @@ namespace Gestion_Mtps_v2
         {
             List<string> lst = new List<string>();
             // passer par la classe Ajouts pour ajouter une catégorie
-            frmAjouts aj = new frmAjouts("Categorie", m_maBD,ref lst, ref m_usager);
+            frmAjouts aj = new frmAjouts("Categorie", m_maBD, ref lst, ref m_usager);
             aj.ShowDialog();
+            if(aj.AjoutOk)
+            {
+                ListerCategories();
+            }
         }
 
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
         {
             // Vérifier si une catégorie est sélectionnée, forcer la sélection
             bool selectione = lstBxCategories.SelectedIndex >= 0;
-            if(lstBxCategories.SelectedIndex >= 0)
+            if (lstBxCategories.SelectedIndex >= 0)
             {
                 List<string> lst = new List<string>();
                 frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
                 aj.ShowDialog();
+
+                if (aj.AjoutOk)
+                {
+                    ListerSousCategories();
+                }
                 return;
             }
 
             MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        private void btnAjoutSite_Click(object sender, EventArgs e)
+        {
+            // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
+            bool selectione = lstBxSousCategories.SelectedIndex >= 0;
+            if (lstBxSousCategories.SelectedIndex >= 0)
+            {
+                List<string> lst = new List<string>();
 
+                frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+                aj.ShowDialog();
+            }
+        }
+        #endregion
+        #region LES LISTBOXES
         private void lstBxCategories_Click(object sender, EventArgs e)
         {
             // lire la sélection
@@ -138,24 +159,36 @@ namespace Gestion_Mtps_v2
                 ListerSousCategories();
                 ListerLesSites();
             }
-            catch(Exception ex) { string msg = ex.Message.ToString(); }
-            // obtenir l'id de la sélection
-            // Mettre l'id dans l'objet Usager
+            catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
-
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
             // lire la sélection
             try
             {
-                string lecture = lstBxSousCategories.SelectedItem.ToString();
-                m_usager.IdCategorie = m_Choix.ObtenirIdSousCategorie(lecture);
-
-                // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
-                ListerSousCategories();
-                ListerLesSites();
+                if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
+                {
+                    string lecture = lstBxSousCategories.SelectedItem.ToString();
+                    //string lecture = lstBxSousCategories.SelectedItem.ToString();
+                    m_usager.IdSousCategorie = m_Choix.ObtenirIdSousCategorie(lecture);
+                    // vérifier si une catégorie est sélectionnée
+                    // si non, déterminer à quelle catégorie appartient cette sous catégorie pour cet usager
+                    if (m_usager.IdCategorie == 0)
+                    {
+                        m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
+                    }
+                    ListerLesSites();
+                }                
             }
+            catch (NullReferenceException nre) { return; }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
+
+
+        #endregion
+
+        #endregion
+
+        
     }
 }
