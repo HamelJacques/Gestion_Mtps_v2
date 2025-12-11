@@ -62,7 +62,8 @@ namespace Gestion_Mtps_v2
         {
             //List<string> lst = new List<string>();
             //maBD.ObtenirSousCategories(ref lst, U, Moimeme);
-            maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
+            //maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
+            maBD.ObtenirSousCategoriesPourAjouts(ref lst, U);
         }
         public void ObtenirListeSites(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
         {
