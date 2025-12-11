@@ -1571,13 +1571,43 @@ namespace Gestion_Mtps
                 string mess = ex.ToString();
             }
         }
-        internal void ObtenirSites(ref List<string> lstSites, Usager_v2 U, bool moimeme = true)
+        internal void ObtenirSousCategoriesPourAjouts(ref List<string> lstSousCategories, Usager_v2 U)
         {
+            int i;
+            //            SELECT tblSousCategories.NomSousCategorie, jctCategorieSousCategorie.IdUsager
+            //FROM tblSousCategories INNER JOIN(jctUsagerCategorie INNER JOIN jctCategorieSousCategorie ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)) ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie
+            //WHERE((Not(jctCategorieSousCategorie.IdUsager) = 1));
+            string szSelect, szFROM, szWHERE, szORDERBY;
+            szSelect = "SELECT tblSousCategories.NomSousCategorie ";
+            szFROM = "FROM tblSousCategories INNER JOIN(jctUsagerCategorie INNER JOIN jctCategorieSousCategorie ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)) ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie ";
+            szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " +  U.IdUsager + ")) ";
+            szORDERBY = "ORDER BY tblSousCategories.NomSousCategorie";
 
+            szSelect += szFROM + szWHERE + szORDERBY;
+
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+
+                if (i > 0)
+                {
+                    //lstSousCategories.Add("Ajouter une sous catégorie");
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSousCategories.Add(m_DataTable.Rows[i]["NomSousCategorie"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
         }
-
-
-
         private void ObtenirListeIdCategoriesPourUsager(ref List<string> lstSousCategoriesID, int idusager)
         {
             string szSelect;
@@ -1674,6 +1704,11 @@ namespace Gestion_Mtps
         /// <param name="lstCategories"></param>
         /// <param name="idusager"></param>
         /// <param name="associe"></param>
+
+        internal void ObtenirSites(ref List<string> lstSites, Usager_v2 U, bool moimeme = true)
+        {
+
+        }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
         {
             int i = 0;
