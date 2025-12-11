@@ -33,7 +33,7 @@ namespace Gestion_Mtps_v2
         }
 
 
-        internal int Ajouter(string type, string text, ref Usager_v2 U)
+        internal bool Ajouter(string type, string text, ref Usager_v2 U)
         {
             bool ret = false;
             switch (type)
@@ -48,7 +48,7 @@ namespace Gestion_Mtps_v2
                     ret = maBD.ajouterSousCatgorie_v2(text, ref U, ref messageRetour);                    
                     break;
             }
-            return Convert.ToInt32(ret);
+            return ret;
         }
         #endregion
         #region MÉTHODES PUBLIQUES
@@ -63,6 +63,11 @@ namespace Gestion_Mtps_v2
             //List<string> lst = new List<string>();
             //maBD.ObtenirSousCategories(ref lst, U, Moimeme);
             maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
+        }
+        public void ObtenirListeSites(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
+        {
+            //List<string> lst = new List<string>();
+            maBD.ObtenirSites(ref lst, U, Moimeme);
         }
         #endregion
     }
