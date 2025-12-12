@@ -1580,7 +1580,8 @@ namespace Gestion_Mtps
             string szSelect, szFROM, szWHERE, szORDERBY;
             szSelect = "SELECT tblSousCategories.NomSousCategorie ";
             szFROM = "FROM tblSousCategories INNER JOIN(jctUsagerCategorie INNER JOIN jctCategorieSousCategorie ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)) ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie ";
-            szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " +  U.IdUsager + ")) ";
+            szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + ")) ";
+            //szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + ") AND (Not(jctCategorieSousCategorie.IdCategorie) = " + U.IdCategorie + ") ";
             szORDERBY = "ORDER BY tblSousCategories.NomSousCategorie";
 
             szSelect += szFROM + szWHERE + szORDERBY;
