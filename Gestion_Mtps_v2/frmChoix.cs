@@ -135,15 +135,37 @@ namespace Gestion_Mtps_v2
         }
         private void btnAjoutSite_Click(object sender, EventArgs e)
         {
+            string message = string.Empty;
             // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
             bool selectione = lstBxSousCategories.SelectedIndex >= 0;
-            if (lstBxSousCategories.SelectedIndex >= 0)
+            if(m_usager.IdCategorie == 0)
             {
-                List<string> lst = new List<string>();
+                message = "Vous devez sélectionner une catégorie pour poursuivre.";
+                MessageBox.Show(message,"OUPS",MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
-                aj.ShowDialog();
             }
+            else
+            {
+                if (m_usager.IdSousCategorie == 0)
+                {
+                    message = "Vous devez sélectionner une sous-catégorie pour poursuivre.";
+                    MessageBox.Show(message, "OUPS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    List<string> lst = new List<string>();
+
+                    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+                    aj.ShowDialog();
+                }
+            }
+            //if (lstBxSousCategories.SelectedIndex >= 0)
+            //{
+            //    List<string> lst = new List<string>();
+
+            //    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+            //    aj.ShowDialog();
+            //}
         }
         #endregion
         #region LES LISTBOXES
