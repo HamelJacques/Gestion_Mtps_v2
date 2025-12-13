@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Gestion_Mtps
 {
@@ -1574,17 +1575,25 @@ namespace Gestion_Mtps
         internal void ObtenirSousCategoriesPourAjouts(ref List<string> lstSousCategories, Usager_v2 U)
         {
             int i;
-            //            SELECT tblSousCategories.NomSousCategorie, jctCategorieSousCategorie.IdUsager
-            //FROM tblSousCategories INNER JOIN(jctUsagerCategorie INNER JOIN jctCategorieSousCategorie ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)) ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie
-            //WHERE((Not(jctCategorieSousCategorie.IdUsager) = 1));
-            string szSelect, szFROM, szWHERE, szORDERBY;
-            szSelect = "SELECT tblSousCategories.NomSousCategorie ";
-            szFROM = "FROM tblSousCategories INNER JOIN(jctUsagerCategorie INNER JOIN jctCategorieSousCategorie ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)) ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie ";
-            szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + ")) ";
-            //szWHERE = "WHERE((Not(jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + ") AND (Not(jctCategorieSousCategorie.IdCategorie) = " + U.IdCategorie + ") ";
+            //string egal = " <> ";
+//            / SELECT tblSousCategories.NomSousCategorie
+//FROM tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie
+//WHERE(((tblSousCategories.NomSousCategorie)Not In(SELECT DISTINCT tblSousCategories.NomSousCategorie
+//FROM jctUsagerCategorie INNER JOIN(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie
+//WHERE(((jctCategorieSousCategorie.IdUsager) = 2)))))
+//ORDER BY tblSousCategories.NomSousCategorie;
+
+            string szSelect, szFROM, szFrom2, szWHERE, szWHERE2, szORDERBY;
+
+            szSelect = "SELECT DISTINCT tblSousCategories.NomSousCategorie ";
+            szFROM = "FROM tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie ";
+            szWHERE = "WHERE(((tblSousCategories.NomSousCategorie)Not In(SELECT DISTINCT tblSousCategories.NomSousCategorie ";
+            szFrom2 = "FROM jctUsagerCategorie INNER JOIN(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie ";
+            szWHERE2 = "WHERE(((jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + "))))) ";
             szORDERBY = "ORDER BY tblSousCategories.NomSousCategorie";
 
-            szSelect += szFROM + szWHERE + szORDERBY;
+            //szSelect += szFROM + szWHERE + szORDERBY;
+            szSelect += szFROM + szWHERE + szFrom2 + szWHERE2 + szORDERBY;
 
             try
             {
