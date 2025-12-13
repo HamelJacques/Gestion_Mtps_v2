@@ -60,9 +60,8 @@ namespace Gestion_Mtps_v2
         }
         public void ObtenirListeSousCategories(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
         {
-            //List<string> lst = new List<string>();
-            //maBD.ObtenirSousCategories(ref lst, U, Moimeme);
-            //maBD.ObtenirSousCategories(ref lst, U.IdUsager,U.IdCategorie, Moimeme);
+            // Obtenir la liste des sous ctégories pour et usager et la catégorie sélectionnée
+            // pour exclue ces valeurs de la liste des sous catégories disponibles
             maBD.ObtenirSousCategoriesPourAjouts(ref lst, U);
         }
         public void ObtenirListeSites(ref List<string> lst, ref Usager_v2 U, bool Moimeme = true)
