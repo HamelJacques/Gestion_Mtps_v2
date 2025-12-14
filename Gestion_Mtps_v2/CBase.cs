@@ -829,6 +829,7 @@ namespace Gestion_Mtps
             string szSelect; //, szWHERE;
             List<string> lstUsagers = new List<string>();
             szSelect = "SELECT distinct NomUsager " + " FROM tblUsagers";// +" ORDER BY " + szChampCbo;
+            Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -854,6 +855,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                lg = new Logger(mess, m_cheminLog);
             }
             finally
             {
@@ -966,6 +968,7 @@ namespace Gestion_Mtps
             string szSelect;
             string retour = string.Empty;
             szSelect = "SELECT NomUsager " + " FROM tblUsagers where IdUsager = " + idUsager;
+            Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -981,6 +984,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                lg = new Logger(mess, m_cheminLog);
                 return "ERREUR";
             }
         }
@@ -1975,6 +1979,7 @@ namespace Gestion_Mtps
             catch (OleDbException err)
             {
                 String mesage = err.ToString();
+                Logger lg = new Logger(mesage, m_cheminLog);
                 return false;
             }            
         }
