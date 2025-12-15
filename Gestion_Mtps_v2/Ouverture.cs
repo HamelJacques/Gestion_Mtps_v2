@@ -16,6 +16,7 @@ namespace Gestion_Mtps_v2
         private CBase m_LaBase;
         private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_List_Usagers;
+        private Logger lg;
         #endregion
         #region CONSTRUCTEURS
         public Ouverture() 
@@ -48,9 +49,12 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES    
         private void InitOuverture()
         {
+            
+            
             m_CheminExe = string.Empty;
             TestModifString("Chemin exe");
             ObtenirCheminExe();
+            lg = new Logger("Dans InitOuverture()", m_CheminExe + "application.log");
             m_List_Usagers = new List<string>();
             Init_LaBD();
             ObtenirLesUsagers();
@@ -65,6 +69,7 @@ namespace Gestion_Mtps_v2
             catch(Exception ex)
             {
                 string msg = ex.Message;
+                lg = new Logger(msg, m_CheminExe + "application.log");
             }
             //throw new NotImplementedException();
         }

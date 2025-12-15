@@ -7,12 +7,14 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using Application = System.Windows.Forms.Application;
 
 namespace Gestion_Mtps
 {
@@ -1954,10 +1956,22 @@ namespace Gestion_Mtps
         #region METHODES PRIVÉE
         private bool InitCBase()
         {
+            Logger lg;
+            // Récupère le dossier parent
+            string parent = AppContext.BaseDirectory;
+            m_cheminLog = parent + "application.log";
+            lg = new Logger("Dans InitBase()", m_cheminLog);
+
+            string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
+             
+            lg = new Logger("dbPath = " + dbPath, m_cheminLog);
+
             try
             {
                 m_cnADONetConnection = new OleDbConnection();
-                string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
+                //string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
+                string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};Persist Security Info=False;";
+                
 
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
                 m_maconnetionstring = connectionString;
@@ -1965,21 +1979,21 @@ namespace Gestion_Mtps
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
                     m_estConnectee = true;
+                    
                 }
-                string cheminexe = connectionString;
-                // Récupère le dossier parent
-                string parent = AppContext.BaseDirectory;
-                m_cheminLog = parent + "application.log";
+                lg = new Logger("Connecté = " + m_estConnectee.ToString(), m_cheminLog);
+                //string cheminexe = connectionString;
+
 
                 Console.WriteLine(m_cheminLog);
                 // Résultat : D:\Develop\Gestion\Gestion\bin
-
+                
                 return m_estConnectee;
             }
             catch (OleDbException err)
             {
                 String mesage = err.ToString();
-                Logger lg = new Logger(mesage, m_cheminLog);
+                lg = new Logger(mesage, m_cheminLog);
                 return false;
             }            
         }
