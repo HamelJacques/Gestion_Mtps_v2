@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Data.OleDb;
+
 
 namespace Gestion_Mtps_v2
 {
@@ -41,6 +44,13 @@ namespace Gestion_Mtps_v2
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter";
             m_lesUsagers = new List<string>();
+            foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
+            {
+                Console.WriteLine($"Nom: {cs.Name}, Connexion: {cs.ConnectionString}");
+            }
+
+            string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
+
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
             lblChBD.Text = O.ChBD;
@@ -70,6 +80,8 @@ namespace Gestion_Mtps_v2
         {
             try
             {
+                
+
                 O = new Ouverture();
                 //m_LaBase = new CBase(m_Chemin_BD);
                 List<string> listUsagers = new List<string>();
