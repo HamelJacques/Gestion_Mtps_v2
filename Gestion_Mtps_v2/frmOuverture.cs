@@ -20,7 +20,7 @@ namespace Gestion_Mtps_v2
         private string m_Titre;
         //private CBase m_LaBase;
         //private string m_CheminExe;
-        //private string m_Chemin_BD;
+        private string m_Chemin_BD;
         //private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_lesUsagers;
         public Usager_v2 m_UsagerSelectionne;
@@ -50,6 +50,9 @@ namespace Gestion_Mtps_v2
             }
 
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
+            m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
+
+
 
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
