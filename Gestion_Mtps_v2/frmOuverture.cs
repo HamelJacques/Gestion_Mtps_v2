@@ -29,7 +29,9 @@ namespace Gestion_Mtps_v2
         #region CONSTRUCTEUR
         public frmOuverture()
         {
+            
             InitializeComponent();
+            
             InitForm();
         }
         #endregion
@@ -44,15 +46,17 @@ namespace Gestion_Mtps_v2
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter";
             m_lesUsagers = new List<string>();
+            
+            m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
+            //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
+            O = new Ouverture(m_Chemin_BD);
+
             foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
             {
                 Console.WriteLine($"Nom: {cs.Name}, Connexion: {cs.ConnectionString}");
             }
 
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
-            m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
-
-
 
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
@@ -83,9 +87,6 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                
-
-                O = new Ouverture();
                 //m_LaBase = new CBase(m_Chemin_BD);
                 List<string> listUsagers = new List<string>();
                 m_lesUsagers = O.LstUsagers;
