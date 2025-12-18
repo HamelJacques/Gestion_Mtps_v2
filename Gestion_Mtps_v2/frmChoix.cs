@@ -49,7 +49,7 @@ namespace Gestion_Mtps_v2
             grbxCategories.Text = "Categories";
             grbxCategories.BackColor = Color.LightBlue;
             btnAjoutCatego.BackColor = Color.LightGreen;
-            btnAjoutCatego.Text = "Ajout";
+            btnAjoutCatego.Text = "Ajouter";
             m_usager.IdSousCategorie = 0;
             ListerCategories();
         }
