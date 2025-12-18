@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Data.OleDb;
+
 
 namespace Gestion_Mtps_v2
 {
@@ -17,7 +20,7 @@ namespace Gestion_Mtps_v2
         private string m_Titre;
         //private CBase m_LaBase;
         //private string m_CheminExe;
-        //private string m_Chemin_BD;
+        private string m_Chemin_BD;
         //private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_lesUsagers;
         public Usager_v2 m_UsagerSelectionne;
@@ -26,7 +29,9 @@ namespace Gestion_Mtps_v2
         #region CONSTRUCTEUR
         public frmOuverture()
         {
+            
             InitializeComponent();
+            
             InitForm();
         }
         #endregion
@@ -41,6 +46,18 @@ namespace Gestion_Mtps_v2
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter";
             m_lesUsagers = new List<string>();
+            
+            m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
+            //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
+            O = new Ouverture(m_Chemin_BD);
+
+            foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
+            {
+                Console.WriteLine($"Nom: {cs.Name}, Connexion: {cs.ConnectionString}");
+            }
+
+            string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
+
             ConnectBD();
             this.Text = string.Concat(m_Titre,"   ", O.ChExe);
             lblChBD.Text = O.ChBD;
@@ -70,7 +87,6 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                O = new Ouverture();
                 //m_LaBase = new CBase(m_Chemin_BD);
                 List<string> listUsagers = new List<string>();
                 m_lesUsagers = O.LstUsagers;
