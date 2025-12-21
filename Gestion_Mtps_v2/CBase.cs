@@ -21,7 +21,7 @@ namespace Gestion_Mtps
     public class CBase
     {
         #region DONNEES MEMBRES
-        private string m_LaBase;
+        private string m_CheminBD;
         private string m_cheminLog;
         private string m_maconnetionstring;
         private OleDbConnection m_cnADONetConnection;
@@ -53,7 +53,7 @@ namespace Gestion_Mtps
         //}
         public CBase(string CheminBD)//, string table
         {
-            m_LaBase = CheminBD;
+            m_CheminBD = CheminBD;
 
             bool initbase = InitCBase();
             //Connection();
@@ -61,7 +61,7 @@ namespace Gestion_Mtps
         }
         public CBase()
         {
-            m_LaBase = string.Empty;
+            m_CheminBD = string.Empty;
             //m_TableChoisie = "";
             //InitCBase();
         }
@@ -1969,10 +1969,7 @@ namespace Gestion_Mtps
             try
             {
                 m_cnADONetConnection = new OleDbConnection();
-                //string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_LaBase};Persist Security Info=False;";
-                string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={dbPath};Persist Security Info=False;";
-                
-
+                string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_CheminBD};Persist Security Info=False;";
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
                 m_maconnetionstring = connectionString;
                 m_cnADONetConnection.Open();

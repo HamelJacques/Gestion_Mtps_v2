@@ -23,6 +23,12 @@ namespace Gestion_Mtps_v2
         {
             InitOuverture();
         }
+        public Ouverture(string chBD)
+        {
+            m_Chemin_BD = chBD;
+            InitOuverture();
+            
+        }
         #region PROPRIÉTÉS
         public string ChExe
         {
@@ -52,7 +58,8 @@ namespace Gestion_Mtps_v2
             
             
             m_CheminExe = string.Empty;
-            TestModifString("Chemin exe");
+            //m_Chemin_BD= string.Empty;
+            //TestModifString("Chemin exe");
             ObtenirCheminExe();
             lg = new Logger("Dans InitOuverture()", m_CheminExe + "application.log");
             m_List_Usagers = new List<string>();
@@ -88,7 +95,7 @@ namespace Gestion_Mtps_v2
             //Directory.GetParent(m_CheminExe).FullName, "Base\\");
 
 
-            m_Chemin_BD = cheminBase + NOM_BD;
+            //m_Chemin_BD = cheminBase + NOM_BD;
         }
         private void TestModifString(string modifString)
         {
