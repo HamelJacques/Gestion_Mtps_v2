@@ -44,7 +44,7 @@ namespace Gestion_Mtps_v2
             m_Titre = "Ouverture";
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
-            btnAjout.Text = "Ajouter";
+            btnAjout.Text = "Ajouter un utilisateur";
             m_lesUsagers = new List<string>();
             
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
@@ -59,8 +59,16 @@ namespace Gestion_Mtps_v2
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
 
             ConnectBD();
-            this.Text = string.Concat(m_Titre,"   ", O.ChExe);
-            lblChBD.Text = O.ChBD;
+            this.Text = string.Concat(m_Titre,"   ", Environment.MachineName);
+            if (O.LaBase.BdConnecte)
+            {
+                lblChBD.Text = "Connecté à " + O.ChBD;
+            }
+            else
+            {
+                lblChBD.Text = "Un problème est survenu au moment de connecter à la base de donnée.";
+            }
+                
             AjusteCouleurFenere();
             AfficheUsagers();
         }
@@ -82,6 +90,8 @@ namespace Gestion_Mtps_v2
         private void AjusteCouleurFenere()
         {
             this.BackColor = Color.LightPink;
+            btnFermer.BackColor = Color.LightGreen;
+            btnAjout.BackColor = Color.LightYellow;
         }
         private void ConnectBD()
         {
