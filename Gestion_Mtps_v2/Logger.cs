@@ -30,7 +30,7 @@ namespace Gestion_Mtps
         {
             try
             {
-                string logFile = Path.Combine(cheminEXE, "application.log");
+                string logFile = cheminEXE; // Path.Combine(cheminEXE, "application.log");
                 string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}";
                 File.AppendAllText(logFile, logEntry + Environment.NewLine);
             }
