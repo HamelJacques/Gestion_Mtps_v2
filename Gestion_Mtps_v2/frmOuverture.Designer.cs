@@ -40,12 +40,12 @@
             // 
             this.btnFermer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFermer.Font = new System.Drawing.Font("Arial Unicode MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFermer.Font = new System.Drawing.Font("Arial Unicode MS", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(14, 135);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(717, 52);
+            this.btnFermer.Size = new System.Drawing.Size(701, 52);
             this.btnFermer.TabIndex = 0;
-            this.btnFermer.Text = "Fermer";
+            this.btnFermer.Text = "Fermer l\'application";
             this.btnFermer.UseVisualStyleBackColor = true;
             this.btnFermer.Click += new System.EventHandler(this.btnFermer_Click);
             // 
@@ -92,10 +92,10 @@
             // 
             // btnAjout
             // 
-            this.btnAjout.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAjout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAjout.Location = new System.Drawing.Point(301, 55);
             this.btnAjout.Name = "btnAjout";
-            this.btnAjout.Size = new System.Drawing.Size(141, 23);
+            this.btnAjout.Size = new System.Drawing.Size(403, 40);
             this.btnAjout.TabIndex = 5;
             this.btnAjout.Text = "btnAjout";
             this.btnAjout.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 220);
+            this.ClientSize = new System.Drawing.Size(744, 220);
             this.Controls.Add(this.btnAjout);
             this.Controls.Add(this.lblUsagers);
             this.Controls.Add(this.lstUsagers);
