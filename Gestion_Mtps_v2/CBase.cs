@@ -1246,6 +1246,24 @@ namespace Gestion_Mtps
             }
             return presence;
         }
+        private bool VerifierPresenceSite(ref Usager_v2 u, string text)
+        {
+            bool presence = false;
+            string szSelect;
+            szSelect = "SELECT COUNT(NomSite) FROM tblSites ";
+            szSelect += "WHERE tblSites.NomSite = '" + text + "'";
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+
+            if ((Int32)m_DataTable.Rows[0][0] >= 1)
+            {
+                presence = true;
+            }
+            return presence;
+        }
 
         internal bool VerifierPresenceCombinaison(int IdUsager, int IdCatego, int IdSousCatego, int IdSite)
         {
@@ -1723,13 +1741,42 @@ namespace Gestion_Mtps
 
         internal void ObtenirSites(ref List<string> lstSites, Usager_v2 U, bool moimeme = true)
         {
+            int i = 0;
+            string szSelect;
+            szSelect = "SELECT tblSites.NomSite FROM (jctCategorieSousCategorie " 
+                     + "INNER JOIN (tblSites " 
+                     + "INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
+                         + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) " 
+                         + "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie " 
+                     + "WHERE (((jctUsagerCategorie.IdUsager)=" + U.IdUsager  + "))";
 
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSites.Add(m_DataTable.Rows[i]["NomSite"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+            }
         }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
         {
             int i = 0;
             string szSelect;
             //int idusager = 2;
+            
 
             szSelect = "SELECT tblCategories.NomCategorie FROM tblCategories "
                        + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
@@ -1748,10 +1795,9 @@ namespace Gestion_Mtps
                 {
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -2023,7 +2069,6 @@ namespace Gestion_Mtps
                 return (Int32)m_DataTable.Rows[0][0];
             }
             return 0;
-
         }
         /// <summary>
         /// Retourne le porchain numéro de catégorie
@@ -2234,9 +2279,9 @@ namespace Gestion_Mtps
                     Int32 unid = ObtenirIdSousCategorie(text);
                     idSousCategorie = unid;  
                     message = "Cette sous catégorie est déjà présente";
-                    //on ajoute la sous catégorie, et on s'assure des jounctions
+                    return retour;
                 }
-                else
+                else //on ajoute la sous catégorie, et on s'assure des jounctions
                 {
                     idSousCategorie = ProchainNoSousCategorie();
                 }
@@ -2298,7 +2343,88 @@ namespace Gestion_Mtps
             }
         }
 
-        
+        internal bool ajouterSite_v2(string text, ref Usager_v2 u, ref string messageRetour)
+        {
+            bool ret = false;
+            int idSite = 0;
+
+            try
+            {
+                //vérifier si la valeur existe déjà
+                bool present = VerifierPresenceSite(ref u, text);
+                if (present)
+                {
+                    // Obtenir l'Id de la sous catégorie en question
+                    Int32 unid = ObtenirIdSite(text);
+                    idSite = unid;
+                    messageRetour = "Cette sous catégorie est déjà présente";
+                    return ret;
+                }
+                else //on ajoute la sous catégorie, et on s'assure des jounctions
+                {
+                    idSite = ProchainNoSite();
+                }
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        if (!present)
+                        {
+                            // Execute the commands.
+                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + text + "')";
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctSousCategorieSite VALUES (" + u.IdCategorie + "," + u.IdSousCategorie + ", " + idSite + ")";
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        ret = true;
+                    }
+                    catch (Exception transEx)
+                    {
+                        #region catch
+                        string err = string.Empty;
+                        err = transEx.ToString();
+                        Logger lg = new Logger(err, m_cheminLog);
+                        try
+                        {
+                            // Attempt to roll back the transaction.
+                            transaction?.Rollback();
+                            return ret;
+                        }
+                        catch
+                        {
+                            // Handle any errors that may have occurred during the rollback.
+                            return ret;
+                        }
+                        #endregion
+                    }
+                }
+                //        return ret;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+                //throw (new Exception(mess));
+            }
+            return ret;
+        }
+
+
         #endregion
     }
 }

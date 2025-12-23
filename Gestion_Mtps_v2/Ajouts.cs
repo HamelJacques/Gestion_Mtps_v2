@@ -47,6 +47,9 @@ namespace Gestion_Mtps_v2
                 case "SousCategorie":
                     ret = maBD.ajouterSousCatgorie_v2(text, ref U, ref messageRetour);                    
                     break;
+                case "Site":
+                    ret = maBD.ajouterSite_v2(text, ref U, ref messageRetour);
+                     break;
             }
             return ret;
         }
