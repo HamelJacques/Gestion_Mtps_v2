@@ -34,7 +34,7 @@ namespace Gestion_Mtps_v2
         internal List<string> ObtenirListeSites(Usager_v2 m_usager)
         {
             List<string> lst = new List<string>();
-            m_maBD.ObtenirListeSites(ref lst, m_usager);
+            m_maBD.ObtenirSites(ref lst, m_usager);
             return lst;
 //            throw new NotImplementedException();
         }

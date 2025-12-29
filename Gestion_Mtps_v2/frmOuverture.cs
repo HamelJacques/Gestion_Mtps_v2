@@ -60,9 +60,11 @@ namespace Gestion_Mtps_v2
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
 
             ConnectBD();
+            
+
             m_CheminLog = O.ChExe + "application.log";
             m_lg = new Logger("Dans InitForm", m_CheminLog);
-            this.Text = string.Concat(m_Titre,"   ", O.ChExe);
+            this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
             lblChBD.Text = O.ChBD + O.LaBase.BdConnecte.ToString();
             AjusteCouleurFenere();
             AfficheUsagers();
