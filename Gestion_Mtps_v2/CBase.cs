@@ -1744,6 +1744,7 @@ namespace Gestion_Mtps
             int i = 0;
             string szSelect;
             szSelect = "SELECT tblSites.NomSite FROM (jctCategorieSousCategorie " 
+            szSelect = "SELECT DISTINCT tblSites.NomSite FROM (jctUsagerCategorie "
                      + "INNER JOIN (tblSites " 
                      + "INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
                          + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) " 
