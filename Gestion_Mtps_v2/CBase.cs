@@ -1709,6 +1709,7 @@ namespace Gestion_Mtps
             szSelect += ")";
 
             szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
+            #region try
             try
             {
                 m_DataTable = new DataTable();
@@ -1729,7 +1730,9 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                Logger lg = new Logger(mess, m_cheminLog);
             }
+            #endregion 
         }
 
         /// <summary>
@@ -1743,13 +1746,26 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
-            szSelect = "SELECT tblSites.NomSite FROM (jctCategorieSousCategorie " 
-            szSelect = "SELECT DISTINCT tblSites.NomSite FROM (jctUsagerCategorie "
-                     + "INNER JOIN (tblSites " 
-                     + "INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
-                         + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) " 
-                         + "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie " 
-                     + "WHERE (((jctUsagerCategorie.IdUsager)=" + U.IdUsager  + "))";
+            string szANDcatego = string.Empty;
+            string szANDsouscatego = string.Empty;
+           
+            szSelect = "SELECT DISTINCT tblSites.NomSite FROM jctUsagerCategorie "
+                + "INNER JOIN (jctCategorieSousCategorie INNER JOIN (tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
+                + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
+                     + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + ")";
+
+            if (U.IdCategorie > 0)
+            {
+                szANDcatego = ")";
+                szANDcatego = "AND ((jctSousCategorieSite.IdCategorie)= " + U.IdCategorie + ")";
+            }
+            if (U.IdSousCategorie  > 0)
+            {
+                szANDsouscatego = ")";
+                szANDsouscatego = "AND ((jctSousCategorieSite.IdSousCategorie)= " + U.IdSousCategorie + ")";
+            }
+            szSelect += szANDcatego + szANDsouscatego;
+            szSelect += ")";
 
             try
             {
@@ -1769,7 +1785,8 @@ namespace Gestion_Mtps
             }
             catch (Exception ex)
             {
-                string szmess = ex.ToString();
+                string szmess = ex.ToString(); 
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
@@ -1803,6 +1820,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         /// <summary>
@@ -1855,6 +1873,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         internal void ObtenirListeCategories(ref List<string> lstSites)
