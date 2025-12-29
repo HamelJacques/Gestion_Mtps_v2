@@ -176,6 +176,8 @@ namespace Gestion_Mtps_v2
             {
                 string lecture = lstBxCategories.SelectedItem.ToString();
                 m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+                m_usager.IdSousCategorie = 0;
+                m_usager.IdSite = 0;
 
                 // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
                 ListerSousCategories();

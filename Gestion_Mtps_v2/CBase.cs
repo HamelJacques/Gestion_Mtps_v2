@@ -1709,6 +1709,7 @@ namespace Gestion_Mtps
             szSelect += ")";
 
             szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
+            #region try
             try
             {
                 m_DataTable = new DataTable();
@@ -1729,7 +1730,9 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                Logger lg = new Logger(mess, m_cheminLog);
             }
+            #endregion 
         }
 
         /// <summary>
@@ -1769,7 +1772,8 @@ namespace Gestion_Mtps
             }
             catch (Exception ex)
             {
-                string szmess = ex.ToString();
+                string szmess = ex.ToString(); 
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
@@ -1803,6 +1807,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         /// <summary>
@@ -1855,6 +1860,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         internal void ObtenirListeCategories(ref List<string> lstSites)
