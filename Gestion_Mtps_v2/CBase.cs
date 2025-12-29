@@ -1746,14 +1746,31 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
-            szSelect = "SELECT tblSites.NomSite FROM (jctCategorieSousCategorie " 
-            szSelect = "SELECT DISTINCT tblSites.NomSite FROM (jctUsagerCategorie "
-                     + "INNER JOIN (tblSites " 
-                     + "INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
-                         + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) " 
-                         + "INNER JOIN jctUsagerCategorie ON jctCategorieSousCategorie.IdCategorie = jctUsagerCategorie.IdCategorie " 
-                     + "WHERE (((jctUsagerCategorie.IdUsager)=" + U.IdUsager  + "))";
+            string szANDcatego = string.Empty;
+            string szAndSousCatego = string.Empty;
 
+            //szSelect = "SELECT distinct tblSites.NomSite FROM (jctCategorieSousCategorie "
+            //szSelect = "SELECT DISTINCT tblSites.NomSite FROM (jctUsagerCategorie "
+            //         + "INNER JOIN (jctCategorieSousCategorie INNER JOIN (tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
+            //         + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
+
+            //         + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
+
+            szSelect = "SELECT DISTINCT tblSites.NomSite "
+                + "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
+                + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
+
+            if (U.IdCategorie > 0)
+            {
+                szANDcatego = ")";
+                szANDcatego = "AND ((jctSousCategorieSite.IdCategorie)= " + U.IdCategorie + ")";
+            }
+            if (U.IdSousCategorie > 0)
+            {
+                szAndSousCatego = ")";
+                szAndSousCatego = "AND ((jctSousCategorieSite.IdSousCategorie)= " + U.IdSousCategorie + ")";
+            }
+            szSelect += szANDcatego + szAndSousCatego;
             try
             {
                 m_DataTable = new DataTable();
