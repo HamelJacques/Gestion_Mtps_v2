@@ -2410,7 +2410,8 @@ namespace Gestion_Mtps
                         }
 
                         // Assign transaction object for a pending local transaction.
-                        command.CommandText = "INSERT INTO jctSousCategorieSite VALUES (" + u.IdCategorie + "," + u.IdSousCategorie + ", " + idSite + ")";
+                        command.CommandText = "INSERT INTO jctSousCategorieSite VALUES("+ u.IdUsager + "," + u.IdCategorie + "," + u.IdSousCategorie + "," + idSite + ")";
+
                         command.ExecuteNonQuery();
 
                         // Commit the transaction.
