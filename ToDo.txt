@@ -9,6 +9,12 @@ Dans frmAjouter
    - Ouvrir avec le bouton ajouter enable false jusqu'à ce qu'il y ait du texte dans la nouvelle valeur
    - Colorer les boutons
 
+Dans CBase:
+  - Dans internal int ObtenirIdCategorie(string nom_Categorie) 
+      a) enlever throw new NotImplementedException()
+      b) ajouter un throw dans le catch
+
+
 ///////////////////////////////////////////////// BASH ///////////////////////////////////////
 Procédure de merge:
 # 1. Aller dans le dossier du projet
