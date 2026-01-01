@@ -43,6 +43,7 @@ namespace Gestion_Mtps_v2
             InitCategories();
             InitSousCategories();
             InitSites();
+            InitInfoSites();
         }       
         private void InitCategories()
         {
@@ -69,9 +70,36 @@ namespace Gestion_Mtps_v2
             btnAjoutSite.BackColor = Color.LightGreen;
             ListerLesSites();
         }
+        private void InitInfoSites()
+        {
+            grbxInfosSites.Text = "Informations";
+            grbxInfosSites.BackColor = Color.Yellow;
+            btnAjoutInfos.Text = "Ajouter";
+            btnAjoutInfos.BackColor = Color.LightGreen;
+            ActiveBtns();
+            InitDatagridInfos();
+            // Lire jctTblInfos pour voir si on a au moins une ligne pour l'usager
+            // lister les IdInfos en vue d'obtenir la liste correspondnte dans la table tblInfos
+            ListerLesIdInfos();
+            // Lister les informatons de la table tblInfos ayant ce 
+        }
+        private void ActiveBtns()
+        {
+            btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
+                && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
+        }
+        private void InitDatagridInfos()
+        {
+            dgInfos.Columns[0].Width = 150;
+        }
         private string ObtenirNomUsager()
         {
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
+        }
+        private void ListerLesIdInfos()
+        {
+            List<Int32 > lst = new List<Int32>();
+            lst = m_Choix.ObtenirListeIdInfos(m_usager);
         }
         private void ListerLesSites()
         {
@@ -79,6 +107,10 @@ namespace Gestion_Mtps_v2
             lstBxSites.Items.Clear();
             lst = m_Choix.ObtenirListeSites(m_usager);
             lstBxSites.Items.AddRange(lst.ToArray());
+        }
+        private void ListerLesInfosSites()
+        {
+            List<string> lst = new List<string>();
         }
         private void ListerSousCategories()
         {
@@ -101,7 +133,6 @@ namespace Gestion_Mtps_v2
         {
             this.Close();
         }
-
         private void btnAjoutCatego_Click(object sender, EventArgs e)
         {
             List<string> lst = new List<string>();
@@ -113,7 +144,6 @@ namespace Gestion_Mtps_v2
                 ListerCategories();
             }
         }
-
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
         {
             // Vérifier si une catégorie est sélectionnée, forcer la sélection
@@ -159,13 +189,11 @@ namespace Gestion_Mtps_v2
                     aj.ShowDialog();
                 }
             }
-            //if (lstBxSousCategories.SelectedIndex >= 0)
-            //{
-            //    List<string> lst = new List<string>();
-
-            //    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
-            //    aj.ShowDialog();
-            //}
+        }
+        private void btnAjoutInfos_Click(object sender, EventArgs e)
+        {
+            // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
+            // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
         }
         #endregion
         #region LES LISTBOXES
@@ -182,12 +210,16 @@ namespace Gestion_Mtps_v2
                 // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
                 ListerSousCategories();
                 ListerLesSites();
+                ActiveBtns();
             }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
+
+            m_usager.IdSite = 0;
             // lire la sélection
+
             try
             {
                 if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
@@ -202,17 +234,28 @@ namespace Gestion_Mtps_v2
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
                     ListerLesSites();
+                    ActiveBtns();
                 }                
             }
             catch (NullReferenceException nre) { return; }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
+        private void lstBxSites_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string lecture = lstBxSites.SelectedItem.ToString();
+                m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
-
+                ActiveBtns();
+            }
+            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            
+        }
         #endregion
 
         #endregion
 
-        
+
     }
 }
