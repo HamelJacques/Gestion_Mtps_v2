@@ -62,6 +62,12 @@
     <Compile Include="frmAjouts.Designer.cs">
       <DependentUpon>frmAjouts.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAjoutSiteInfos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAjoutSiteInfos.Designer.cs">
+      <DependentUpon>frmAjoutSiteInfos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmChoix.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     <Compile Include="Usager_v2.cs" />
     <EmbeddedResource Include="frmAjouts.resx">
       <DependentUpon>frmAjouts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAjoutSiteInfos.resx">
+      <DependentUpon>frmAjoutSiteInfos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmChoix.resx">
       <DependentUpon>frmChoix.cs</DependentUpon>

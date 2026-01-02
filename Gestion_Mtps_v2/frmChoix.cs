@@ -194,6 +194,8 @@ namespace Gestion_Mtps_v2
         {
             // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos();
+            AjoutSiteInfos .ShowDialog();
         }
         #endregion
         #region LES LISTBOXES
