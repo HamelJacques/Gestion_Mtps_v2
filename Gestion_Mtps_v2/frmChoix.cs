@@ -19,6 +19,11 @@ namespace Gestion_Mtps_v2
         private Choix m_Choix;
         private CBase m_maBD;
         private Ajouts m_Ajouts;
+        private enum Mode
+        {
+            Ajout = 0,
+            Modif
+        }
         #endregion
         #region CONSTRUCTEURS
         public frmChoix(ref Usager_v2 U, CBase bd)
@@ -194,7 +199,7 @@ namespace Gestion_Mtps_v2
         {
             // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
-            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos();
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout);
             AjoutSiteInfos .ShowDialog();
         }
         #endregion

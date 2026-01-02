@@ -132,6 +132,7 @@
             this.btnSauvegarde.TabIndex = 9;
             this.btnSauvegarde.Text = "btnSauvegarde";
             this.btnSauvegarde.UseVisualStyleBackColor = true;
+            this.btnSauvegarde.Click += new System.EventHandler(this.btnSauvegarde_Click);
             // 
             // frmAjoutSiteInfos
             // 
