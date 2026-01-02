@@ -45,10 +45,11 @@ namespace Gestion_Mtps_v2
             //m_maBD.ObtenirSousCategories(ref lst, U.IdUsager);
             return lst;
         }
-        
-        internal void AjouterUneCategorie(Usager_v2 m_usager)
-        {            
-            //throw new NotImplementedException();
+        internal List<int> ObtenirListeIdInfos(Usager_v2 m_usager)
+        {
+            List<Int32> lst = new List<Int32>();
+            m_maBD.ObtenirListeIdInfos(ref lst, m_usager);
+            return lst;
         }
 
         internal int ObtenirIdCategorie(string lecture)
@@ -79,6 +80,21 @@ namespace Gestion_Mtps_v2
                 return -1;
             }
         }
+        internal int ObtenirIdSite(string lecture)
+        {
+
+            try
+            {
+                int id = 0;
+                id = m_maBD.ObtenirIdSite(lecture);
+                return id;
+            }
+            catch (Exception e)
+            {
+                //Logger l'erreur
+                return -1;
+            }
+        }
 
         internal int ObtenirIdCategorie_UsagerSousCatego(Usager_v2 U)
         {
@@ -94,6 +110,9 @@ namespace Gestion_Mtps_v2
                 return -1;
             }
         }
+
+        
+
 
         #endregion
     }

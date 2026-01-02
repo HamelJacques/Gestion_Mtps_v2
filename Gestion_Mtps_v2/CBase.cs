@@ -1793,6 +1793,36 @@ namespace Gestion_Mtps
                 Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
+        internal void ObtenirListeIdInfos(ref List<int> lst, Usager_v2 m_usager)
+        {
+            int i = 0;
+            string szSelect =string.Empty;
+            string szANDcatego = string.Empty;
+            string szAndSousCatego = string.Empty;
+
+            szSelect = "SELECT DISTINCT jctTblInfos.IdInfos FROM jctTblInfos";
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lst.Add(Convert.ToInt32 ( m_DataTable.Rows[i]["IdInfos"]));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
+            }
+        }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
         {
             int i = 0;
@@ -2448,6 +2478,8 @@ namespace Gestion_Mtps
             }
             return ret;
         }
+
+        
 
 
         #endregion
