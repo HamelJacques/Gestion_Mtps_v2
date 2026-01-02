@@ -15,6 +15,10 @@ namespace Gestion_Mtps_v2
     {
         private Usager_v2 usager;
         private CBase maBD;
+        private int m_mode;
+        private string m_NomSite;
+        private string m_AdresseSite;
+        SiteInfos m_siteInfos;
         private enum Mode
         {
             Ajout = 0,
@@ -40,6 +44,8 @@ namespace Gestion_Mtps_v2
             this.maBD = maBD;
             InitializeComponent();
             InitFenetre(pos);
+            m_mode = mode;
+            m_siteInfos = new SiteInfos();
         }
 
         private void InitFenetre(FormStartPosition pos)
@@ -63,6 +69,17 @@ namespace Gestion_Mtps_v2
         private void btnSauvegarde_Click(object sender, EventArgs e)
         {
             //Je veux vérifier si on est en more ajout ou en mode modif
+            if (m_mode == 0)
+            {
+                // on ajoute
+            }
+            else
+            {
+                if(m_mode == 1)
+                {
+                    // on modifie
+                }
+            }
             // puis appeler CBase en conséquence
         }
         #endregion

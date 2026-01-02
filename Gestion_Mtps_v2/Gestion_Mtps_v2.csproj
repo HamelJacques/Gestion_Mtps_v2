@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajouts.cs" />
+    <Compile Include="AjoutSiteInfos.cs" />
     <Compile Include="CBase.cs" />
     <Compile Include="Choix.cs" />
     <Compile Include="Encriptage.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Ouverture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiteInfos.cs" />
     <Compile Include="Usager_v2.cs" />
     <EmbeddedResource Include="frmAjouts.resx">
       <DependentUpon>frmAjouts.cs</DependentUpon>
