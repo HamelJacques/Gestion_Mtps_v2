@@ -18,7 +18,9 @@ namespace Gestion_Mtps_v2
         private int m_mode;
         private string m_NomSite;
         private string m_AdresseSite;
+        private string m_cheminLog;
         SiteInfos m_siteInfos;
+        AjoutSiteInfos m_ASI;
         private enum Mode
         {
             Ajout = 0,
@@ -38,9 +40,10 @@ namespace Gestion_Mtps_v2
             //InitFenetre();
         }
 
-        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode)
+        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog)
         {
             this.usager = usager;
+            this.m_cheminLog = chlog;
             this.maBD = maBD;
             InitializeComponent();
             InitFenetre(pos);
@@ -68,19 +71,38 @@ namespace Gestion_Mtps_v2
 
         private void btnSauvegarde_Click(object sender, EventArgs e)
         {
+            bool reussite = false;
+            // Récolter les informations
+            LireLaPage();
+            m_ASI = new AjoutSiteInfos();
             //Je veux vérifier si on est en more ajout ou en mode modif
-            if (m_mode == 0)
+            try
             {
-                // on ajoute
-            }
-            else
-            {
-                if(m_mode == 1)
+                if (m_mode == 0)
                 {
-                    // on modifie
+                    // on ajoute
+                    reussite = m_ASI.AjouterNouveau(ref usager, ref maBD, ref m_siteInfos);
                 }
+                else
+                {
+                    if (m_mode == 1)
+                    {
+                        // on modifie
+                    }
+                }
+                // puis appeler CBase en conséquence
             }
-            // puis appeler CBase en conséquence
+            catch (Exception ex)
+            {
+                Logger lg = new Logger(ex.ToString(), m_cheminLog);
+            }
+            
+        }
+
+        private void LireLaPage()
+        {
+            m_siteInfos.NomSite=txtNomSite.Text;
+            //throw new NotImplementedException();
         }
         #endregion
     }

@@ -17,9 +17,9 @@ namespace Gestion_Mtps_v2
         {
             //m_siteInfos = new SiteInfos();
         }
-        public bool AjouterNouveau(ref Usager_v2 usager, ref CBase BD)
+        public bool AjouterNouveau(ref Usager_v2 usager, ref CBase BD, ref SiteInfos m_siteInfos)
         {
-            //BD.AjouterCombinaisonSecret(usager, m_siteInfos);
+            bool ret = BD.AjouterCombinaisonSecret(usager, m_siteInfos);
             return false;
         }
     }

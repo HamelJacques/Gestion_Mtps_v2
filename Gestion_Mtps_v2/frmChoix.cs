@@ -15,6 +15,7 @@ namespace Gestion_Mtps_v2
     public partial class frmChoix : Form
     {
         #region DONNÉES MEMBRES
+        private string m_CheminLog;
         private Usager_v2 m_usager;
         private Choix m_Choix;
         private CBase m_maBD;
@@ -26,12 +27,13 @@ namespace Gestion_Mtps_v2
         }
         #endregion
         #region CONSTRUCTEURS
-        public frmChoix(ref Usager_v2 U, CBase bd)
+        public frmChoix(ref Usager_v2 U, CBase bd, string chlog)
         {
             InitializeComponent();
             m_usager = new Usager_v2();
             m_usager = U;
             m_maBD = bd;
+            m_CheminLog = chlog;
             InitChoix();
         }
         #endregion
@@ -199,7 +201,7 @@ namespace Gestion_Mtps_v2
         {
             // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
-            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout);
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
             AjoutSiteInfos .ShowDialog();
         }
         #endregion

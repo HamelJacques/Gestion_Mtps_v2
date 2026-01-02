@@ -138,7 +138,7 @@ namespace Gestion_Mtps_v2
             {
                 m_UsagerSelectionne.IdUsager = iSelect;
                 m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase);
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
                 // Ouvrir la nouvelle fenêtre de choix
                 fen.ShowDialog();
             }

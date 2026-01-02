@@ -2474,12 +2474,27 @@ namespace Gestion_Mtps
             {
                 string mess = ex.ToString();
                 throw;
-                //throw (new Exception(mess));
             }
             return ret;
         }
 
-        
+        internal bool AjouterCombinaisonSecret(Usager_v2 usager, SiteInfos m_siteInfos)
+        {
+            string szSelect;
+            bool reussite = false;
+            
+            try
+            {
+                return reussite;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw ;
+            }
+        }
+
+
 
 
         #endregion
