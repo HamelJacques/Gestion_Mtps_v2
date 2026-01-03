@@ -20,6 +20,7 @@ namespace Gestion_Mtps_v2
         private Choix m_Choix;
         private CBase m_maBD;
         private Ajouts m_Ajouts;
+        private List<SiteInfos> m_lstSiteInfos;
         private enum Mode
         {
             Ajout = 0,
@@ -34,6 +35,7 @@ namespace Gestion_Mtps_v2
             m_usager = U;
             m_maBD = bd;
             m_CheminLog = chlog;
+            m_lstSiteInfos = new List<SiteInfos>();
             InitChoix();
         }
         #endregion
@@ -88,7 +90,8 @@ namespace Gestion_Mtps_v2
             // Lire jctTblInfos pour voir si on a au moins une ligne pour l'usager
             // lister les IdInfos en vue d'obtenir la liste correspondnte dans la table tblInfos
             ListerLesIdInfos();
-            // Lister les informatons de la table tblInfos ayant ce 
+            // Lister les informatons de la table tblInfos ayant les Ids de la liste des m_lstInfoSites
+            ListerLesInfosSites();
         }
         private void ActiveBtns()
         {
@@ -97,7 +100,7 @@ namespace Gestion_Mtps_v2
         }
         private void InitDatagridInfos()
         {
-            dgInfos.Columns[0].Width = 150;
+            //dgInfos.Columns[0].Width = 150;
         }
         private string ObtenirNomUsager()
         {
@@ -118,7 +121,27 @@ namespace Gestion_Mtps_v2
         private void ListerLesInfosSites()
         {
             List<string> lst = new List<string>();
+            m_lstSiteInfos = new List<SiteInfos>();
+            dgInfos.Rows.Clear();
+            //dgInfos.Columns.Clear();
+
+            m_Choix.ObtenirLesSitesInfos(ref m_lstSiteInfos, m_usager);
+            AfficherLesInfosSites();
         }
+
+        private void AfficherLesInfosSites()
+        {
+            dgInfos.Rows.Clear();
+            dgInfos.DataSource = m_lstSiteInfos;
+
+            //dgInfos.Columns["IdInfos"].HeaderText = "Id";
+            //dgInfos.Columns["IdInfos"].Width = 25;
+            dgInfos.Columns["NomSite"].HeaderText = "Nom du site";
+            dgInfos.Columns["NomSite"].Width = 150;
+            dgInfos.Columns["Adresse"].Width = 150;
+
+        }
+
         private void ListerSousCategories()
         {
             List<string> lst = new List<string>();

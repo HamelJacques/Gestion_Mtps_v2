@@ -26,7 +26,21 @@ namespace Gestion_Mtps_v2
             get { return m_NomSite; }
             set { m_NomSite = value; }
         }
-
+        public string Adresse
+        {
+            get { return m_AdresseSite; }
+            set { m_AdresseSite = value; }
+        }
+        public string Identifiant
+        {
+            get { return m_Identifiant; }
+            set { m_Identifiant = value; }
+        }
+        public string MotPass
+        {
+            get { return m_MtPss; }
+            set { m_MtPss = value; }
+        }
 
         #endregion
         #region CONSTRUCTEURS

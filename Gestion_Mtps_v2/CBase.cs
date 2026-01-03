@@ -2526,7 +2526,14 @@ namespace Gestion_Mtps
                         command.Transaction = transaction;
 
                         // Execute the commands.
-                        command.CommandText = "INSERT INTO tblInfos VALUES (" + prochainNo + ", '" + m_siteInfos.NomSite + "')";
+                        command.CommandText = "INSERT INTO tblInfos VALUES ("
+                                                 + prochainNo + ","
+                                                 + " '" + m_siteInfos.NomSite + "',"
+                                                 + " '" + m_siteInfos.Adresse + "', "
+                                                 + " '" + m_siteInfos.Identifiant + "', "
+                                                 + " '" + m_siteInfos.MotPass
+                                                 + "')";
+
                         command.ExecuteNonQuery();
 
                         // Assign transaction object for a pending local transaction.
@@ -2572,6 +2579,32 @@ namespace Gestion_Mtps
             }
             
             return lstIds;
+        }
+
+        internal void ObtenirLesSitesInfos(ref List<SiteInfos> m_lstSiteInfos, Usager_v2 usager)
+        {
+            string szSelect;
+            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count > 0)
+            {
+                
+                for(int i = 0; i < m_DataTable.Rows.Count; i++)
+                {
+                    SiteInfos unsite = new SiteInfos();
+                    DataRow row = m_DataTable.Rows[i];
+                    unsite.Id = (int)row["IdInfos"];
+                    unsite.NomSite = row["NomSite"].ToString();
+                    unsite.Adresse = row["Adresse"].ToString();
+
+                    m_lstSiteInfos.Add(unsite);
+                }
+                
+            }
         }
 
 

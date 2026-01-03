@@ -39,9 +39,8 @@
             this.btnAjoutSite = new System.Windows.Forms.Button();
             this.lstBxSites = new System.Windows.Forms.ListBox();
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
-            this.btnAjoutInfos = new System.Windows.Forms.Button();
             this.dgInfos = new System.Windows.Forms.DataGridView();
-            this.NomSite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAjoutInfos = new System.Windows.Forms.Button();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -171,6 +170,14 @@
             this.grbxInfosSites.TabStop = false;
             this.grbxInfosSites.Text = "grbxInfosSites";
             // 
+            // dgInfos
+            // 
+            this.dgInfos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgInfos.Location = new System.Drawing.Point(113, 11);
+            this.dgInfos.Name = "dgInfos";
+            this.dgInfos.Size = new System.Drawing.Size(767, 103);
+            this.dgInfos.TabIndex = 1;
+            // 
             // btnAjoutInfos
             // 
             this.btnAjoutInfos.Location = new System.Drawing.Point(6, 30);
@@ -180,21 +187,6 @@
             this.btnAjoutInfos.Text = "btnAjoutInfos";
             this.btnAjoutInfos.UseVisualStyleBackColor = true;
             this.btnAjoutInfos.Click += new System.EventHandler(this.btnAjoutInfos_Click);
-            // 
-            // dgInfos
-            // 
-            this.dgInfos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgInfos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NomSite});
-            this.dgInfos.Location = new System.Drawing.Point(113, 11);
-            this.dgInfos.Name = "dgInfos";
-            this.dgInfos.Size = new System.Drawing.Size(767, 103);
-            this.dgInfos.TabIndex = 1;
-            // 
-            // NomSite
-            // 
-            this.NomSite.HeaderText = "Nom";
-            this.NomSite.Name = "NomSite";
             // 
             // frmChoix
             // 
@@ -232,6 +224,5 @@
         private System.Windows.Forms.GroupBox grbxInfosSites;
         private System.Windows.Forms.Button btnAjoutInfos;
         private System.Windows.Forms.DataGridView dgInfos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NomSite;
     }
 }

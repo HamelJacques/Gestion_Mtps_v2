@@ -102,6 +102,9 @@ namespace Gestion_Mtps_v2
         private void LireLaPage()
         {
             m_siteInfos.NomSite=txtNomSite.Text;
+            m_siteInfos.Adresse = txtAdresse.Text;
+            m_siteInfos.Identifiant = txtIdentifiant.Text;
+            m_siteInfos.MotPass = txtMotPass.Text;
             //throw new NotImplementedException();
         }
         #endregion

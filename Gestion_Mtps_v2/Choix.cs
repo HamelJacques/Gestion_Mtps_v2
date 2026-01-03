@@ -51,6 +51,10 @@ namespace Gestion_Mtps_v2
             m_maBD.ObtenirListeIdInfos(ref lst, m_usager);
             return lst;
         }
+        internal void ObtenirLesSitesInfos(ref List<SiteInfos> m_lstSiteInfos, Usager_v2 usager)
+        {
+            m_maBD.ObtenirLesSitesInfos(ref  m_lstSiteInfos, usager);
+        }
 
         internal int ObtenirIdCategorie(string lecture)
         {
@@ -112,6 +116,8 @@ namespace Gestion_Mtps_v2
         }
 
         
+
+
 
 
         #endregion
