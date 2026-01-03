@@ -1,6 +1,7 @@
 ﻿using Gestion_Mtps_v2;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -2237,7 +2238,36 @@ namespace Gestion_Mtps
             //return 0;
             //throw new NotImplementedException();
         }
+        // retourne le prochain id de sous catégorie associé à un ensemble de détails de site
+        private int ProchainNoInfos()
+        {
+            string szSelect;
 
+            szSelect = "SELECT COUNT (IdInfos) FROM tblInfos";
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                m_DataTable.Clear();
+                szSelect = "SELECT MAX(IdInfos) FROM tblInfos";// where IdSousCatgorie > 0";
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                object val = m_DataTable.Rows[0][0];
+                int nb = val == DBNull.Value ? 0 : Convert.ToInt32(val);
+
+                //Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+                return Convert.ToInt32(nb) + 1;
+            }
+            //return 0;
+        }
         internal int UnSeulSite(int idsite)
         {
             int i = 0;
@@ -2466,18 +2496,82 @@ namespace Gestion_Mtps
 
         internal bool AjouterCombinaisonSecret(Usager_v2 usager, SiteInfos m_siteInfos)
         {
-            string szSelect;
+            string szSelect = string.Empty;
             bool reussite = false;
-            
+            int prochainNo = 0;
             try
             {
-                return reussite;
+                // a) Obtenir le prochain Id de tblInfos, conserver localement
+                prochainNo = ProchainNoInfos();
+                //vérifier si la combinaison existe déjà dans jctTblInfos
+                List<int> ids = IdDeCombinaison(usager);
+                //  si oui, s'assurer que le nom du site est différent
+                //  si nom du site est == on bloque et on averti
+                //  si différent, 
+
+
+                // b) Faire le insert into tblInfos ET le insert into jctTblInfos
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        // Execute the commands.
+                        command.CommandText = "INSERT INTO tblInfos VALUES (" + prochainNo + ", '" + m_siteInfos.NomSite + "')";
+                        command.ExecuteNonQuery();
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctTblInfos VALUES(" + prochainNo + "," + usager.IdUsager + "," + usager.IdCategorie + "," + usager.IdSousCategorie + "," + usager.IdSite + ")";
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        reussite = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
+                    return reussite;
             }
             catch (Exception ex)
             {
                 string mess = ex.ToString();
                 throw ;
             }
+        }
+
+        private List<int> IdDeCombinaison(Usager_v2 usager)
+        {
+            string szSelect;
+            List<int> lstIds = new List<int>();
+            szSelect = "SELECT IdInfos FROM jctTblInfos as jct WHERE jct.IdUsager = " + usager.IdUsager;
+            // Ajouter les autres champs de la combinaison
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in m_DataTable.Rows)
+                {                    
+                    lstIds.Add(Convert.ToInt32(row["IdInfos"]));
+                }
+            }
+            
+            return lstIds;
         }
 
 

@@ -19,7 +19,15 @@ namespace Gestion_Mtps_v2
         }
         public bool AjouterNouveau(ref Usager_v2 usager, ref CBase BD, ref SiteInfos m_siteInfos)
         {
-            bool ret = BD.AjouterCombinaisonSecret(usager, m_siteInfos);
+            try
+            {
+                bool ret = BD.AjouterCombinaisonSecret(usager, m_siteInfos);
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
             return false;
         }
     }

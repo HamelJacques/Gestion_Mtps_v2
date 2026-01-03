@@ -211,17 +211,27 @@ namespace Gestion_Mtps_v2
             // lire la sélection
             try
             {
-                string lecture = lstBxCategories.SelectedItem.ToString();
-                m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
-                m_usager.IdSousCategorie = 0;
-                m_usager.IdSite = 0;
+                if (lstBxCategories.SelectedItem != null)
+                {
+                    string lecture = lstBxCategories.SelectedItem.ToString();
+                    m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+                    m_usager.IdSousCategorie = 0;
+                    m_usager.IdSite = 0;
 
-                // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
-                ListerSousCategories();
-                ListerLesSites();
-                ActiveBtns();
+                    // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
+                    ListerSousCategories();
+                    ListerLesSites();
+                    ActiveBtns();
+                }
+                else
+                {
+                    // Aucun item sélectionné
+                }                
             }
-            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            catch (Exception ex) { 
+                string msg = ex.Message.ToString(); 
+                
+            }
         }
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
