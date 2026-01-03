@@ -27,14 +27,8 @@ namespace Gestion_Mtps
         private OleDbConnection m_cnADONetConnection;
         private OleDbDataAdapter m_dataAdatper;
         private DataTable m_DataTable;
-       
-        //public DataTable pDataTable;
-        ////private OleDbDataReader m_datareader;
-        //private OleDbCommand m_cmCommand;
-        //private OleDbCommandBuilder m_cbCommandBuilder;
-        //private DataSet m_ds;
-        //public string m_TableChoisie;// la table de la base de donnée
-        //private Logger /*lg*/;
+
+        private Logger lg;
 
         private bool m_estConnectee;
         #endregion
@@ -831,7 +825,7 @@ namespace Gestion_Mtps
             string szSelect; //, szWHERE;
             List<string> lstUsagers = new List<string>();
             szSelect = "SELECT distinct NomUsager " + " FROM tblUsagers";// +" ORDER BY " + szChampCbo;
-            Logger lg = new Logger(szSelect, m_cheminLog);
+            //Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -970,7 +964,7 @@ namespace Gestion_Mtps
             string szSelect;
             string retour = string.Empty;
             szSelect = "SELECT NomUsager " + " FROM tblUsagers where IdUsager = " + idUsager;
-            Logger lg = new Logger(szSelect, m_cheminLog);
+            //Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -2060,7 +2054,7 @@ namespace Gestion_Mtps
             // Récupère le dossier parent
             string parent = AppContext.BaseDirectory;
             m_cheminLog = parent + "application.log";
-            lg = new Logger("Dans InitBase()", m_cheminLog);
+            //lg = new Logger("Dans InitBase()", m_cheminLog);
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
@@ -2075,14 +2069,11 @@ namespace Gestion_Mtps
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
-                    m_estConnectee = true;
-                    
+                    m_estConnectee = true;                    
                 }
-                lg = new Logger("Connecté = " + m_estConnectee.ToString(), m_cheminLog);
+                lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
                 //string cheminexe = connectionString;
-
-
-                Console.WriteLine(m_cheminLog);
+                //Console.WriteLine(m_cheminLog);
                 // Résultat : D:\Develop\Gestion\Gestion\bin
                 
                 return m_estConnectee;
@@ -2105,7 +2096,6 @@ namespace Gestion_Mtps
                 return true;
             }
             return ret;
-            //throw new NotImplementedException();
         }
         private Int32 ProchainIdUsager()
         {
@@ -2184,8 +2174,7 @@ namespace Gestion_Mtps
             m_dataAdatper.Fill(m_DataTable);
 
             if (m_DataTable.Rows.Count == 0)
-            {
-                
+            {                
                 return 1;
             }
             else
@@ -2200,7 +2189,6 @@ namespace Gestion_Mtps
 
                 //Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
                 return Convert.ToInt32(nb) + 1;
-                //throw new NotImplementedException();
             }
 
             //return 0;
@@ -2277,7 +2265,6 @@ namespace Gestion_Mtps
                 return 100;
             }
         }
-
         internal void ObtenirListeTables(ref List<string> list)
         {
             try
@@ -2313,7 +2300,6 @@ namespace Gestion_Mtps
                 // Tu peux aussi logger ou afficher le message ici
             }
         }
-
         internal int Ajouter(string m_Type, string text)
         {
             return 0;
