@@ -2600,6 +2600,8 @@ namespace Gestion_Mtps
                     unsite.Id = (int)row["IdInfos"];
                     unsite.NomSite = row["NomSite"].ToString();
                     unsite.Adresse = row["Adresse"].ToString();
+                    unsite.Identifiant = row["Identifiant"].ToString();
+                    unsite.MotPass = row["MotPass"].ToString();
 
                     m_lstSiteInfos.Add(unsite);
                 }

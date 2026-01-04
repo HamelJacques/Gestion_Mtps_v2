@@ -138,7 +138,11 @@ namespace Gestion_Mtps_v2
             //dgInfos.Columns["IdInfos"].Width = 25;
             dgInfos.Columns["NomSite"].HeaderText = "Nom du site";
             dgInfos.Columns["NomSite"].Width = 150;
-            dgInfos.Columns["Adresse"].Width = 150;
+            dgInfos.Columns["Adresse"].Width = 230;
+
+            dgInfos.Columns["Identifiant"].Width = 225; 
+            dgInfos.Columns["MotPass"].Width = 225;
+            dgInfos.Columns["MotPass"].HeaderText = "Mot de passe";
 
         }
 
