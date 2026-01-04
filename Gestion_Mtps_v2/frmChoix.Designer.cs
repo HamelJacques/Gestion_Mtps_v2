@@ -41,6 +41,7 @@
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
             this.dgInfos = new System.Windows.Forms.DataGridView();
             this.btnAjoutInfos = new System.Windows.Forms.Button();
+            this.txtInfosSupp = new System.Windows.Forms.TextBox();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -54,9 +55,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFermer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFermer.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFermer.Location = new System.Drawing.Point(22, 403);
+            this.btnFermer.Location = new System.Drawing.Point(22, 535);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(1079, 32);
+            this.btnFermer.Size = new System.Drawing.Size(1317, 32);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -69,7 +70,7 @@
             this.grbxCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbxCategories.Location = new System.Drawing.Point(12, 12);
             this.grbxCategories.Name = "grbxCategories";
-            this.grbxCategories.Size = new System.Drawing.Size(340, 159);
+            this.grbxCategories.Size = new System.Drawing.Size(284, 159);
             this.grbxCategories.TabIndex = 1;
             this.grbxCategories.TabStop = false;
             this.grbxCategories.Text = "grbxCategories";
@@ -78,7 +79,7 @@
             // 
             this.btnAjoutCatego.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutCatego.Name = "btnAjoutCatego";
-            this.btnAjoutCatego.Size = new System.Drawing.Size(127, 38);
+            this.btnAjoutCatego.Size = new System.Drawing.Size(71, 38);
             this.btnAjoutCatego.TabIndex = 3;
             this.btnAjoutCatego.Text = "btnAjoutCatego";
             this.btnAjoutCatego.UseVisualStyleBackColor = true;
@@ -99,9 +100,9 @@
             this.grbxSousCategories.Controls.Add(this.btnAjoutSousCatego);
             this.grbxSousCategories.Controls.Add(this.lstBxSousCategories);
             this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxSousCategories.Location = new System.Drawing.Point(390, 12);
+            this.grbxSousCategories.Location = new System.Drawing.Point(12, 177);
             this.grbxSousCategories.Name = "grbxSousCategories";
-            this.grbxSousCategories.Size = new System.Drawing.Size(340, 159);
+            this.grbxSousCategories.Size = new System.Drawing.Size(284, 159);
             this.grbxSousCategories.TabIndex = 2;
             this.grbxSousCategories.TabStop = false;
             this.grbxSousCategories.Text = "grbxSousCategories";
@@ -110,7 +111,7 @@
             // 
             this.btnAjoutSousCatego.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutSousCatego.Name = "btnAjoutSousCatego";
-            this.btnAjoutSousCatego.Size = new System.Drawing.Size(127, 38);
+            this.btnAjoutSousCatego.Size = new System.Drawing.Size(71, 38);
             this.btnAjoutSousCatego.TabIndex = 3;
             this.btnAjoutSousCatego.Text = "btnAjoutSousCatego";
             this.btnAjoutSousCatego.UseVisualStyleBackColor = true;
@@ -131,9 +132,9 @@
             this.grbxSites.Controls.Add(this.btnAjoutSite);
             this.grbxSites.Controls.Add(this.lstBxSites);
             this.grbxSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxSites.Location = new System.Drawing.Point(761, 12);
+            this.grbxSites.Location = new System.Drawing.Point(12, 353);
             this.grbxSites.Name = "grbxSites";
-            this.grbxSites.Size = new System.Drawing.Size(340, 159);
+            this.grbxSites.Size = new System.Drawing.Size(284, 159);
             this.grbxSites.TabIndex = 4;
             this.grbxSites.TabStop = false;
             this.grbxSites.Text = "grbxSites";
@@ -142,7 +143,7 @@
             // 
             this.btnAjoutSite.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutSite.Name = "btnAjoutSite";
-            this.btnAjoutSite.Size = new System.Drawing.Size(127, 38);
+            this.btnAjoutSite.Size = new System.Drawing.Size(71, 38);
             this.btnAjoutSite.TabIndex = 3;
             this.btnAjoutSite.Text = "btnAjoutSite";
             this.btnAjoutSite.UseVisualStyleBackColor = true;
@@ -166,9 +167,9 @@
             this.grbxInfosSites.Controls.Add(this.dgInfos);
             this.grbxInfosSites.Controls.Add(this.btnAjoutInfos);
             this.grbxInfosSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxInfosSites.Location = new System.Drawing.Point(12, 177);
+            this.grbxInfosSites.Location = new System.Drawing.Point(323, 20);
             this.grbxInfosSites.Name = "grbxInfosSites";
-            this.grbxInfosSites.Size = new System.Drawing.Size(1100, 146);
+            this.grbxInfosSites.Size = new System.Drawing.Size(1016, 218);
             this.grbxInfosSites.TabIndex = 5;
             this.grbxInfosSites.TabStop = false;
             this.grbxInfosSites.Text = "grbxInfosSites";
@@ -181,7 +182,7 @@
             this.dgInfos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgInfos.Location = new System.Drawing.Point(113, 11);
             this.dgInfos.Name = "dgInfos";
-            this.dgInfos.Size = new System.Drawing.Size(976, 129);
+            this.dgInfos.Size = new System.Drawing.Size(892, 263);
             this.dgInfos.TabIndex = 1;
             // 
             // btnAjoutInfos
@@ -194,11 +195,20 @@
             this.btnAjoutInfos.UseVisualStyleBackColor = true;
             this.btnAjoutInfos.Click += new System.EventHandler(this.btnAjoutInfos_Click);
             // 
+            // txtInfosSupp
+            // 
+            this.txtInfosSupp.Location = new System.Drawing.Point(351, 334);
+            this.txtInfosSupp.Multiline = true;
+            this.txtInfosSupp.Name = "txtInfosSupp";
+            this.txtInfosSupp.Size = new System.Drawing.Size(988, 159);
+            this.txtInfosSupp.TabIndex = 6;
+            // 
             // frmChoix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 447);
+            this.ClientSize = new System.Drawing.Size(1369, 579);
+            this.Controls.Add(this.txtInfosSupp);
             this.Controls.Add(this.grbxInfosSites);
             this.Controls.Add(this.grbxSites);
             this.Controls.Add(this.grbxSousCategories);
@@ -212,6 +222,7 @@
             this.grbxInfosSites.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgInfos)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -230,5 +241,6 @@
         private System.Windows.Forms.GroupBox grbxInfosSites;
         private System.Windows.Forms.Button btnAjoutInfos;
         private System.Windows.Forms.DataGridView dgInfos;
+        private System.Windows.Forms.TextBox txtInfosSupp;
     }
 }

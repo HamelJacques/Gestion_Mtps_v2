@@ -66,7 +66,7 @@ namespace Gestion_Mtps_v2
         private void InitSousCategories()
         {
             grbxSousCategories.Text = "Sous catégories";
-            grbxSousCategories.BackColor = Color.LightBlue;
+            grbxSousCategories.BackColor = Color.LightCyan;
             btnAjoutSousCatego.Text = "Ajouter";
             btnAjoutSousCatego.BackColor = Color.LightGreen;
             ListerSousCategories();
