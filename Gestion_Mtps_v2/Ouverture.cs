@@ -61,7 +61,7 @@ namespace Gestion_Mtps_v2
             //m_Chemin_BD= string.Empty;
             //TestModifString("Chemin exe");
             ObtenirCheminExe();
-            lg = new Logger("Dans InitOuverture()", m_CheminExe + "application.log");
+            //lg = new Logger("Dans InitOuverture()", m_CheminExe + "application.log");
             m_List_Usagers = new List<string>();
             Init_LaBD();
             ObtenirLesUsagers();

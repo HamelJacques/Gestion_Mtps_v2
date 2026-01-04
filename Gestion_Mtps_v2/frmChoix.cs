@@ -15,18 +15,27 @@ namespace Gestion_Mtps_v2
     public partial class frmChoix : Form
     {
         #region DONNÉES MEMBRES
+        private string m_CheminLog;
         private Usager_v2 m_usager;
         private Choix m_Choix;
         private CBase m_maBD;
         private Ajouts m_Ajouts;
+        private List<SiteInfos> m_lstSiteInfos;
+        private enum Mode
+        {
+            Ajout = 0,
+            Modif
+        }
         #endregion
         #region CONSTRUCTEURS
-        public frmChoix(ref Usager_v2 U, CBase bd)
+        public frmChoix(ref Usager_v2 U, CBase bd, string chlog)
         {
             InitializeComponent();
             m_usager = new Usager_v2();
             m_usager = U;
             m_maBD = bd;
+            m_CheminLog = chlog;
+            m_lstSiteInfos = new List<SiteInfos>();
             InitChoix();
         }
         #endregion
@@ -81,7 +90,8 @@ namespace Gestion_Mtps_v2
             // Lire jctTblInfos pour voir si on a au moins une ligne pour l'usager
             // lister les IdInfos en vue d'obtenir la liste correspondnte dans la table tblInfos
             ListerLesIdInfos();
-            // Lister les informatons de la table tblInfos ayant ce 
+            // Lister les informatons de la table tblInfos ayant les Ids de la liste des m_lstInfoSites
+            ListerLesInfosSites();
         }
         private void ActiveBtns()
         {
@@ -90,7 +100,7 @@ namespace Gestion_Mtps_v2
         }
         private void InitDatagridInfos()
         {
-            dgInfos.Columns[0].Width = 150;
+            //dgInfos.Columns[0].Width = 150;
         }
         private string ObtenirNomUsager()
         {
@@ -111,7 +121,27 @@ namespace Gestion_Mtps_v2
         private void ListerLesInfosSites()
         {
             List<string> lst = new List<string>();
+            m_lstSiteInfos = new List<SiteInfos>();
+            dgInfos.Rows.Clear();
+            //dgInfos.Columns.Clear();
+
+            m_Choix.ObtenirLesSitesInfos(ref m_lstSiteInfos, m_usager);
+            AfficherLesInfosSites();
         }
+
+        private void AfficherLesInfosSites()
+        {
+            dgInfos.Rows.Clear();
+            dgInfos.DataSource = m_lstSiteInfos;
+
+            //dgInfos.Columns["IdInfos"].HeaderText = "Id";
+            //dgInfos.Columns["IdInfos"].Width = 25;
+            dgInfos.Columns["NomSite"].HeaderText = "Nom du site";
+            dgInfos.Columns["NomSite"].Width = 150;
+            dgInfos.Columns["Adresse"].Width = 150;
+
+        }
+
         private void ListerSousCategories()
         {
             List<string> lst = new List<string>();
@@ -194,6 +224,8 @@ namespace Gestion_Mtps_v2
         {
             // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
+            AjoutSiteInfos .ShowDialog();
         }
         #endregion
         #region LES LISTBOXES
@@ -202,17 +234,27 @@ namespace Gestion_Mtps_v2
             // lire la sélection
             try
             {
-                string lecture = lstBxCategories.SelectedItem.ToString();
-                m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
-                m_usager.IdSousCategorie = 0;
-                m_usager.IdSite = 0;
+                if (lstBxCategories.SelectedItem != null)
+                {
+                    string lecture = lstBxCategories.SelectedItem.ToString();
+                    m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+                    m_usager.IdSousCategorie = 0;
+                    m_usager.IdSite = 0;
 
-                // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
-                ListerSousCategories();
-                ListerLesSites();
-                ActiveBtns();
+                    // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
+                    ListerSousCategories();
+                    ListerLesSites();
+                    ActiveBtns();
+                }
+                else
+                {
+                    // Aucun item sélectionné
+                }                
             }
-            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            catch (Exception ex) { 
+                string msg = ex.Message.ToString(); 
+                
+            }
         }
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {

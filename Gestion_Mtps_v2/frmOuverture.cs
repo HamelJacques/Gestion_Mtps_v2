@@ -63,7 +63,7 @@ namespace Gestion_Mtps_v2
             
 
             m_CheminLog = O.ChExe + "application.log";
-            m_lg = new Logger("Dans InitForm", m_CheminLog);
+            //m_lg = new Logger("Dans InitForm", m_CheminLog);
             this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
             lblChBD.Text = O.ChBD + O.LaBase.BdConnecte.ToString();
             AjusteCouleurFenere();
@@ -137,8 +137,8 @@ namespace Gestion_Mtps_v2
             else
             {
                 m_UsagerSelectionne.IdUsager = iSelect;
-                m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase);
+                //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
                 // Ouvrir la nouvelle fenêtre de choix
                 fen.ShowDialog();
             }

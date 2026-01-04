@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajouts.cs" />
+    <Compile Include="AjoutSiteInfos.cs" />
     <Compile Include="CBase.cs" />
     <Compile Include="Choix.cs" />
     <Compile Include="Encriptage.cs" />
@@ -61,6 +62,12 @@
     </Compile>
     <Compile Include="frmAjouts.Designer.cs">
       <DependentUpon>frmAjouts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAjoutSiteInfos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAjoutSiteInfos.Designer.cs">
+      <DependentUpon>frmAjoutSiteInfos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmChoix.cs">
       <SubType>Form</SubType>
@@ -78,9 +85,13 @@
     <Compile Include="Ouverture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiteInfos.cs" />
     <Compile Include="Usager_v2.cs" />
     <EmbeddedResource Include="frmAjouts.resx">
       <DependentUpon>frmAjouts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAjoutSiteInfos.resx">
+      <DependentUpon>frmAjoutSiteInfos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmChoix.resx">
       <DependentUpon>frmChoix.cs</DependentUpon>
