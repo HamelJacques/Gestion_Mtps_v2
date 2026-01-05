@@ -2531,7 +2531,8 @@ namespace Gestion_Mtps
                                                  + " '" + m_siteInfos.NomSite + "',"
                                                  + " '" + m_siteInfos.Adresse + "', "
                                                  + " '" + m_siteInfos.Identifiant + "', "
-                                                 + " '" + m_siteInfos.MotPass
+                                                 + " '" + m_siteInfos.MotPass + "', "
+                                                 + " '" + m_siteInfos.InfosCompl
                                                  + "')";
 
                         command.ExecuteNonQuery();

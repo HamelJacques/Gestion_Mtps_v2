@@ -14,6 +14,7 @@ namespace Gestion_Mtps_v2
         private string m_AdresseSite;
         private string m_Identifiant;
         private string m_MtPss;
+        private string m_InfosCompl;
         #endregion
         #region PROPRIÉTÉS
         public int Id
@@ -41,7 +42,11 @@ namespace Gestion_Mtps_v2
             get { return m_MtPss; }
             set { m_MtPss = value; }
         }
-
+        public string InfosCompl
+        {
+            get { return m_InfosCompl; }
+            set { m_InfosCompl = value; }
+        }
         #endregion
         #region CONSTRUCTEURS
         public SiteInfos() 

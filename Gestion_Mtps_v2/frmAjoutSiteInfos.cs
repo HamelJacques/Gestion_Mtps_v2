@@ -37,7 +37,6 @@ namespace Gestion_Mtps_v2
         public frmAjoutSiteInfos(ref Usager_v2 m_usager)
         {
             InitializeComponent();
-            //InitFenetre();
         }
 
         public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog)
@@ -62,6 +61,7 @@ namespace Gestion_Mtps_v2
             lblIdentifiant.Text = "Identifiant:";
             lblMotPassse.Text = "Mot de passe:";
             lblNomSite.Text = "Nom du site:";
+            lblInfosCompl.Text = "Informations" + Environment.NewLine +"complémemntaires";
             this.StartPosition = pos;
         }
         #region LES BOUTONS
@@ -106,13 +106,16 @@ namespace Gestion_Mtps_v2
             
         }
 
+        /// <summary>
+        /// Lecture des informations en vue de la sauvegarde
+        /// </summary>
         private void LireLaPage()
         {
             m_siteInfos.NomSite=txtNomSite.Text;
             m_siteInfos.Adresse = txtAdresse.Text;
             m_siteInfos.Identifiant = txtIdentifiant.Text;
             m_siteInfos.MotPass = txtMotPass.Text;
-            //throw new NotImplementedException();
+            m_siteInfos.InfosCompl = txtInfosComplementaires .Text;
         }
         #endregion
     }

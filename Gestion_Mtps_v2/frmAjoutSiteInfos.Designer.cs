@@ -38,6 +38,8 @@
             this.txtIdentifiant = new System.Windows.Forms.TextBox();
             this.txtMotPass = new System.Windows.Forms.TextBox();
             this.btnSauvegarde = new System.Windows.Forms.Button();
+            this.txtInfosComplementaires = new System.Windows.Forms.TextBox();
+            this.lblInfosCompl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnFermer
@@ -45,7 +47,7 @@
             this.btnFermer.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(12, 381);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(776, 57);
+            this.btnFermer.Size = new System.Drawing.Size(774, 57);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -96,7 +98,7 @@
             this.txtNomSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNomSite.Location = new System.Drawing.Point(129, 23);
             this.txtNomSite.Name = "txtNomSite";
-            this.txtNomSite.Size = new System.Drawing.Size(620, 24);
+            this.txtNomSite.Size = new System.Drawing.Size(657, 24);
             this.txtNomSite.TabIndex = 5;
             // 
             // txtAdresse
@@ -104,7 +106,7 @@
             this.txtAdresse.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAdresse.Location = new System.Drawing.Point(129, 56);
             this.txtAdresse.Name = "txtAdresse";
-            this.txtAdresse.Size = new System.Drawing.Size(620, 24);
+            this.txtAdresse.Size = new System.Drawing.Size(657, 24);
             this.txtAdresse.TabIndex = 6;
             // 
             // txtIdentifiant
@@ -112,7 +114,7 @@
             this.txtIdentifiant.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIdentifiant.Location = new System.Drawing.Point(129, 89);
             this.txtIdentifiant.Name = "txtIdentifiant";
-            this.txtIdentifiant.Size = new System.Drawing.Size(620, 24);
+            this.txtIdentifiant.Size = new System.Drawing.Size(657, 24);
             this.txtIdentifiant.TabIndex = 7;
             // 
             // txtMotPass
@@ -120,7 +122,7 @@
             this.txtMotPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMotPass.Location = new System.Drawing.Point(129, 122);
             this.txtMotPass.Name = "txtMotPass";
-            this.txtMotPass.Size = new System.Drawing.Size(620, 24);
+            this.txtMotPass.Size = new System.Drawing.Size(657, 24);
             this.txtMotPass.TabIndex = 8;
             // 
             // btnSauvegarde
@@ -128,17 +130,40 @@
             this.btnSauvegarde.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSauvegarde.Location = new System.Drawing.Point(12, 318);
             this.btnSauvegarde.Name = "btnSauvegarde";
-            this.btnSauvegarde.Size = new System.Drawing.Size(776, 57);
+            this.btnSauvegarde.Size = new System.Drawing.Size(774, 57);
             this.btnSauvegarde.TabIndex = 9;
             this.btnSauvegarde.Text = "btnSauvegarde";
             this.btnSauvegarde.UseVisualStyleBackColor = true;
             this.btnSauvegarde.Click += new System.EventHandler(this.btnSauvegarde_Click);
+            // 
+            // txtInfosComplementaires
+            // 
+            this.txtInfosComplementaires.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInfosComplementaires.Location = new System.Drawing.Point(163, 169);
+            this.txtInfosComplementaires.Multiline = true;
+            this.txtInfosComplementaires.Name = "txtInfosComplementaires";
+            this.txtInfosComplementaires.Size = new System.Drawing.Size(623, 131);
+            this.txtInfosComplementaires.TabIndex = 10;
+            // 
+            // lblInfosCompl
+            // 
+            this.lblInfosCompl.AutoSize = true;
+            this.lblInfosCompl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfosCompl.Location = new System.Drawing.Point(16, 207);
+            this.lblInfosCompl.Name = "lblInfosCompl";
+            this.lblInfosCompl.Size = new System.Drawing.Size(98, 18);
+            this.lblInfosCompl.TabIndex = 11;
+            this.lblInfosCompl.Text = "lblInfosCompl";
             // 
             // frmAjoutSiteInfos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblInfosCompl);
+            this.Controls.Add(this.txtInfosComplementaires);
             this.Controls.Add(this.btnSauvegarde);
             this.Controls.Add(this.txtMotPass);
             this.Controls.Add(this.txtIdentifiant);
@@ -168,5 +193,7 @@
         private System.Windows.Forms.TextBox txtIdentifiant;
         private System.Windows.Forms.TextBox txtMotPass;
         private System.Windows.Forms.Button btnSauvegarde;
+        private System.Windows.Forms.TextBox txtInfosComplementaires;
+        private System.Windows.Forms.Label lblInfosCompl;
     }
 }
