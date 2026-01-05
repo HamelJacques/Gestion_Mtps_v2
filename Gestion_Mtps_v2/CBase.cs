@@ -2531,7 +2531,8 @@ namespace Gestion_Mtps
                                                  + " '" + m_siteInfos.NomSite + "',"
                                                  + " '" + m_siteInfos.Adresse + "', "
                                                  + " '" + m_siteInfos.Identifiant + "', "
-                                                 + " '" + m_siteInfos.MotPass
+                                                 + " '" + m_siteInfos.MotPass + "', "
+                                                 + " '" + m_siteInfos.InfosCompl
                                                  + "')";
 
                         command.ExecuteNonQuery();
@@ -2584,7 +2585,25 @@ namespace Gestion_Mtps
         internal void ObtenirLesSitesInfos(ref List<SiteInfos> m_lstSiteInfos, Usager_v2 usager)
         {
             string szSelect;
-            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            string szAND_Catego = string.Empty;
+            string szAND_SousCatego = string.Empty;
+            string szAND_Site = string.Empty;
+            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
+                + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            if (usager.IdCategorie­ > 0)
+            {
+                szAND_Catego = " AND jctTblInfos.IdCategorie = " + usager.IdCategorie;
+            }
+            if(usager.IdSousCategorie > 0)
+            {
+                szAND_SousCatego = " AND jctTblInfos.IdSousCategorie = " + usager.IdSousCategorie;
+            }
+            if (usager.IdSite > 0)
+            {
+                szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
+            }
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

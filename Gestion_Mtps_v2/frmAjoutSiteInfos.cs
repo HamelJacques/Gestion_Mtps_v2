@@ -37,7 +37,6 @@ namespace Gestion_Mtps_v2
         public frmAjoutSiteInfos(ref Usager_v2 m_usager)
         {
             InitializeComponent();
-            //InitFenetre();
         }
 
         public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog)
@@ -49,6 +48,7 @@ namespace Gestion_Mtps_v2
             InitFenetre(pos);
             m_mode = mode;
             m_siteInfos = new SiteInfos();
+            this.DialogResult = DialogResult.No;
         }
 
         private void InitFenetre(FormStartPosition pos)
@@ -61,6 +61,7 @@ namespace Gestion_Mtps_v2
             lblIdentifiant.Text = "Identifiant:";
             lblMotPassse.Text = "Mot de passe:";
             lblNomSite.Text = "Nom du site:";
+            lblInfosCompl.Text = "Informations" + Environment.NewLine +"complémemntaires";
             this.StartPosition = pos;
         }
         #region LES BOUTONS
@@ -82,13 +83,19 @@ namespace Gestion_Mtps_v2
                 {
                     // on ajoute
                     reussite = m_ASI.AjouterNouveau(ref usager, ref maBD, ref m_siteInfos);
+                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
                     if (m_mode == 1)
                     {
                         // on modifie
+                        //reussite = m_ASI.ModifierNouveau(ref usager, ref maBD, ref m_siteInfos);
                     }
+                }
+                if (reussite)
+                {
+                    this.Close();
                 }
                 // puis appeler CBase en conséquence
             }
@@ -99,13 +106,16 @@ namespace Gestion_Mtps_v2
             
         }
 
+        /// <summary>
+        /// Lecture des informations en vue de la sauvegarde
+        /// </summary>
         private void LireLaPage()
         {
             m_siteInfos.NomSite=txtNomSite.Text;
             m_siteInfos.Adresse = txtAdresse.Text;
             m_siteInfos.Identifiant = txtIdentifiant.Text;
             m_siteInfos.MotPass = txtMotPass.Text;
-            //throw new NotImplementedException();
+            m_siteInfos.InfosCompl = txtInfosComplementaires .Text;
         }
         #endregion
     }

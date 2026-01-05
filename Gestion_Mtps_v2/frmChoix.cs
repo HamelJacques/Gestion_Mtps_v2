@@ -66,7 +66,7 @@ namespace Gestion_Mtps_v2
         private void InitSousCategories()
         {
             grbxSousCategories.Text = "Sous catégories";
-            grbxSousCategories.BackColor = Color.LightBlue;
+            grbxSousCategories.BackColor = Color.LightCyan;
             btnAjoutSousCatego.Text = "Ajouter";
             btnAjoutSousCatego.BackColor = Color.LightGreen;
             ListerSousCategories();
@@ -132,7 +132,17 @@ namespace Gestion_Mtps_v2
         private void AfficherLesInfosSites()
         {
             dgInfos.Rows.Clear();
-            dgInfos.DataSource = m_lstSiteInfos;
+            foreach(SiteInfos siteInfo in m_lstSiteInfos)
+            {
+                dgInfos.Rows.Add(
+                    siteInfo.Id.ToString(),
+                    siteInfo.NomSite,
+                    siteInfo.Adresse,
+                    siteInfo.Identifiant,
+                    siteInfo.MotPass
+                    );
+            }
+            //dgInfos.DataSource = m_lstSiteInfos;
 
             //dgInfos.Columns["IdInfos"].HeaderText = "Id";
             //dgInfos.Columns["IdInfos"].Width = 25;
@@ -230,6 +240,7 @@ namespace Gestion_Mtps_v2
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
             frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
             AjoutSiteInfos .ShowDialog();
+            
         }
         #endregion
         #region LES LISTBOXES
@@ -249,6 +260,8 @@ namespace Gestion_Mtps_v2
                     ListerSousCategories();
                     ListerLesSites();
                     ActiveBtns();
+                    ListerLesInfosSites();
+                    //AfficherLesInfosSites();
                 }
                 else
                 {
@@ -280,6 +293,7 @@ namespace Gestion_Mtps_v2
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
                     ListerLesSites();
+                    ListerLesInfosSites();
                     ActiveBtns();
                 }                
             }
@@ -293,6 +307,7 @@ namespace Gestion_Mtps_v2
                 string lecture = lstBxSites.SelectedItem.ToString();
                 m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
+                ListerLesInfosSites();
                 ActiveBtns();
             }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
