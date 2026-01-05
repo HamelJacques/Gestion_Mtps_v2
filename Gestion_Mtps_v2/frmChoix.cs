@@ -240,6 +240,7 @@ namespace Gestion_Mtps_v2
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
             frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
             AjoutSiteInfos .ShowDialog();
+            
         }
         #endregion
         #region LES LISTBOXES
@@ -260,7 +261,7 @@ namespace Gestion_Mtps_v2
                     ListerLesSites();
                     ActiveBtns();
                     ListerLesInfosSites();
-                    AfficherLesInfosSites();
+                    //AfficherLesInfosSites();
                 }
                 else
                 {
@@ -292,6 +293,7 @@ namespace Gestion_Mtps_v2
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
                     ListerLesSites();
+                    ListerLesInfosSites();
                     ActiveBtns();
                 }                
             }
@@ -305,6 +307,7 @@ namespace Gestion_Mtps_v2
                 string lecture = lstBxSites.SelectedItem.ToString();
                 m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
+                ListerLesInfosSites();
                 ActiveBtns();
             }
             catch (Exception ex) { string msg = ex.Message.ToString(); }

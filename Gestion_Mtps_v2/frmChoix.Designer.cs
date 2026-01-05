@@ -60,9 +60,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFermer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnFermer.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFermer.Location = new System.Drawing.Point(22, 535);
+            this.btnFermer.Location = new System.Drawing.Point(22, 518);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(1317, 32);
+            this.btnFermer.Size = new System.Drawing.Size(1317, 50);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -208,16 +208,17 @@
             // 
             // txtInfosSupp
             // 
-            this.txtInfosSupp.Location = new System.Drawing.Point(351, 334);
+            this.txtInfosSupp.Location = new System.Drawing.Point(351, 265);
             this.txtInfosSupp.Multiline = true;
             this.txtInfosSupp.Name = "txtInfosSupp";
-            this.txtInfosSupp.Size = new System.Drawing.Size(988, 159);
+            this.txtInfosSupp.Size = new System.Drawing.Size(988, 228);
             this.txtInfosSupp.TabIndex = 6;
             // 
             // Id
             // 
             this.Id.HeaderText = "Id";
             this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
             this.Id.Width = 10;
             // 
             // NomSite

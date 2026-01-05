@@ -77,6 +77,7 @@ namespace Gestion_Mtps_v2
             m_items = lst;
 
             InitAjouts(type);
+            this.DialogResult = DialogResult.OK;
 
         }
         #endregion

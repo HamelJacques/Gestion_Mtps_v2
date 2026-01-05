@@ -2585,13 +2585,24 @@ namespace Gestion_Mtps
         {
             string szSelect;
             string szAND_Catego = string.Empty;
+            string szAND_SousCatego = string.Empty;
+            string szAND_Site = string.Empty;
             szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
                 + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
             if (usager.IdCategorie­ > 0)
             {
                 szAND_Catego = " AND jctTblInfos.IdCategorie = " + usager.IdCategorie;
             }
-            szSelect += szAND_Catego;
+            if(usager.IdSousCategorie > 0)
+            {
+                szAND_SousCatego = " AND jctTblInfos.IdSousCategorie = " + usager.IdSousCategorie;
+            }
+            if (usager.IdSite > 0)
+            {
+                szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
+            }
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

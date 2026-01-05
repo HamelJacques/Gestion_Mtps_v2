@@ -49,6 +49,7 @@ namespace Gestion_Mtps_v2
             InitFenetre(pos);
             m_mode = mode;
             m_siteInfos = new SiteInfos();
+            this.DialogResult = DialogResult.No;
         }
 
         private void InitFenetre(FormStartPosition pos)
@@ -82,13 +83,19 @@ namespace Gestion_Mtps_v2
                 {
                     // on ajoute
                     reussite = m_ASI.AjouterNouveau(ref usager, ref maBD, ref m_siteInfos);
+                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
                     if (m_mode == 1)
                     {
                         // on modifie
+                        //reussite = m_ASI.ModifierNouveau(ref usager, ref maBD, ref m_siteInfos);
                     }
+                }
+                if (reussite)
+                {
+                    this.Close();
                 }
                 // puis appeler CBase en conséquence
             }
