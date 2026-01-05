@@ -42,6 +42,11 @@
             this.dgInfos = new System.Windows.Forms.DataGridView();
             this.btnAjoutInfos = new System.Windows.Forms.Button();
             this.txtInfosSupp = new System.Windows.Forms.TextBox();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NomSite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adresse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Identifiant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MotPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -180,9 +185,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgInfos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgInfos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.NomSite,
+            this.Adresse,
+            this.Identifiant,
+            this.MotPass});
             this.dgInfos.Location = new System.Drawing.Point(113, 11);
             this.dgInfos.Name = "dgInfos";
-            this.dgInfos.Size = new System.Drawing.Size(892, 263);
+            this.dgInfos.Size = new System.Drawing.Size(892, 201);
             this.dgInfos.TabIndex = 1;
             // 
             // btnAjoutInfos
@@ -202,6 +213,34 @@
             this.txtInfosSupp.Name = "txtInfosSupp";
             this.txtInfosSupp.Size = new System.Drawing.Size(988, 159);
             this.txtInfosSupp.TabIndex = 6;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Width = 10;
+            // 
+            // NomSite
+            // 
+            this.NomSite.HeaderText = "Nom du site";
+            this.NomSite.Name = "NomSite";
+            this.NomSite.Width = 200;
+            // 
+            // Adresse
+            // 
+            this.Adresse.HeaderText = "Adresse";
+            this.Adresse.Name = "Adresse";
+            this.Adresse.Width = 200;
+            // 
+            // Identifiant
+            // 
+            this.Identifiant.HeaderText = "Identifiant";
+            this.Identifiant.Name = "Identifiant";
+            // 
+            // MotPass
+            // 
+            this.MotPass.HeaderText = "Mot de passe";
+            this.MotPass.Name = "MotPass";
             // 
             // frmChoix
             // 
@@ -242,5 +281,10 @@
         private System.Windows.Forms.Button btnAjoutInfos;
         private System.Windows.Forms.DataGridView dgInfos;
         private System.Windows.Forms.TextBox txtInfosSupp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NomSite;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adresse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Identifiant;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MotPass;
     }
 }

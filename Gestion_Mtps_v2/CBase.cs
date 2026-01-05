@@ -2584,7 +2584,14 @@ namespace Gestion_Mtps
         internal void ObtenirLesSitesInfos(ref List<SiteInfos> m_lstSiteInfos, Usager_v2 usager)
         {
             string szSelect;
-            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            string szAND_Catego = string.Empty;
+            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
+                + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            if (usager.IdCategorie­ > 0)
+            {
+                szAND_Catego = " AND jctTblInfos.IdCategorie = " + usager.IdCategorie;
+            }
+            szSelect += szAND_Catego;
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

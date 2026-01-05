@@ -132,7 +132,17 @@ namespace Gestion_Mtps_v2
         private void AfficherLesInfosSites()
         {
             dgInfos.Rows.Clear();
-            dgInfos.DataSource = m_lstSiteInfos;
+            foreach(SiteInfos siteInfo in m_lstSiteInfos)
+            {
+                dgInfos.Rows.Add(
+                    siteInfo.Id.ToString(),
+                    siteInfo.NomSite,
+                    siteInfo.Adresse,
+                    siteInfo.Identifiant,
+                    siteInfo.MotPass
+                    );
+            }
+            //dgInfos.DataSource = m_lstSiteInfos;
 
             //dgInfos.Columns["IdInfos"].HeaderText = "Id";
             //dgInfos.Columns["IdInfos"].Width = 25;
@@ -249,6 +259,8 @@ namespace Gestion_Mtps_v2
                     ListerSousCategories();
                     ListerLesSites();
                     ActiveBtns();
+                    ListerLesInfosSites();
+                    AfficherLesInfosSites();
                 }
                 else
                 {
