@@ -1,18 +1,21 @@
 ﻿using Gestion_Mtps_v2;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using Application = System.Windows.Forms.Application;
 
 namespace Gestion_Mtps
 {
@@ -25,14 +28,8 @@ namespace Gestion_Mtps
         private OleDbConnection m_cnADONetConnection;
         private OleDbDataAdapter m_dataAdatper;
         private DataTable m_DataTable;
-       
-        //public DataTable pDataTable;
-        ////private OleDbDataReader m_datareader;
-        //private OleDbCommand m_cmCommand;
-        //private OleDbCommandBuilder m_cbCommandBuilder;
-        //private DataSet m_ds;
-        //public string m_TableChoisie;// la table de la base de donnée
-        //private Logger /*lg*/;
+
+        private Logger lg;
 
         private bool m_estConnectee;
         #endregion
@@ -829,6 +826,7 @@ namespace Gestion_Mtps
             string szSelect; //, szWHERE;
             List<string> lstUsagers = new List<string>();
             szSelect = "SELECT distinct NomUsager " + " FROM tblUsagers";// +" ORDER BY " + szChampCbo;
+            //Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -854,6 +852,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                lg = new Logger(mess, m_cheminLog);
             }
             finally
             {
@@ -966,6 +965,7 @@ namespace Gestion_Mtps
             string szSelect;
             string retour = string.Empty;
             szSelect = "SELECT NomUsager " + " FROM tblUsagers where IdUsager = " + idUsager;
+            //Logger lg = new Logger(szSelect, m_cheminLog);
             try
             {
                 m_DataTable = new DataTable();
@@ -981,6 +981,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                lg = new Logger(mess, m_cheminLog);
                 return "ERREUR";
             }
         }
@@ -1228,6 +1229,24 @@ namespace Gestion_Mtps
             string szSelect;
             szSelect = "SELECT COUNT(NomSousCategorie) FROM tblSousCategories ";
             szSelect += "WHERE tblSousCategories.NomSousCategorie = '" + text + "'";
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+
+            if ((Int32)m_DataTable.Rows[0][0] >= 1)
+            {
+                presence = true;
+            }
+            return presence;
+        }
+        private bool VerifierPresenceSite(ref Usager_v2 u, string text)
+        {
+            bool presence = false;
+            string szSelect;
+            szSelect = "SELECT COUNT(NomSite) FROM tblSites ";
+            szSelect += "WHERE tblSites.NomSite = '" + text + "'";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
@@ -1685,6 +1704,7 @@ namespace Gestion_Mtps
             szSelect += ")";
 
             szSelect += " ORDER BY tblSousCategories.NomSousCategorie";
+            #region try
             try
             {
                 m_DataTable = new DataTable();
@@ -1705,7 +1725,9 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                Logger lg = new Logger(mess, m_cheminLog);
             }
+            #endregion 
         }
 
         /// <summary>
@@ -1717,13 +1739,91 @@ namespace Gestion_Mtps
 
         internal void ObtenirSites(ref List<string> lstSites, Usager_v2 U, bool moimeme = true)
         {
+            int i = 0;
+            string szSelect;
+            string szANDcatego = string.Empty;
+            string szAndSousCatego = string.Empty;
 
+            //szSelect = "SELECT distinct tblSites.NomSite FROM (jctCategorieSousCategorie "
+            //szSelect = "SELECT DISTINCT tblSites.NomSite FROM (jctUsagerCategorie "
+            //         + "INNER JOIN (jctCategorieSousCategorie INNER JOIN (tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) "
+            //         + "ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
+
+            //         + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
+
+            szSelect = "SELECT DISTINCT tblSites.NomSite "
+                + "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
+                + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
+
+            if (U.IdCategorie > 0)
+            {
+                szANDcatego = ")";
+                szANDcatego = "AND ((jctSousCategorieSite.IdCategorie)= " + U.IdCategorie + ")";
+            }
+            if (U.IdSousCategorie > 0)
+            {
+                szAndSousCatego = ")";
+                szAndSousCatego = "AND ((jctSousCategorieSite.IdSousCategorie)= " + U.IdSousCategorie + ")";
+            }
+            szSelect += szANDcatego + szAndSousCatego;
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSites.Add(m_DataTable.Rows[i]["NomSite"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString(); 
+                Logger lg = new Logger(szmess, m_cheminLog);
+            }
+        }
+        internal void ObtenirListeIdInfos(ref List<int> lst, Usager_v2 m_usager)
+        {
+            int i = 0;
+            string szSelect =string.Empty;
+            string szANDcatego = string.Empty;
+            string szAndSousCatego = string.Empty;
+
+            szSelect = "SELECT DISTINCT jctTblInfos.IdInfos FROM jctTblInfos";
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lst.Add(Convert.ToInt32 ( m_DataTable.Rows[i]["IdInfos"]));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
+            }
         }
         internal void ObtenirCategoriesUnUsager(ref List<string> lstCategories, int idusager, bool associe = true)
         {
             int i = 0;
             string szSelect;
             //int idusager = 2;
+            
 
             szSelect = "SELECT tblCategories.NomCategorie FROM tblCategories "
                        + "LEFT JOIN jctUsagerCatgo ON tblCategories.IdCategorie = jctUsagerCatgorie.IdCategorie "
@@ -1742,14 +1842,14 @@ namespace Gestion_Mtps
                 {
                     for (i = 0; i < m_DataTable.Rows.Count; i++)
                     {
-                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());// + " " + m_DataTable.Rows[i]["Prenom"].ToString() + Environment.NewLine;
+                        lstCategories.Add(m_DataTable.Rows[i]["NomCatego"].ToString());
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         /// <summary>
@@ -1802,6 +1902,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
             }
         }
         internal void ObtenirListeCategories(ref List<string> lstSites)
@@ -1950,31 +2051,38 @@ namespace Gestion_Mtps
         #region METHODES PRIVÉE
         private bool InitCBase()
         {
+            Logger lg;
+            // Récupère le dossier parent
+            string parent = AppContext.BaseDirectory;
+            m_cheminLog = parent + "application.log";
+            //lg = new Logger("Dans InitBase()", m_cheminLog);
+
+            string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
+             
+            lg = new Logger("dbPath = " + dbPath, m_cheminLog);
+
             try
             {
                 m_cnADONetConnection = new OleDbConnection();
                 string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={m_CheminBD};Persist Security Info=False;";
-
                 m_cnADONetConnection.ConnectionString = connectionString; // @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + m_LaBase;
                 m_maconnetionstring = connectionString;
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
-                    m_estConnectee = true;
+                    m_estConnectee = true;                    
                 }
-                string cheminexe = connectionString;
-                // Récupère le dossier parent
-                string parent = AppContext.BaseDirectory;
-                m_cheminLog = parent + "application.log";
-
-                Console.WriteLine(m_cheminLog);
+                lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
+                //string cheminexe = connectionString;
+                //Console.WriteLine(m_cheminLog);
                 // Résultat : D:\Develop\Gestion\Gestion\bin
-
+                
                 return m_estConnectee;
             }
             catch (OleDbException err)
             {
                 String mesage = err.ToString();
+                lg = new Logger(mesage, m_cheminLog);
                 return false;
             }            
         }
@@ -1989,7 +2097,6 @@ namespace Gestion_Mtps
                 return true;
             }
             return ret;
-            //throw new NotImplementedException();
         }
         private Int32 ProchainIdUsager()
         {
@@ -2007,7 +2114,6 @@ namespace Gestion_Mtps
                 return (Int32)m_DataTable.Rows[0][0];
             }
             return 0;
-
         }
         /// <summary>
         /// Retourne le porchain numéro de catégorie
@@ -2069,8 +2175,7 @@ namespace Gestion_Mtps
             m_dataAdatper.Fill(m_DataTable);
 
             if (m_DataTable.Rows.Count == 0)
-            {
-                
+            {                
                 return 1;
             }
             else
@@ -2085,7 +2190,6 @@ namespace Gestion_Mtps
 
                 //Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
                 return Convert.ToInt32(nb) + 1;
-                //throw new NotImplementedException();
             }
 
             //return 0;
@@ -2134,7 +2238,36 @@ namespace Gestion_Mtps
             //return 0;
             //throw new NotImplementedException();
         }
+        // retourne le prochain id de sous catégorie associé à un ensemble de détails de site
+        private int ProchainNoInfos()
+        {
+            string szSelect;
 
+            szSelect = "SELECT COUNT (IdInfos) FROM tblInfos";
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                m_DataTable.Clear();
+                szSelect = "SELECT MAX(IdInfos) FROM tblInfos";// where IdSousCatgorie > 0";
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                object val = m_DataTable.Rows[0][0];
+                int nb = val == DBNull.Value ? 0 : Convert.ToInt32(val);
+
+                //Int32 nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
+                return Convert.ToInt32(nb) + 1;
+            }
+            //return 0;
+        }
         internal int UnSeulSite(int idsite)
         {
             int i = 0;
@@ -2162,7 +2295,6 @@ namespace Gestion_Mtps
                 return 100;
             }
         }
-
         internal void ObtenirListeTables(ref List<string> list)
         {
             try
@@ -2198,7 +2330,6 @@ namespace Gestion_Mtps
                 // Tu peux aussi logger ou afficher le message ici
             }
         }
-
         internal int Ajouter(string m_Type, string text)
         {
             return 0;
@@ -2218,9 +2349,9 @@ namespace Gestion_Mtps
                     Int32 unid = ObtenirIdSousCategorie(text);
                     idSousCategorie = unid;  
                     message = "Cette sous catégorie est déjà présente";
-                    //on ajoute la sous catégorie, et on s'assure des jounctions
+                    return retour;
                 }
-                else
+                else //on ajoute la sous catégorie, et on s'assure des jounctions
                 {
                     idSousCategorie = ProchainNoSousCategorie();
                 }
@@ -2282,7 +2413,224 @@ namespace Gestion_Mtps
             }
         }
 
-        
+        internal bool ajouterSite_v2(string text, ref Usager_v2 u, ref string messageRetour)
+        {
+            bool ret = false;
+            int idSite = 0;
+
+            try
+            {
+                //vérifier si la valeur existe déjà
+                bool present = VerifierPresenceSite(ref u, text);
+                if (present)
+                {
+                    // Obtenir l'Id de la sous catégorie en question
+                    Int32 unid = ObtenirIdSite(text);
+                    idSite = unid;
+                    messageRetour = "Cette sous catégorie est déjà présente";
+                    return ret;
+                }
+                else //on ajoute la sous catégorie, et on s'assure des jounctions
+                {
+                    idSite = ProchainNoSite();
+                }
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        if (!present)
+                        {
+                            // Execute the commands.
+                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + text + "')";
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctSousCategorieSite VALUES("+ u.IdUsager + "," + u.IdCategorie + "," + u.IdSousCategorie + "," + idSite + ")";
+
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        ret = true;
+                    }
+                    catch (Exception transEx)
+                    {
+                        #region catch
+                        string err = string.Empty;
+                        err = transEx.ToString();
+                        Logger lg = new Logger(err, m_cheminLog);
+                        try
+                        {
+                            // Attempt to roll back the transaction.
+                            transaction?.Rollback();
+                            return ret;
+                        }
+                        catch
+                        {
+                            // Handle any errors that may have occurred during the rollback.
+                            return ret;
+                        }
+                        #endregion
+                    }
+                }
+                //        return ret;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
+            return ret;
+        }
+
+        internal bool AjouterCombinaisonSecret(Usager_v2 usager, SiteInfos m_siteInfos)
+        {
+            string szSelect = string.Empty;
+            bool reussite = false;
+            int prochainNo = 0;
+            try
+            {
+                // a) Obtenir le prochain Id de tblInfos, conserver localement
+                prochainNo = ProchainNoInfos();
+                //vérifier si la combinaison existe déjà dans jctTblInfos
+                List<int> ids = IdDeCombinaison(usager);
+                //  si oui, s'assurer que le nom du site est différent
+                //  si nom du site est == on bloque et on averti
+                //  si différent, 
+
+
+                // b) Faire le insert into tblInfos ET le insert into jctTblInfos
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        // Execute the commands.
+                        command.CommandText = "INSERT INTO tblInfos VALUES ("
+                                                 + prochainNo + ","
+                                                 + " '" + m_siteInfos.NomSite + "',"
+                                                 + " '" + m_siteInfos.Adresse + "', "
+                                                 + " '" + m_siteInfos.Identifiant + "', "
+                                                 + " '" + m_siteInfos.MotPass + "', "
+                                                 + " '" + m_siteInfos.InfosCompl
+                                                 + "')";
+
+                        command.ExecuteNonQuery();
+
+                        // Assign transaction object for a pending local transaction.
+                        command.CommandText = "INSERT INTO jctTblInfos VALUES(" + prochainNo + "," + usager.IdUsager + "," + usager.IdCategorie + "," + usager.IdSousCategorie + "," + usager.IdSite + ")";
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        reussite = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
+                    return reussite;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw ;
+            }
+        }
+
+        private List<int> IdDeCombinaison(Usager_v2 usager)
+        {
+            string szSelect;
+            List<int> lstIds = new List<int>();
+            szSelect = "SELECT IdInfos FROM jctTblInfos as jct WHERE jct.IdUsager = " + usager.IdUsager;
+            // Ajouter les autres champs de la combinaison
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in m_DataTable.Rows)
+                {                    
+                    lstIds.Add(Convert.ToInt32(row["IdInfos"]));
+                }
+            }
+            
+            return lstIds;
+        }
+
+        internal void ObtenirLesSitesInfos(ref List<SiteInfos> m_lstSiteInfos, Usager_v2 usager)
+        {
+            string szSelect;
+            string szAND_Catego = string.Empty;
+            string szAND_SousCatego = string.Empty;
+            string szAND_Site = string.Empty;
+            szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
+                + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
+            if (usager.IdCategorie­ > 0)
+            {
+                szAND_Catego = " AND jctTblInfos.IdCategorie = " + usager.IdCategorie;
+            }
+            if(usager.IdSousCategorie > 0)
+            {
+                szAND_SousCatego = " AND jctTblInfos.IdSousCategorie = " + usager.IdSousCategorie;
+            }
+            if (usager.IdSite > 0)
+            {
+                szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
+            }
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            if (m_DataTable.Rows.Count > 0)
+            {
+                
+                for(int i = 0; i < m_DataTable.Rows.Count; i++)
+                {
+                    SiteInfos unsite = new SiteInfos();
+                    DataRow row = m_DataTable.Rows[i];
+                    unsite.Id = (int)row["IdInfos"];
+                    unsite.NomSite = row["NomSite"].ToString();
+                    unsite.Adresse = row["Adresse"].ToString();
+                    unsite.Identifiant = row["Identifiant"].ToString();
+                    unsite.MotPass = row["MotPass"].ToString();
+
+                    m_lstSiteInfos.Add(unsite);
+                }
+                
+            }
+        }
+
+
+
+
         #endregion
     }
 }

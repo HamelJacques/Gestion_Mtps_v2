@@ -77,6 +77,7 @@ namespace Gestion_Mtps_v2
             m_items = lst;
 
             InitAjouts(type);
+            this.DialogResult = DialogResult.OK;
 
         }
         #endregion
@@ -106,6 +107,8 @@ namespace Gestion_Mtps_v2
                     break;
                 case "Site":
                     AjusteFenetreSite();
+                    m_Ajouts.ObtenirListeSites(ref m_items,ref m_Usager,false);
+                    AfficherListeItems();
                     break;
             }
             txtNouvelleValeur.Text = "";
@@ -156,6 +159,11 @@ namespace Gestion_Mtps_v2
                     grbxLstValsDispo.Text = "Valeurs disponibles";
                     grbxLstValsDispo.BackColor = Color.LightSalmon;
                     break;
+                case (UneDonnee)4:
+                    grbxMotPasseUsager.Visible = false;
+                    grbxLstValsDispo.Text = "Valeurs disponibles";
+                    grbxLstValsDispo.BackColor = Color.LightCoral;
+                    break;
             }
         }
         private void AlimenteGroupBox(UneDonnee donnee)
@@ -168,6 +176,9 @@ namespace Gestion_Mtps_v2
                     m_items.Clear();
                     break;
                 case (UneDonnee)3:
+                    m_items.Clear();
+                    break;
+                case (UneDonnee)4:
                     m_items.Clear();
                     break;
             }
@@ -209,10 +220,13 @@ namespace Gestion_Mtps_v2
         private void AjusteFenetreSite()
         {
             this.Width = 600;
-            this.Height = 300;
+            this.Height = 310;
             BackColor = Color.Yellow;
 
             txtNouvelleValeur.Select();
+            AlimenteGroupBox(UneDonnee.Site);
+            PlaceGroupBoxes(UneDonnee.Site);
+            PlaceBoutons(UneDonnee.Site);
         }
 
         private void btnFermer_Click(object sender, EventArgs e)

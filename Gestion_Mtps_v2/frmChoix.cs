@@ -15,18 +15,27 @@ namespace Gestion_Mtps_v2
     public partial class frmChoix : Form
     {
         #region DONNÉES MEMBRES
+        private string m_CheminLog;
         private Usager_v2 m_usager;
         private Choix m_Choix;
         private CBase m_maBD;
         private Ajouts m_Ajouts;
+        private List<SiteInfos> m_lstSiteInfos;
+        private enum Mode
+        {
+            Ajout = 0,
+            Modif
+        }
         #endregion
         #region CONSTRUCTEURS
-        public frmChoix(ref Usager_v2 U, CBase bd)
+        public frmChoix(ref Usager_v2 U, CBase bd, string chlog)
         {
             InitializeComponent();
             m_usager = new Usager_v2();
             m_usager = U;
             m_maBD = bd;
+            m_CheminLog = chlog;
+            m_lstSiteInfos = new List<SiteInfos>();
             InitChoix();
         }
         #endregion
@@ -43,6 +52,7 @@ namespace Gestion_Mtps_v2
             InitCategories();
             InitSousCategories();
             InitSites();
+            InitInfoSites();
         }       
         private void InitCategories()
         {
@@ -56,7 +66,7 @@ namespace Gestion_Mtps_v2
         private void InitSousCategories()
         {
             grbxSousCategories.Text = "Sous catégories";
-            grbxSousCategories.BackColor = Color.LightBlue;
+            grbxSousCategories.BackColor = Color.LightCyan;
             btnAjoutSousCatego.Text = "Ajouter";
             btnAjoutSousCatego.BackColor = Color.LightGreen;
             ListerSousCategories();
@@ -69,9 +79,37 @@ namespace Gestion_Mtps_v2
             btnAjoutSite.BackColor = Color.LightGreen;
             ListerLesSites();
         }
+        private void InitInfoSites()
+        {
+            grbxInfosSites.Text = "Informations";
+            grbxInfosSites.BackColor = Color.Yellow;
+            btnAjoutInfos.Text = "Ajouter";
+            btnAjoutInfos.BackColor = Color.LightGreen;
+            ActiveBtns();
+            InitDatagridInfos();
+            // Lire jctTblInfos pour voir si on a au moins une ligne pour l'usager
+            // lister les IdInfos en vue d'obtenir la liste correspondnte dans la table tblInfos
+            ListerLesIdInfos();
+            // Lister les informatons de la table tblInfos ayant les Ids de la liste des m_lstInfoSites
+            ListerLesInfosSites();
+        }
+        private void ActiveBtns()
+        {
+            btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
+                && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
+        }
+        private void InitDatagridInfos()
+        {
+            //dgInfos.Columns[0].Width = 150;
+        }
         private string ObtenirNomUsager()
         {
             return m_Choix.ObtenirNomUsager(m_usager.IdUsager);
+        }
+        private void ListerLesIdInfos()
+        {
+            List<Int32 > lst = new List<Int32>();
+            lst = m_Choix.ObtenirListeIdInfos(m_usager);
         }
         private void ListerLesSites()
         {
@@ -80,6 +118,44 @@ namespace Gestion_Mtps_v2
             lst = m_Choix.ObtenirListeSites(m_usager);
             lstBxSites.Items.AddRange(lst.ToArray());
         }
+        private void ListerLesInfosSites()
+        {
+            List<string> lst = new List<string>();
+            m_lstSiteInfos = new List<SiteInfos>();
+            dgInfos.Rows.Clear();
+            //dgInfos.Columns.Clear();
+
+            m_Choix.ObtenirLesSitesInfos(ref m_lstSiteInfos, m_usager);
+            AfficherLesInfosSites();
+        }
+
+        private void AfficherLesInfosSites()
+        {
+            dgInfos.Rows.Clear();
+            foreach(SiteInfos siteInfo in m_lstSiteInfos)
+            {
+                dgInfos.Rows.Add(
+                    siteInfo.Id.ToString(),
+                    siteInfo.NomSite,
+                    siteInfo.Adresse,
+                    siteInfo.Identifiant,
+                    siteInfo.MotPass
+                    );
+            }
+            //dgInfos.DataSource = m_lstSiteInfos;
+
+            //dgInfos.Columns["IdInfos"].HeaderText = "Id";
+            //dgInfos.Columns["IdInfos"].Width = 25;
+            dgInfos.Columns["NomSite"].HeaderText = "Nom du site";
+            dgInfos.Columns["NomSite"].Width = 150;
+            dgInfos.Columns["Adresse"].Width = 230;
+
+            dgInfos.Columns["Identifiant"].Width = 225; 
+            dgInfos.Columns["MotPass"].Width = 225;
+            dgInfos.Columns["MotPass"].HeaderText = "Mot de passe";
+
+        }
+
         private void ListerSousCategories()
         {
             List<string> lst = new List<string>();
@@ -101,7 +177,6 @@ namespace Gestion_Mtps_v2
         {
             this.Close();
         }
-
         private void btnAjoutCatego_Click(object sender, EventArgs e)
         {
             List<string> lst = new List<string>();
@@ -113,7 +188,6 @@ namespace Gestion_Mtps_v2
                 ListerCategories();
             }
         }
-
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
         {
             // Vérifier si une catégorie est sélectionnée, forcer la sélection
@@ -135,15 +209,38 @@ namespace Gestion_Mtps_v2
         }
         private void btnAjoutSite_Click(object sender, EventArgs e)
         {
+            string message = string.Empty;
             // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
             bool selectione = lstBxSousCategories.SelectedIndex >= 0;
-            if (lstBxSousCategories.SelectedIndex >= 0)
+            if(m_usager.IdCategorie == 0)
             {
-                List<string> lst = new List<string>();
+                message = "Vous devez sélectionner une catégorie pour poursuivre.";
+                MessageBox.Show(message,"OUPS",MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
-                aj.ShowDialog();
             }
+            else
+            {
+                if (m_usager.IdSousCategorie == 0)
+                {
+                    message = "Vous devez sélectionner une sous-catégorie pour poursuivre.";
+                    MessageBox.Show(message, "OUPS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    List<string> lst = new List<string>();
+
+                    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+                    aj.ShowDialog();
+                }
+            }
+        }
+        private void btnAjoutInfos_Click(object sender, EventArgs e)
+        {
+            // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
+            // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
+            AjoutSiteInfos .ShowDialog();
+            
         }
         #endregion
         #region LES LISTBOXES
@@ -152,18 +249,36 @@ namespace Gestion_Mtps_v2
             // lire la sélection
             try
             {
-                string lecture = lstBxCategories.SelectedItem.ToString();
-                m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+                if (lstBxCategories.SelectedItem != null)
+                {
+                    string lecture = lstBxCategories.SelectedItem.ToString();
+                    m_usager.IdCategorie = m_Choix.ObtenirIdCategorie(lecture);
+                    m_usager.IdSousCategorie = 0;
+                    m_usager.IdSite = 0;
 
-                // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
-                ListerSousCategories();
-                ListerLesSites();
+                    // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
+                    ListerSousCategories();
+                    ListerLesSites();
+                    ActiveBtns();
+                    ListerLesInfosSites();
+                    //AfficherLesInfosSites();
+                }
+                else
+                {
+                    // Aucun item sélectionné
+                }                
             }
-            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            catch (Exception ex) { 
+                string msg = ex.Message.ToString(); 
+                
+            }
         }
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
+
+            m_usager.IdSite = 0;
             // lire la sélection
+
             try
             {
                 if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
@@ -178,17 +293,30 @@ namespace Gestion_Mtps_v2
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
                     ListerLesSites();
+                    ListerLesInfosSites();
+                    ActiveBtns();
                 }                
             }
             catch (NullReferenceException nre) { return; }
             catch (Exception ex) { string msg = ex.Message.ToString(); }
         }
+        private void lstBxSites_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string lecture = lstBxSites.SelectedItem.ToString();
+                m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
-
+                ListerLesInfosSites();
+                ActiveBtns();
+            }
+            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            
+        }
         #endregion
 
         #endregion
 
-        
+
     }
 }

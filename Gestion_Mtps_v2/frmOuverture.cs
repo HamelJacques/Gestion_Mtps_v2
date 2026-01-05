@@ -19,11 +19,11 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_Titre;
         //private CBase m_LaBase;
-        //private string m_CheminExe;
         private string m_Chemin_BD;
-        //private const string NOM_BD = "G_Mtps.accdb";
+        private string m_CheminLog;
         private List<string> m_lesUsagers;
         public Usager_v2 m_UsagerSelectionne;
+        private Logger m_lg;
         #endregion
         private Ouverture O;
         #region CONSTRUCTEUR
@@ -39,6 +39,7 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES
         private void InitForm()
         {
+            
             this.StartPosition = FormStartPosition.CenterScreen;
             m_UsagerSelectionne = new Usager_v2();
             m_Titre = "Ouverture";
@@ -59,16 +60,12 @@ namespace Gestion_Mtps_v2
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
 
             ConnectBD();
-            this.Text = string.Concat(m_Titre,"   ", Environment.MachineName);
-            if (O.LaBase.BdConnecte)
-            {
-                lblChBD.Text = "Connecté à " + O.ChBD;
-            }
-            else
-            {
-                lblChBD.Text = "Un problème est survenu au moment de connecter à la base de donnée.";
-            }
-                
+            
+
+            m_CheminLog = O.ChExe + "application.log";
+            //m_lg = new Logger("Dans InitForm", m_CheminLog);
+            this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
+            lblChBD.Text = O.ChBD + O.LaBase.BdConnecte.ToString();
             AjusteCouleurFenere();
             AfficheUsagers();
         }
@@ -140,7 +137,8 @@ namespace Gestion_Mtps_v2
             else
             {
                 m_UsagerSelectionne.IdUsager = iSelect;
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase);
+                //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
                 // Ouvrir la nouvelle fenêtre de choix
                 fen.ShowDialog();
             }
