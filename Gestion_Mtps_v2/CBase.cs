@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
@@ -2558,7 +2559,57 @@ namespace Gestion_Mtps
                 throw ;
             }
         }
+        internal bool ModifierCombinaisonSecret(SiteInfos m_siteInfos)
+        {
+            string szUpdate = string.Empty;
+            bool reussite = false;
+            //" '" + m_siteInfos.NomSite + "',"
+            szUpdate = "UPDATE tblInfos SET tblInfos.NomSite = " + "'" + m_siteInfos.NomSite + "',"
+                + "tblInfos.Adresse = " + "'" + m_siteInfos.Adresse + "', "
+                + "tblInfos.Identifiant = " + " '" + m_siteInfos.Identifiant + "', "
+                + "tblInfos.MotPass = " + "'" + m_siteInfos.MotPass + "', "
+                + "tblInfos.InfosCompl = " + "'" + m_siteInfos.InfosCompl + "'"
+                + " WHERE tblInfos.IdInfos = " + + m_siteInfos.Id ;
 
+
+            try
+            {
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        // Execute the commands.
+                        command.CommandText = szUpdate;
+
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        reussite = true;
+                    }
+                    catch (Exception ex1)
+                    {
+                        throw;
+                    }
+                }
+                    return reussite;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
+        }
         private List<int> IdDeCombinaison(Usager_v2 usager)
         {
             string szSelect;
@@ -2625,6 +2676,58 @@ namespace Gestion_Mtps
                     m_lstSiteInfos.Add(unsite);
                 }
                 
+            }
+        }
+
+        internal string ObtenirInfosComplementaires(object unid)
+        {
+            string szSelect;
+            string ret = string.Empty;
+            szSelect = "SELECT InfosCompl FROM TblInfos as ti WHERE ti.IdInfos = " + unid;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    ret = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+                    return ret;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        internal void RecupererUnEnregistrement(SiteInfos m_siteInfos)
+        {
+            string szSelect = string.Empty;
+            szSelect = "SELECT * from tblInfos WHERE tblInfos.IdInfos = " + m_siteInfos.Id;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    m_siteInfos.NomSite = m_DataTable.Rows[0]["NomSite"].ToString();
+                    m_siteInfos.Adresse = m_DataTable.Rows[0]["Adresse"].ToString();
+                    m_siteInfos.Identifiant = m_DataTable.Rows[0]["Identifiant"].ToString();
+                    m_siteInfos.MotPass = m_DataTable.Rows[0]["MotPass"].ToString();
+                    m_siteInfos.InfosCompl = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
             }
         }
 

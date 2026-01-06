@@ -115,7 +115,14 @@ namespace Gestion_Mtps_v2
             }
         }
 
-        
+        internal string ObtenirInfosCompl(object unid)
+        {
+            string lesinfos = string.Empty;
+            lesinfos = m_maBD.ObtenirInfosComplementaires(unid);
+            return lesinfos;
+        }
+
+
 
 
 

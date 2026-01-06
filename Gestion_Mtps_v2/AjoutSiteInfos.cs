@@ -21,14 +21,26 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                bool ret = BD.AjouterCombinaisonSecret(usager, m_siteInfos);
+                return  BD.AjouterCombinaisonSecret(usager, m_siteInfos);
             }
             catch (Exception ex)
             {
                 string mess = ex.ToString();
                 throw;
             }
-            return false;
+            
+        }
+        public bool ModifierSiteInfos(ref CBase BD, ref SiteInfos m_siteInfos)
+        {
+            try
+            {
+                return BD.ModifierCombinaisonSecret(m_siteInfos);
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
         }
     }
 }
