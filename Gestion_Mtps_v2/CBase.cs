@@ -2559,7 +2559,57 @@ namespace Gestion_Mtps
                 throw ;
             }
         }
+        internal bool ModifierCombinaisonSecret(SiteInfos m_siteInfos)
+        {
+            string szUpdate = string.Empty;
+            bool reussite = false;
+            //" '" + m_siteInfos.NomSite + "',"
+            szUpdate = "UPDATE tblInfos SET tblInfos.NomSite = " + "'" + m_siteInfos.NomSite + "',"
+                + "tblInfos.Adresse = " + "'" + m_siteInfos.Adresse + "', "
+                + "tblInfos.Identifiant = " + " '" + m_siteInfos.Identifiant + "', "
+                + "tblInfos.MotPass = " + "'" + m_siteInfos.MotPass + "', "
+                + "tblInfos.InfosCompl = " + "'" + m_siteInfos.InfosCompl + "'"
+                + " WHERE tblInfos.IdInfos = " + + m_siteInfos.Id ;
 
+
+            try
+            {
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        // Execute the commands.
+                        command.CommandText = szUpdate;
+
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        reussite = true;
+                    }
+                    catch (Exception ex1)
+                    {
+                        throw;
+                    }
+                }
+                    return reussite;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
+        }
         private List<int> IdDeCombinaison(Usager_v2 usager)
         {
             string szSelect;

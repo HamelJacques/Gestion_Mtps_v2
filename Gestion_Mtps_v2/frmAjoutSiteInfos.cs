@@ -132,7 +132,7 @@ namespace Gestion_Mtps_v2
                     if (m_mode == 1)
                     {
                         // on modifie
-                        //reussite = m_ASI.ModifierNouveau(ref usager, ref maBD, ref m_siteInfos);
+                        reussite = m_ASI.ModifierSiteInfos(ref maBD,ref m_siteInfos);//     ModifierNouveau(ref maBD, ref m_siteInfos);
                     }
                 }
                 if (reussite)
