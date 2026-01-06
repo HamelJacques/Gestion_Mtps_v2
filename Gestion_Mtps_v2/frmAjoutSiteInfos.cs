@@ -39,15 +39,18 @@ namespace Gestion_Mtps_v2
             InitializeComponent();
         }
 
-        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog)
+        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog, int unid = 0)
         {
             this.usager = usager;
             this.m_cheminLog = chlog;
             this.maBD = maBD;
+            m_siteInfos = new SiteInfos();
+            m_siteInfos.Id = unid;
+            m_mode = mode;
             InitializeComponent();
             InitFenetre(pos, GetM_mode());
-            m_mode = mode;
-            m_siteInfos = new SiteInfos();
+            
+            
             this.DialogResult = DialogResult.No;
         }
 
@@ -68,6 +71,8 @@ namespace Gestion_Mtps_v2
             {
                 this.BackColor = Color.LightSalmon;
                 btnSauvegarde.Text = "Sauvegarde les modifications";
+                RecupererUnEnregistrement(m_siteInfos);
+                AfficherInfos();
             }
 
 
@@ -78,6 +83,28 @@ namespace Gestion_Mtps_v2
             lblNomSite.Text = "Nom du site:";
             lblInfosCompl.Text = "Informations" + Environment.NewLine +"complémemntaires";
             this.StartPosition = pos;
+        }
+
+        private void AfficherInfos()
+        {
+            txtAdresse.Text = m_siteInfos.Adresse;
+            txtIdentifiant.Text = m_siteInfos.Identifiant;
+            txtInfosComplementaires.Text=   m_siteInfos.InfosCompl.ToString();
+            txtMotPass.Text= m_siteInfos.MotPass;
+            txtNomSite.Text= m_siteInfos.NomSite;
+        }
+
+        private void RecupererUnEnregistrement(SiteInfos m_siteInfos)
+        {
+            try
+            {
+                maBD.RecupererUnEnregistrement(m_siteInfos);
+            }
+            catch(Exception ex)
+            {
+                Logger lg = new Logger(ex.ToString(), m_cheminLog);
+            }
+            
         }
         #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)

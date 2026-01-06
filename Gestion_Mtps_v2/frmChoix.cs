@@ -21,6 +21,7 @@ namespace Gestion_Mtps_v2
         private CBase m_maBD;
         private Ajouts m_Ajouts;
         private List<SiteInfos> m_lstSiteInfos;
+        private int m_NumSiteEnModif;
         private enum Mode
         {
             Ajout = 0,
@@ -249,7 +250,7 @@ namespace Gestion_Mtps_v2
         private void btnModifInfos_Click(object sender, EventArgs e)
         {
             // appeler la fenêtre AjoutSiteInfos en mode modification
-            frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog);
+            frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog, m_NumSiteEnModif);
             ModifSiteInfos.ShowDialog();
         }
 
@@ -328,29 +329,31 @@ namespace Gestion_Mtps_v2
 
         #region LE DATAGRID
         private void dgInfos_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-                {
-                    Int32 unid = 0;
-                    // Vérifier que l’index est valide
-                    if (e.RowIndex >= 0)
-                    {
-                        DataGridViewRow row = dgInfos.Rows[e.RowIndex];
-                        // Exemple : récupérer des valeurs par nom de colonne
-                        string id = row.Cells["Id"].Value?.ToString();
-                        unid = Convert.ToInt32(id);
-                    }
-                    string infosCompl = string.Empty;
-                    try
-                    {
-                        infosCompl = m_Choix.ObtenirInfosCompl(unid);
-                        txtInfosSupp.Text = infosCompl;
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger lg = new Logger(ex.ToString(), m_CheminLog);
-                    }
+        {
+            Int32 unid = 0;
+            // Vérifier que l’index est valide
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgInfos.Rows[e.RowIndex];
+                // Exemple : récupérer des valeurs par nom de colonne
+                string id = row.Cells["Id"].Value?.ToString();
+                unid = Convert.ToInt32(id);
+                m_NumSiteEnModif = unid;
+            }
+            string infosCompl = string.Empty;
+            try
+            {
+                infosCompl = m_Choix.ObtenirInfosCompl(unid);
+                txtInfosSupp.Text = infosCompl;
+                btnModifInfos.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Logger lg = new Logger(ex.ToString(), m_CheminLog);
+            }
             
-                    //lignechoisie = dgInfos.Rows
-                }
+            //lignechoisie = dgInfos.Rows
+        }
         #endregion
 
         #endregion

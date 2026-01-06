@@ -2652,9 +2652,33 @@ namespace Gestion_Mtps
             {
                 throw;
             }
-            
+        }
 
-            
+        internal void RecupererUnEnregistrement(SiteInfos m_siteInfos)
+        {
+            string szSelect = string.Empty;
+            szSelect = "SELECT * from tblInfos WHERE tblInfos.IdInfos = " + m_siteInfos.Id;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    m_siteInfos.NomSite = m_DataTable.Rows[0]["NomSite"].ToString();
+                    m_siteInfos.Adresse = m_DataTable.Rows[0]["Adresse"].ToString();
+                    m_siteInfos.Identifiant = m_DataTable.Rows[0]["Identifiant"].ToString();
+                    m_siteInfos.MotPass = m_DataTable.Rows[0]["MotPass"].ToString();
+                    m_siteInfos.InfosCompl = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
 
 
