@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
@@ -2626,6 +2627,34 @@ namespace Gestion_Mtps
                 }
                 
             }
+        }
+
+        internal string ObtenirInfosComplementaires(object unid)
+        {
+            string szSelect;
+            string ret = string.Empty;
+            szSelect = "SELECT InfosCompl FROM TblInfos as ti WHERE ti.IdInfos = " + unid;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    ret = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+                    return ret;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+
+            
         }
 
 

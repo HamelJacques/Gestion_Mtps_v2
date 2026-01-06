@@ -45,17 +45,32 @@ namespace Gestion_Mtps_v2
             this.m_cheminLog = chlog;
             this.maBD = maBD;
             InitializeComponent();
-            InitFenetre(pos);
+            InitFenetre(pos, GetM_mode());
             m_mode = mode;
             m_siteInfos = new SiteInfos();
             this.DialogResult = DialogResult.No;
         }
 
-        private void InitFenetre(FormStartPosition pos)
+        private int GetM_mode()
+        {
+            return m_mode;
+        }
+
+        private void InitFenetre(FormStartPosition pos, int m_mode)
         {
             btnFermer.Text = "Fermer";
-            btnSauvegarde.Text = "Sauvegarde";
-            this.BackColor = Color.LightSalmon;
+            if(m_mode == (int)Mode.Ajout)
+            {
+                this.BackColor = Color.LightSalmon;
+                btnSauvegarde.Text = "Sauvegarde les nouvelles informations";
+            }
+            if (m_mode == (int)Mode.Modif)
+            {
+                this.BackColor = Color.LightSalmon;
+                btnSauvegarde.Text = "Sauvegarde les modifications";
+            }
+
+
             btnSauvegarde.BackColor = Color.LightGreen;
             lblAdresse.Text = "Adresse:";
             lblIdentifiant.Text = "Identifiant:";

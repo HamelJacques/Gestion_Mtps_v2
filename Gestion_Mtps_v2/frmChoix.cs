@@ -85,6 +85,8 @@ namespace Gestion_Mtps_v2
             grbxInfosSites.BackColor = Color.Yellow;
             btnAjoutInfos.Text = "Ajouter";
             btnAjoutInfos.BackColor = Color.LightGreen;
+            btnModifInfos.Text = "Modifier";
+            btnModifInfos.BackColor = Color.LemonChiffon;
             ActiveBtns();
             InitDatagridInfos();
             // Lire jctTblInfos pour voir si on a au moins une ligne pour l'usager
@@ -97,6 +99,8 @@ namespace Gestion_Mtps_v2
         {
             btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
                 && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
+
+            btnModifInfos.Enabled=false;
         }
         private void InitDatagridInfos()
         {
@@ -242,6 +246,13 @@ namespace Gestion_Mtps_v2
             AjoutSiteInfos .ShowDialog();
             
         }
+        private void btnModifInfos_Click(object sender, EventArgs e)
+        {
+            // appeler la fenêtre AjoutSiteInfos en mode modification
+            frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog);
+            ModifSiteInfos.ShowDialog();
+        }
+
         #endregion
         #region LES LISTBOXES
         private void lstBxCategories_Click(object sender, EventArgs e)
@@ -315,8 +326,35 @@ namespace Gestion_Mtps_v2
         }
         #endregion
 
+        #region LE DATAGRID
+        private void dgInfos_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+                {
+                    Int32 unid = 0;
+                    // Vérifier que l’index est valide
+                    if (e.RowIndex >= 0)
+                    {
+                        DataGridViewRow row = dgInfos.Rows[e.RowIndex];
+                        // Exemple : récupérer des valeurs par nom de colonne
+                        string id = row.Cells["Id"].Value?.ToString();
+                        unid = Convert.ToInt32(id);
+                    }
+                    string infosCompl = string.Empty;
+                    try
+                    {
+                        infosCompl = m_Choix.ObtenirInfosCompl(unid);
+                        txtInfosSupp.Text = infosCompl;
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger lg = new Logger(ex.ToString(), m_CheminLog);
+                    }
+            
+                    //lignechoisie = dgInfos.Rows
+                }
         #endregion
 
+        #endregion
 
+        
     }
 }
