@@ -39,6 +39,7 @@
             this.btnAjoutSite = new System.Windows.Forms.Button();
             this.lstBxSites = new System.Windows.Forms.ListBox();
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
+            this.btnModifInfos = new System.Windows.Forms.Button();
             this.dgInfos = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NomSite = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,7 +48,6 @@
             this.MotPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAjoutInfos = new System.Windows.Forms.Button();
             this.txtInfosSupp = new System.Windows.Forms.TextBox();
-            this.btnModifInfos = new System.Windows.Forms.Button();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -181,6 +181,16 @@
             this.grbxInfosSites.TabStop = false;
             this.grbxInfosSites.Text = "grbxInfosSites";
             // 
+            // btnModifInfos
+            // 
+            this.btnModifInfos.Location = new System.Drawing.Point(6, 82);
+            this.btnModifInfos.Name = "btnModifInfos";
+            this.btnModifInfos.Size = new System.Drawing.Size(96, 37);
+            this.btnModifInfos.TabIndex = 2;
+            this.btnModifInfos.Text = "btnModifInfos";
+            this.btnModifInfos.UseVisualStyleBackColor = true;
+            this.btnModifInfos.Click += new System.EventHandler(this.btnModifInfos_Click);
+            // 
             // dgInfos
             // 
             this.dgInfos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -241,21 +251,11 @@
             // txtInfosSupp
             // 
             this.txtInfosSupp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInfosSupp.Location = new System.Drawing.Point(351, 265);
+            this.txtInfosSupp.Location = new System.Drawing.Point(329, 265);
             this.txtInfosSupp.Multiline = true;
             this.txtInfosSupp.Name = "txtInfosSupp";
-            this.txtInfosSupp.Size = new System.Drawing.Size(988, 228);
+            this.txtInfosSupp.Size = new System.Drawing.Size(1010, 228);
             this.txtInfosSupp.TabIndex = 6;
-            // 
-            // btnModifInfos
-            // 
-            this.btnModifInfos.Location = new System.Drawing.Point(6, 82);
-            this.btnModifInfos.Name = "btnModifInfos";
-            this.btnModifInfos.Size = new System.Drawing.Size(96, 37);
-            this.btnModifInfos.TabIndex = 2;
-            this.btnModifInfos.Text = "btnModifInfos";
-            this.btnModifInfos.UseVisualStyleBackColor = true;
-            this.btnModifInfos.Click += new System.EventHandler(this.btnModifInfos_Click);
             // 
             // frmChoix
             // 
