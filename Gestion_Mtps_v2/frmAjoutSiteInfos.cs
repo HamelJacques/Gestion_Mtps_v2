@@ -16,8 +16,6 @@ namespace Gestion_Mtps_v2
         private Usager_v2 usager;
         private CBase maBD;
         private int m_mode;
-        private string m_NomSite;
-        private string m_AdresseSite;
         private string m_cheminLog;
         SiteInfos m_siteInfos;
         AjoutSiteInfos m_ASI;
@@ -48,8 +46,7 @@ namespace Gestion_Mtps_v2
             m_siteInfos.Id = unid;
             m_mode = mode;
             InitializeComponent();
-            InitFenetre(pos, GetM_mode());
-            
+            InitFenetre(pos, GetM_mode());            
             
             this.DialogResult = DialogResult.No;
         }
@@ -74,7 +71,6 @@ namespace Gestion_Mtps_v2
                 RecupererUnEnregistrement(m_siteInfos);
                 AfficherInfos();
             }
-
 
             btnSauvegarde.BackColor = Color.LightGreen;
             lblAdresse.Text = "Adresse:";
@@ -103,8 +99,7 @@ namespace Gestion_Mtps_v2
             catch(Exception ex)
             {
                 Logger lg = new Logger(ex.ToString(), m_cheminLog);
-            }
-            
+            }            
         }
         #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
@@ -119,6 +114,7 @@ namespace Gestion_Mtps_v2
             LireLaPage();
             m_ASI = new AjoutSiteInfos();
             //Je veux vérifier si on est en more ajout ou en mode modif
+            // puis appeler CBase en conséquence
             try
             {
                 if (m_mode == 0)
@@ -139,7 +135,6 @@ namespace Gestion_Mtps_v2
                 {
                     this.Close();
                 }
-                // puis appeler CBase en conséquence
             }
             catch (Exception ex)
             {
