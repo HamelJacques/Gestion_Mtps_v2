@@ -126,6 +126,7 @@ namespace Gestion_Mtps_v2
             List<string> lst = new List<string>();
             m_lstSiteInfos = new List<SiteInfos>();
             dgInfos.Rows.Clear();
+            txtInfosSupp.Text = string.Empty;
             //dgInfos.Columns.Clear();
 
             m_Choix.ObtenirLesSitesInfos(ref m_lstSiteInfos, m_usager);
@@ -176,6 +177,7 @@ namespace Gestion_Mtps_v2
         #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
         private void btnAjoutCatego_Click(object sender, EventArgs e)
