@@ -136,11 +136,17 @@ namespace Gestion_Mtps_v2
             }
             else
             {
+                DialogResult dr = new DialogResult();
                 m_UsagerSelectionne.IdUsager = iSelect;
                 //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
                 frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
                 // Ouvrir la nouvelle fenêtre de choix
-                fen.ShowDialog();
+                this.Hide();
+                dr = fen.ShowDialog();
+                if(dr == DialogResult.OK)
+                {
+                    this.ShowDialog();
+                }
             }
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
         }

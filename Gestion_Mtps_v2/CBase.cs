@@ -2645,6 +2645,7 @@ namespace Gestion_Mtps
             string szAND_Catego = string.Empty;
             string szAND_SousCatego = string.Empty;
             string szAND_Site = string.Empty;
+            string szORDERBY = string.Empty;
             szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
                 + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
             if (usager.IdCategorie­ > 0)
@@ -2659,7 +2660,8 @@ namespace Gestion_Mtps
             {
                 szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
             }
-            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+            szORDERBY = " ORDER BY tblInfos.NomSite";
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site + szORDERBY;
 
             m_DataTable = new DataTable();
             m_DataTable.Clear();
