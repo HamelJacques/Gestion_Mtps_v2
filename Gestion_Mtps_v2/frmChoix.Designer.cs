@@ -270,6 +270,7 @@
             this.Controls.Add(this.btnFermer);
             this.Name = "frmChoix";
             this.Text = "frmChoix";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmChoix_FormClosing);
             this.grbxCategories.ResumeLayout(false);
             this.grbxSousCategories.ResumeLayout(false);
             this.grbxSites.ResumeLayout(false);

@@ -26,9 +26,10 @@ namespace Gestion_Mtps_v2
         }
         #endregion
         #region CONSTRUCTEURS
-        public frmChoix(ref Usager_v2 U, CBase bd, string chlog)
+        public frmChoix(ref Usager_v2 U, CBase bd, string chlog, Icon ico)
         {
             InitializeComponent();
+            this.Icon = ico;
             m_usager = new Usager_v2();
             m_usager = U;
             m_maBD = bd;
@@ -178,6 +179,7 @@ namespace Gestion_Mtps_v2
         private void btnFermer_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            btnFermer.Tag = "1";
             this.Close();
         }
         private void btnAjoutCatego_Click(object sender, EventArgs e)
@@ -359,6 +361,30 @@ namespace Gestion_Mtps_v2
         #endregion
 
         #endregion
-                
+
+        private void frmChoix_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var btn = btnFermer.Tag;
+            if (btnFermer.Tag == null)
+            {
+                var rep = MessageBox.Show("Voulez-vous vraiment fermer ?",
+                                          "Confirmation",
+                                          MessageBoxButtons.YesNo);
+
+                if (rep == DialogResult.No)
+                {
+                    e.Cancel = true; // Empêche la fermeture
+                    this.Tag = null;
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+        }
     }
 }

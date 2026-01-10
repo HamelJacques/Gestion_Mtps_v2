@@ -139,13 +139,13 @@ namespace Gestion_Mtps_v2
                 DialogResult dr = new DialogResult();
                 m_UsagerSelectionne.IdUsager = iSelect;
                 //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
                 // Ouvrir la nouvelle fenêtre de choix
                 this.Hide();
                 dr = fen.ShowDialog();
-                if(dr == DialogResult.OK)
+                if (dr == DialogResult.OK)
                 {
-                    this.ShowDialog();
+                    this.Show();
                 }
             }
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
