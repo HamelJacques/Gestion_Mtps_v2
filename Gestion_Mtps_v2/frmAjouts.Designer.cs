@@ -36,6 +36,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.grbxLstValsDispo = new System.Windows.Forms.GroupBox();
             this.lstValsDispo = new System.Windows.Forms.ListBox();
+            this.lblerr = new System.Windows.Forms.Label();
             this.grbxMotPasseUsager.SuspendLayout();
             this.grbxLstValsDispo.SuspendLayout();
             this.SuspendLayout();
@@ -119,11 +120,21 @@
             this.lstValsDispo.TabIndex = 0;
             this.lstValsDispo.DoubleClick += new System.EventHandler(this.lstValsDispo_DoubleClick);
             // 
+            // lblerr
+            // 
+            this.lblerr.AutoSize = true;
+            this.lblerr.Location = new System.Drawing.Point(14, 86);
+            this.lblerr.Name = "lblerr";
+            this.lblerr.Size = new System.Drawing.Size(54, 25);
+            this.lblerr.TabIndex = 6;
+            this.lblerr.Text = "lblerr";
+            // 
             // frmAjouts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 295);
+            this.Controls.Add(this.lblerr);
             this.Controls.Add(this.grbxLstValsDispo);
             this.Controls.Add(this.grbxMotPasseUsager);
             this.Controls.Add(this.btnAjouter);
@@ -153,5 +164,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox grbxLstValsDispo;
         private System.Windows.Forms.ListBox lstValsDispo;
+        private System.Windows.Forms.Label lblerr;
     }
 }

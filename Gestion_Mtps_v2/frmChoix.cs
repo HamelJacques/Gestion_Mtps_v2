@@ -316,13 +316,21 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                string lecture = lstBxSites.SelectedItem.ToString();
-                m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
+                if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
+                {
+                    string lecture = lstBxSites.SelectedItem.ToString();
+                    m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
-                ListerLesInfosSites();
-                ActiveBtns();
+                    ListerLesInfosSites();
+                    ActiveBtns();
+                }
+                
             }
-            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            catch (Exception ex) 
+            { 
+                string msg = ex.Message.ToString();
+                Logger lg = new Logger(msg, m_CheminLog);
+            }
             
         }
         #endregion

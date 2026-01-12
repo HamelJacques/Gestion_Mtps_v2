@@ -2358,7 +2358,7 @@ namespace Gestion_Mtps
                 }
                 using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
                 {
-
+                    Logger lg;
                     OleDbCommand command = new OleDbCommand();
                     OleDbTransaction transaction = null;
                     // Set the Connection to the new OleDbConnection.
@@ -2389,9 +2389,10 @@ namespace Gestion_Mtps
                     catch (Exception transEx)
                     {
                         #region catch
+                        retour = false;
                         string err = string.Empty;
                         err = transEx.ToString();
-                        Logger lg = new Logger(err, m_cheminLog);
+                        lg = new Logger(err, m_cheminLog);
                         try
                         {
                             // Attempt to roll back the transaction.
@@ -2401,6 +2402,8 @@ namespace Gestion_Mtps
                         catch
                         {
                             // Handle any errors that may have occurred during the rollback.
+                            string mess = err.ToString();
+                            lg = new Logger(err.ToString(), m_cheminLog);
                             return retour;
                         }
                     }
@@ -2410,8 +2413,10 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString() ;
-                throw(new Exception(mess));
+                lg = new Logger(ex.ToString(), m_cheminLog);
+                //throw(new Exception(mess));
             }
+            return retour;
         }
 
         internal bool ajouterSite_v2(string text, ref Usager_v2 u, ref string messageRetour)
