@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
-using System.Data.OleDb;
 
 
 namespace Gestion_Mtps_v2
@@ -39,10 +40,13 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES
         private void InitForm()
         {
-            
+            string fullUser = WindowsIdentity.GetCurrent().Name;
+            string userName = Environment.UserName;
+
+
             this.StartPosition = FormStartPosition.CenterScreen;
             m_UsagerSelectionne = new Usager_v2();
-            m_Titre = "Ouverture";
+            m_Titre = "Ouverture par " + userName;
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter un utilisateur";
@@ -63,7 +67,7 @@ namespace Gestion_Mtps_v2
             
 
             m_CheminLog = O.ChExe + "application.log";
-            //m_lg = new Logger("Dans InitForm", m_CheminLog);
+            //m_lg = new Logger("Ouverture par " + userName, m_CheminLog);
             this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
             lblChBD.Text = O.ChBD + O.LaBase.BdConnecte.ToString();
             AjusteCouleurFenere();

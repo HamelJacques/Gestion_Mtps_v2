@@ -2055,12 +2055,14 @@ namespace Gestion_Mtps
             Logger lg;
             // Récupère le dossier parent
             string parent = AppContext.BaseDirectory;
-            m_cheminLog = parent + "application.log";
             //lg = new Logger("Dans InitBase()", m_cheminLog);
+            string userName = Environment.UserName;
+
+            m_cheminLog = parent + "application.log";
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
-            lg = new Logger("dbPath = " + dbPath, m_cheminLog);
+            lg = new Logger( userName + " se connecte sur "  + dbPath, m_cheminLog);
 
             try
             {
@@ -2071,8 +2073,9 @@ namespace Gestion_Mtps
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
-                    m_estConnectee = true;                    
+                    m_estConnectee = true;
                 }
+                
                 lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
                 //string cheminexe = connectionString;
                 //Console.WriteLine(m_cheminLog);
