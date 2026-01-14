@@ -105,7 +105,7 @@ namespace Gestion_Mtps_v2
         }
         private void InitDatagridInfos()
         {
-            //dgInfos.Columns[0].Width = 150;
+            dgInfos.Columns[0].Visible = false;
         }
         private string ObtenirNomUsager()
         {
