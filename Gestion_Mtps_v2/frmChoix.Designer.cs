@@ -39,14 +39,15 @@
             this.btnAjoutSite = new System.Windows.Forms.Button();
             this.lstBxSites = new System.Windows.Forms.ListBox();
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
+            this.btnModifInfos = new System.Windows.Forms.Button();
             this.dgInfos = new System.Windows.Forms.DataGridView();
-            this.btnAjoutInfos = new System.Windows.Forms.Button();
-            this.txtInfosSupp = new System.Windows.Forms.TextBox();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NomSite = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Adresse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Identifiant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MotPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAjoutInfos = new System.Windows.Forms.Button();
+            this.txtInfosSupp = new System.Windows.Forms.TextBox();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -169,6 +170,7 @@
             this.grbxInfosSites.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grbxInfosSites.Controls.Add(this.btnModifInfos);
             this.grbxInfosSites.Controls.Add(this.dgInfos);
             this.grbxInfosSites.Controls.Add(this.btnAjoutInfos);
             this.grbxInfosSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -178,6 +180,16 @@
             this.grbxInfosSites.TabIndex = 5;
             this.grbxInfosSites.TabStop = false;
             this.grbxInfosSites.Text = "grbxInfosSites";
+            // 
+            // btnModifInfos
+            // 
+            this.btnModifInfos.Location = new System.Drawing.Point(6, 82);
+            this.btnModifInfos.Name = "btnModifInfos";
+            this.btnModifInfos.Size = new System.Drawing.Size(96, 37);
+            this.btnModifInfos.TabIndex = 2;
+            this.btnModifInfos.Text = "btnModifInfos";
+            this.btnModifInfos.UseVisualStyleBackColor = true;
+            this.btnModifInfos.Click += new System.EventHandler(this.btnModifInfos_Click);
             // 
             // dgInfos
             // 
@@ -195,24 +207,7 @@
             this.dgInfos.Name = "dgInfos";
             this.dgInfos.Size = new System.Drawing.Size(892, 201);
             this.dgInfos.TabIndex = 1;
-            // 
-            // btnAjoutInfos
-            // 
-            this.btnAjoutInfos.Location = new System.Drawing.Point(6, 30);
-            this.btnAjoutInfos.Name = "btnAjoutInfos";
-            this.btnAjoutInfos.Size = new System.Drawing.Size(96, 37);
-            this.btnAjoutInfos.TabIndex = 0;
-            this.btnAjoutInfos.Text = "btnAjoutInfos";
-            this.btnAjoutInfos.UseVisualStyleBackColor = true;
-            this.btnAjoutInfos.Click += new System.EventHandler(this.btnAjoutInfos_Click);
-            // 
-            // txtInfosSupp
-            // 
-            this.txtInfosSupp.Location = new System.Drawing.Point(351, 265);
-            this.txtInfosSupp.Multiline = true;
-            this.txtInfosSupp.Name = "txtInfosSupp";
-            this.txtInfosSupp.Size = new System.Drawing.Size(988, 228);
-            this.txtInfosSupp.TabIndex = 6;
+            this.dgInfos.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgInfos_RowHeaderMouseClick);
             // 
             // Id
             // 
@@ -243,6 +238,25 @@
             this.MotPass.HeaderText = "Mot de passe";
             this.MotPass.Name = "MotPass";
             // 
+            // btnAjoutInfos
+            // 
+            this.btnAjoutInfos.Location = new System.Drawing.Point(6, 30);
+            this.btnAjoutInfos.Name = "btnAjoutInfos";
+            this.btnAjoutInfos.Size = new System.Drawing.Size(96, 37);
+            this.btnAjoutInfos.TabIndex = 0;
+            this.btnAjoutInfos.Text = "btnAjoutInfos";
+            this.btnAjoutInfos.UseVisualStyleBackColor = true;
+            this.btnAjoutInfos.Click += new System.EventHandler(this.btnAjoutInfos_Click);
+            // 
+            // txtInfosSupp
+            // 
+            this.txtInfosSupp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInfosSupp.Location = new System.Drawing.Point(329, 265);
+            this.txtInfosSupp.Multiline = true;
+            this.txtInfosSupp.Name = "txtInfosSupp";
+            this.txtInfosSupp.Size = new System.Drawing.Size(1010, 228);
+            this.txtInfosSupp.TabIndex = 6;
+            // 
             // frmChoix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,6 +270,7 @@
             this.Controls.Add(this.btnFermer);
             this.Name = "frmChoix";
             this.Text = "frmChoix";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmChoix_FormClosing);
             this.grbxCategories.ResumeLayout(false);
             this.grbxSousCategories.ResumeLayout(false);
             this.grbxSites.ResumeLayout(false);
@@ -287,5 +302,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Adresse;
         private System.Windows.Forms.DataGridViewTextBoxColumn Identifiant;
         private System.Windows.Forms.DataGridViewTextBoxColumn MotPass;
+        private System.Windows.Forms.Button btnModifInfos;
     }
 }

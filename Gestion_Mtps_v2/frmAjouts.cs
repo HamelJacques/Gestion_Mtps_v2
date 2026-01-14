@@ -38,6 +38,7 @@ namespace Gestion_Mtps_v2
         {
             InitializeComponent();
             this.Text = type;
+            
         }
         public frmAjouts(string type, CBase bd)
         {
@@ -70,6 +71,7 @@ namespace Gestion_Mtps_v2
         public frmAjouts(string type, CBase bd, ref List<string> lst, ref Usager_v2 U)
         {
             InitializeComponent();
+            lblerr.Text = string.Empty;
             m_maBD = bd;
             m_Type = type;
             m_Usager = U;
@@ -245,7 +247,14 @@ namespace Gestion_Mtps_v2
             // La vérification se fera dans Ajouts et retournera un code
 
             AjoutOk = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
-            if (AjoutOk) { this.Close(); }
+            if (AjoutOk) 
+            {
+                this.Close();
+            }
+            else
+            {
+                lblerr.Text = "ERREUR! Vérifier le fichier de log";
+            }
         }
 
         private void txtNouvelleValeur_KeyUp(object sender, KeyEventArgs e)

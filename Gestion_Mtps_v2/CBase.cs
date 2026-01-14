@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
@@ -46,9 +47,10 @@ namespace Gestion_Mtps
         //    //Connection();
         //    //lg = new Logger();
         //}
-        public CBase(string CheminBD)//, string table
+        public CBase(string CheminBD, string chlog)//, string table
         {
             m_CheminBD = CheminBD;
+            m_cheminLog = chlog;
 
             bool initbase = InitCBase();
             //Connection();
@@ -519,7 +521,7 @@ namespace Gestion_Mtps
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + nouveauNom + "')";
+                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + CorrigeInput(nouveauNom) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2054,12 +2056,14 @@ namespace Gestion_Mtps
             Logger lg;
             // Récupère le dossier parent
             string parent = AppContext.BaseDirectory;
-            m_cheminLog = parent + "application.log";
             //lg = new Logger("Dans InitBase()", m_cheminLog);
+            string userName = Environment.UserName;
+
+            m_cheminLog = parent + "application.log";
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
-            lg = new Logger("dbPath = " + dbPath, m_cheminLog);
+            lg = new Logger(userName + " accède à " + dbPath, m_cheminLog);
 
             try
             {
@@ -2070,8 +2074,9 @@ namespace Gestion_Mtps
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
-                    m_estConnectee = true;                    
+                    m_estConnectee = true;
                 }
+                
                 lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
                 //string cheminexe = connectionString;
                 //Console.WriteLine(m_cheminLog);
@@ -2357,7 +2362,7 @@ namespace Gestion_Mtps
                 }
                 using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
                 {
-
+                    Logger lg;
                     OleDbCommand command = new OleDbCommand();
                     OleDbTransaction transaction = null;
                     // Set the Connection to the new OleDbConnection.
@@ -2373,7 +2378,8 @@ namespace Gestion_Mtps
                         if (!present)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            //command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + CorrigeInput(text) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2388,9 +2394,10 @@ namespace Gestion_Mtps
                     catch (Exception transEx)
                     {
                         #region catch
+                        retour = false;
                         string err = string.Empty;
                         err = transEx.ToString();
-                        Logger lg = new Logger(err, m_cheminLog);
+                        lg = new Logger(err, m_cheminLog);
                         try
                         {
                             // Attempt to roll back the transaction.
@@ -2400,6 +2407,8 @@ namespace Gestion_Mtps
                         catch
                         {
                             // Handle any errors that may have occurred during the rollback.
+                            string mess = err.ToString();
+                            lg = new Logger(err.ToString(), m_cheminLog);
                             return retour;
                         }
                     }
@@ -2409,8 +2418,15 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString() ;
-                throw(new Exception(mess));
+                lg = new Logger(ex.ToString(), m_cheminLog);
+                //throw(new Exception(mess));
             }
+            return retour;
+        }
+
+        private string CorrigeInput(string text)
+        {
+            return text.Replace("'", "''");
         }
 
         internal bool ajouterSite_v2(string text, ref Usager_v2 u, ref string messageRetour)
@@ -2451,7 +2467,7 @@ namespace Gestion_Mtps
                         if (!present)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + CorrigeInput(text) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2528,11 +2544,11 @@ namespace Gestion_Mtps
                         // Execute the commands.
                         command.CommandText = "INSERT INTO tblInfos VALUES ("
                                                  + prochainNo + ","
-                                                 + " '" + m_siteInfos.NomSite + "',"
-                                                 + " '" + m_siteInfos.Adresse + "', "
-                                                 + " '" + m_siteInfos.Identifiant + "', "
-                                                 + " '" + m_siteInfos.MotPass + "', "
-                                                 + " '" + m_siteInfos.InfosCompl
+                                                 + " '" + CorrigeInput(m_siteInfos.NomSite) + "',"
+                                                 + " '" + CorrigeInput(m_siteInfos.Adresse) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.Identifiant) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.MotPass) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.InfosCompl)
                                                  + "')";
 
                         command.ExecuteNonQuery();
@@ -2558,7 +2574,57 @@ namespace Gestion_Mtps
                 throw ;
             }
         }
+        internal bool ModifierCombinaisonSecret(SiteInfos m_siteInfos)
+        {
+            string szUpdate = string.Empty;
+            bool reussite = false;
+            //" '" + m_siteInfos.NomSite + "',"
+            szUpdate = "UPDATE tblInfos SET tblInfos.NomSite = " + "'" + CorrigeInput(m_siteInfos.NomSite) + "',"
+                + "tblInfos.Adresse = " + "'" + m_siteInfos.Adresse + "', "
+                + "tblInfos.Identifiant = " + " '" + CorrigeInput(m_siteInfos.Identifiant) + "', "
+                + "tblInfos.MotPass = " + "'" + CorrigeInput(m_siteInfos.MotPass) + "', "
+                + "tblInfos.InfosCompl = " + "'" + CorrigeInput( m_siteInfos.InfosCompl) + "'"
+                + " WHERE tblInfos.IdInfos = " + + m_siteInfos.Id ;
 
+
+            try
+            {
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+                    OleDbCommand command = new OleDbCommand();
+                    OleDbTransaction transaction = null;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    try
+                    {
+                        // Open the connection and start the transaction.
+                        connection.Open();
+                        transaction = connection.BeginTransaction();
+                        // Assign transaction object for a pending local transaction.
+                        command.Transaction = transaction;
+
+                        // Execute the commands.
+                        command.CommandText = szUpdate;
+
+                        command.ExecuteNonQuery();
+
+                        // Commit the transaction.
+                        transaction.Commit();
+                        reussite = true;
+                    }
+                    catch (Exception ex1)
+                    {
+                        throw;
+                    }
+                }
+                    return reussite;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                throw;
+            }
+        }
         private List<int> IdDeCombinaison(Usager_v2 usager)
         {
             string szSelect;
@@ -2588,6 +2654,7 @@ namespace Gestion_Mtps
             string szAND_Catego = string.Empty;
             string szAND_SousCatego = string.Empty;
             string szAND_Site = string.Empty;
+            string szORDERBY = string.Empty;
             szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
                 + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
             if (usager.IdCategorie­ > 0)
@@ -2602,7 +2669,8 @@ namespace Gestion_Mtps
             {
                 szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
             }
-            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+            szORDERBY = " ORDER BY tblInfos.NomSite";
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site + szORDERBY;
 
             m_DataTable = new DataTable();
             m_DataTable.Clear();
@@ -2625,6 +2693,57 @@ namespace Gestion_Mtps
                     m_lstSiteInfos.Add(unsite);
                 }
                 
+            }
+        }
+        internal string ObtenirInfosComplementaires(object unid)
+        {
+            string szSelect;
+            string ret = string.Empty;
+            szSelect = "SELECT InfosCompl FROM TblInfos as ti WHERE ti.IdInfos = " + unid;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    ret = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+                    return ret;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        internal void RecupererUnEnregistrement(SiteInfos m_siteInfos)
+        {
+            string szSelect = string.Empty;
+            szSelect = "SELECT * from tblInfos WHERE tblInfos.IdInfos = " + m_siteInfos.Id;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    m_siteInfos.NomSite = m_DataTable.Rows[0]["NomSite"].ToString();
+                    m_siteInfos.Adresse = m_DataTable.Rows[0]["Adresse"].ToString();
+                    m_siteInfos.Identifiant = m_DataTable.Rows[0]["Identifiant"].ToString();
+                    m_siteInfos.MotPass = m_DataTable.Rows[0]["MotPass"].ToString();
+                    m_siteInfos.InfosCompl = m_DataTable.Rows[0]["InfosCompl"].ToString();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
             }
         }
 

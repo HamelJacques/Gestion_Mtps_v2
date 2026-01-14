@@ -16,8 +16,6 @@ namespace Gestion_Mtps_v2
         private Usager_v2 usager;
         private CBase maBD;
         private int m_mode;
-        private string m_NomSite;
-        private string m_AdresseSite;
         private string m_cheminLog;
         SiteInfos m_siteInfos;
         AjoutSiteInfos m_ASI;
@@ -39,23 +37,41 @@ namespace Gestion_Mtps_v2
             InitializeComponent();
         }
 
-        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog)
+        public frmAjoutSiteInfos(ref Usager_v2 usager, ref CBase maBD, FormStartPosition pos, int mode, string chlog, int unid = 0)
         {
             this.usager = usager;
             this.m_cheminLog = chlog;
             this.maBD = maBD;
-            InitializeComponent();
-            InitFenetre(pos);
-            m_mode = mode;
             m_siteInfos = new SiteInfos();
+            m_siteInfos.Id = unid;
+            m_mode = mode;
+            InitializeComponent();
+            InitFenetre(pos, GetM_mode());            
+            
             this.DialogResult = DialogResult.No;
         }
 
-        private void InitFenetre(FormStartPosition pos)
+        private int GetM_mode()
+        {
+            return m_mode;
+        }
+
+        private void InitFenetre(FormStartPosition pos, int m_mode)
         {
             btnFermer.Text = "Fermer";
-            btnSauvegarde.Text = "Sauvegarde";
-            this.BackColor = Color.LightSalmon;
+            if(m_mode == (int)Mode.Ajout)
+            {
+                this.BackColor = Color.LightSalmon;
+                btnSauvegarde.Text = "Sauvegarde les nouvelles informations";
+            }
+            if (m_mode == (int)Mode.Modif)
+            {
+                this.BackColor = Color.LightSalmon;
+                btnSauvegarde.Text = "Sauvegarde les modifications";
+                RecupererUnEnregistrement(m_siteInfos);
+                AfficherInfos();
+            }
+
             btnSauvegarde.BackColor = Color.LightGreen;
             lblAdresse.Text = "Adresse:";
             lblIdentifiant.Text = "Identifiant:";
@@ -63,6 +79,27 @@ namespace Gestion_Mtps_v2
             lblNomSite.Text = "Nom du site:";
             lblInfosCompl.Text = "Informations" + Environment.NewLine +"complémemntaires";
             this.StartPosition = pos;
+        }
+
+        private void AfficherInfos()
+        {
+            txtAdresse.Text = m_siteInfos.Adresse;
+            txtIdentifiant.Text = m_siteInfos.Identifiant;
+            txtInfosComplementaires.Text=   m_siteInfos.InfosCompl.ToString();
+            txtMotPass.Text= m_siteInfos.MotPass;
+            txtNomSite.Text= m_siteInfos.NomSite;
+        }
+
+        private void RecupererUnEnregistrement(SiteInfos m_siteInfos)
+        {
+            try
+            {
+                maBD.RecupererUnEnregistrement(m_siteInfos);
+            }
+            catch(Exception ex)
+            {
+                Logger lg = new Logger(ex.ToString(), m_cheminLog);
+            }            
         }
         #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
@@ -77,6 +114,7 @@ namespace Gestion_Mtps_v2
             LireLaPage();
             m_ASI = new AjoutSiteInfos();
             //Je veux vérifier si on est en more ajout ou en mode modif
+            // puis appeler CBase en conséquence
             try
             {
                 if (m_mode == 0)
@@ -90,14 +128,13 @@ namespace Gestion_Mtps_v2
                     if (m_mode == 1)
                     {
                         // on modifie
-                        //reussite = m_ASI.ModifierNouveau(ref usager, ref maBD, ref m_siteInfos);
+                        reussite = m_ASI.ModifierSiteInfos(ref maBD,ref m_siteInfos);//     ModifierNouveau(ref maBD, ref m_siteInfos);
                     }
                 }
                 if (reussite)
                 {
                     this.Close();
                 }
-                // puis appeler CBase en conséquence
             }
             catch (Exception ex)
             {

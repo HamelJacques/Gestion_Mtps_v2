@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
-using System.Data.OleDb;
 
 
 namespace Gestion_Mtps_v2
@@ -39,18 +40,26 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES
         private void InitForm()
         {
-            
+            string fullUser = WindowsIdentity.GetCurrent().Name;
+            string userName = Environment.UserName;
+
+
             this.StartPosition = FormStartPosition.CenterScreen;
             m_UsagerSelectionne = new Usager_v2();
-            m_Titre = "Ouverture";
+            m_Titre = "Ouverture par " + userName;
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter un utilisateur";
             m_lesUsagers = new List<string>();
-            
+
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
+            //m_CheminLog = O.ChExe + "application.log";
+            m_CheminLog = ConfigurationManager.AppSettings["CheminLog"];
+            LogUtilisateurWindows(m_CheminLog);
             //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
-            O = new Ouverture(m_Chemin_BD);
+
+
+            O = new Ouverture(m_Chemin_BD, m_CheminLog);
 
             foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
             {
@@ -60,15 +69,27 @@ namespace Gestion_Mtps_v2
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
 
             ConnectBD();
+
+
             
 
             m_CheminLog = O.ChExe + "application.log";
-            //m_lg = new Logger("Dans InitForm", m_CheminLog);
+            //m_lg = new Logger("Ouverture par " + userName, m_CheminLog);
             this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
             lblChBD.Text = O.ChBD + O.LaBase.BdConnecte.ToString();
             AjusteCouleurFenere();
             AfficheUsagers();
         }
+
+        private static void LogUtilisateurWindows(string chlog)
+        {
+            //string chLog = ConfigurationManager.AppSettings["CheminLog"];
+            //m_CheminLog = chLog;
+            string userName = Environment.UserName;
+            //MessageBox.Show("Chemin log = " + chLog + Environment.NewLine + "Usager Windows = " + userName);
+            Logger lg = new Logger(userName, chlog);
+        }
+
         //private void ObtenirCheminExe()
         //{
         //    m_CheminExe = AppContext.BaseDirectory;
@@ -136,11 +157,17 @@ namespace Gestion_Mtps_v2
             }
             else
             {
+                DialogResult dr = new DialogResult();
                 m_UsagerSelectionne.IdUsager = iSelect;
                 //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog);
+                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
                 // Ouvrir la nouvelle fenêtre de choix
-                fen.ShowDialog();
+                this.Hide();
+                dr = fen.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    this.Show();
+                }
             }
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
         }
