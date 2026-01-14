@@ -47,9 +47,10 @@ namespace Gestion_Mtps
         //    //Connection();
         //    //lg = new Logger();
         //}
-        public CBase(string CheminBD)//, string table
+        public CBase(string CheminBD, string chlog)//, string table
         {
             m_CheminBD = CheminBD;
+            m_cheminLog = chlog;
 
             bool initbase = InitCBase();
             //Connection();
@@ -2055,7 +2056,7 @@ namespace Gestion_Mtps
             Logger lg;
             // Récupère le dossier parent
             string parent = AppContext.BaseDirectory;
-            m_cheminLog = parent + "application.log";
+            //m_cheminLog = parent + "application.log";
             //lg = new Logger("Dans InitBase()", m_cheminLog);
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));

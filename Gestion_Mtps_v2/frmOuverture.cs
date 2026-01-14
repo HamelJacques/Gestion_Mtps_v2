@@ -55,7 +55,7 @@ namespace Gestion_Mtps_v2
             //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
 
 
-            O = new Ouverture(m_Chemin_BD);
+            O = new Ouverture(m_Chemin_BD, m_CheminLog);
 
             foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
             {
