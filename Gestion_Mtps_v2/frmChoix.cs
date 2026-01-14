@@ -1,9 +1,6 @@
 ﻿using Gestion_Mtps;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +16,7 @@ namespace Gestion_Mtps_v2
         private Usager_v2 m_usager;
         private Choix m_Choix;
         private CBase m_maBD;
-        private Ajouts m_Ajouts;
+        //private Ajouts m_Ajouts;
         private List<SiteInfos> m_lstSiteInfos;
         private int m_NumSiteEnModif;
         private enum Mode
@@ -29,9 +26,10 @@ namespace Gestion_Mtps_v2
         }
         #endregion
         #region CONSTRUCTEURS
-        public frmChoix(ref Usager_v2 U, CBase bd, string chlog)
+        public frmChoix(ref Usager_v2 U, CBase bd, string chlog, Icon ico)
         {
             InitializeComponent();
+            this.Icon = ico;
             m_usager = new Usager_v2();
             m_usager = U;
             m_maBD = bd;
@@ -44,7 +42,7 @@ namespace Gestion_Mtps_v2
         private void InitChoix()
         {
             m_Choix = new Choix(ref m_maBD);
-            m_Ajouts = new Ajouts();
+            //m_Ajouts = new Ajouts();
             this.Text = " Choix pour " + ObtenirNomUsager();
             this.BackColor = Color.LightPink;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -98,6 +96,7 @@ namespace Gestion_Mtps_v2
         }
         private void ActiveBtns()
         {
+            // Pour ajouter un ensemble d'informations, on doit avoir les 4 niveaux de sélectionnés
             btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
                 && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
 
@@ -128,12 +127,12 @@ namespace Gestion_Mtps_v2
             List<string> lst = new List<string>();
             m_lstSiteInfos = new List<SiteInfos>();
             dgInfos.Rows.Clear();
+            txtInfosSupp.Text = string.Empty;
             //dgInfos.Columns.Clear();
 
             m_Choix.ObtenirLesSitesInfos(ref m_lstSiteInfos, m_usager);
             AfficherLesInfosSites();
         }
-
         private void AfficherLesInfosSites()
         {
             dgInfos.Rows.Clear();
@@ -160,7 +159,6 @@ namespace Gestion_Mtps_v2
             dgInfos.Columns["MotPass"].HeaderText = "Mot de passe";
 
         }
-
         private void ListerSousCategories()
         {
             List<string> lst = new List<string>();
@@ -180,6 +178,8 @@ namespace Gestion_Mtps_v2
         #region LES BOUTONS
         private void btnFermer_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
+            btnFermer.Tag = "1";
             this.Close();
         }
         private void btnAjoutCatego_Click(object sender, EventArgs e)
@@ -271,26 +271,22 @@ namespace Gestion_Mtps_v2
                     // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
                     ListerSousCategories();
                     ListerLesSites();
-                    ActiveBtns();
                     ListerLesInfosSites();
-                    //AfficherLesInfosSites();
+                    ActiveBtns();
                 }
                 else
-                {
-                    // Aucun item sélectionné
+                { // Aucun item sélectionné
                 }                
             }
             catch (Exception ex) { 
-                string msg = ex.Message.ToString(); 
-                
+                string msg = ex.Message.ToString();
+                Logger lg = new Logger(ex.ToString(), m_CheminLog);
             }
         }
         private void lstBxSousCategories_Click(object sender, EventArgs e)
         {
-
             m_usager.IdSite = 0;
             // lire la sélection
-
             try
             {
                 if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
@@ -309,8 +305,11 @@ namespace Gestion_Mtps_v2
                     ActiveBtns();
                 }                
             }
-            catch (NullReferenceException nre) { return; }
-            catch (Exception ex) { string msg = ex.Message.ToString(); }
+            catch (NullReferenceException nre) { Logger lg = new Logger(nre.ToString(), m_CheminLog); }
+            catch (Exception ex) { 
+                string msg = ex.Message.ToString();
+                Logger lg = new Logger(ex.ToString(), m_CheminLog);
+            }
         }
         private void lstBxSites_Click(object sender, EventArgs e)
         {
@@ -366,6 +365,29 @@ namespace Gestion_Mtps_v2
 
         #endregion
 
-        
+        private void frmChoix_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var btn = btnFermer.Tag;
+            if (btnFermer.Tag == null)
+            {
+                var rep = MessageBox.Show("Voulez-vous vraiment fermer ?",
+                                          "Confirmation",
+                                          MessageBoxButtons.YesNo);
+
+                if (rep == DialogResult.No)
+                {
+                    e.Cancel = true; // Empêche la fermeture
+                    this.Tag = null;
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+            }
+        }
     }
 }

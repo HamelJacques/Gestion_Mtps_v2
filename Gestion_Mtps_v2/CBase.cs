@@ -521,7 +521,7 @@ namespace Gestion_Mtps
                         {
                             // Execute the commands.
                             //command.CommandText = "INSERT INTO tblCategories VALUES ('" + nouveauNom + "', " + num + ", " + idusager + ")";
-                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + nouveauNom + "')";
+                            command.CommandText = "INSERT INTO tblCategories VALUES (" + idCategorie +", '" + CorrigeInput(nouveauNom) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2056,8 +2056,10 @@ namespace Gestion_Mtps
             Logger lg;
             // Récupère le dossier parent
             string parent = AppContext.BaseDirectory;
-            //m_cheminLog = parent + "application.log";
             //lg = new Logger("Dans InitBase()", m_cheminLog);
+            string userName = Environment.UserName;
+
+            m_cheminLog = parent + "application.log";
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
@@ -2072,8 +2074,9 @@ namespace Gestion_Mtps
                 m_cnADONetConnection.Open();
                 if (m_cnADONetConnection.State ==  System.Data.ConnectionState.Open )
                 {
-                    m_estConnectee = true;                    
+                    m_estConnectee = true;
                 }
+                
                 lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
                 //string cheminexe = connectionString;
                 //Console.WriteLine(m_cheminLog);
@@ -2375,7 +2378,8 @@ namespace Gestion_Mtps
                         if (!present)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            //command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSousCategories VALUES (" + idSousCategorie + ", '" + CorrigeInput(text) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2420,6 +2424,11 @@ namespace Gestion_Mtps
             return retour;
         }
 
+        private string CorrigeInput(string text)
+        {
+            return text.Replace("'", "''");
+        }
+
         internal bool ajouterSite_v2(string text, ref Usager_v2 u, ref string messageRetour)
         {
             bool ret = false;
@@ -2458,7 +2467,7 @@ namespace Gestion_Mtps
                         if (!present)
                         {
                             // Execute the commands.
-                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + text + "')";
+                            command.CommandText = "INSERT INTO tblSites VALUES (" + idSite + ", '" + CorrigeInput(text) + "')";
                             command.ExecuteNonQuery();
                         }
 
@@ -2535,11 +2544,11 @@ namespace Gestion_Mtps
                         // Execute the commands.
                         command.CommandText = "INSERT INTO tblInfos VALUES ("
                                                  + prochainNo + ","
-                                                 + " '" + m_siteInfos.NomSite + "',"
-                                                 + " '" + m_siteInfos.Adresse + "', "
-                                                 + " '" + m_siteInfos.Identifiant + "', "
-                                                 + " '" + m_siteInfos.MotPass + "', "
-                                                 + " '" + m_siteInfos.InfosCompl
+                                                 + " '" + CorrigeInput(m_siteInfos.NomSite) + "',"
+                                                 + " '" + CorrigeInput(m_siteInfos.Adresse) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.Identifiant) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.MotPass) + "', "
+                                                 + " '" + CorrigeInput(m_siteInfos.InfosCompl)
                                                  + "')";
 
                         command.ExecuteNonQuery();
@@ -2570,11 +2579,11 @@ namespace Gestion_Mtps
             string szUpdate = string.Empty;
             bool reussite = false;
             //" '" + m_siteInfos.NomSite + "',"
-            szUpdate = "UPDATE tblInfos SET tblInfos.NomSite = " + "'" + m_siteInfos.NomSite + "',"
+            szUpdate = "UPDATE tblInfos SET tblInfos.NomSite = " + "'" + CorrigeInput(m_siteInfos.NomSite) + "',"
                 + "tblInfos.Adresse = " + "'" + m_siteInfos.Adresse + "', "
-                + "tblInfos.Identifiant = " + " '" + m_siteInfos.Identifiant + "', "
-                + "tblInfos.MotPass = " + "'" + m_siteInfos.MotPass + "', "
-                + "tblInfos.InfosCompl = " + "'" + m_siteInfos.InfosCompl + "'"
+                + "tblInfos.Identifiant = " + " '" + CorrigeInput(m_siteInfos.Identifiant) + "', "
+                + "tblInfos.MotPass = " + "'" + CorrigeInput(m_siteInfos.MotPass) + "', "
+                + "tblInfos.InfosCompl = " + "'" + CorrigeInput( m_siteInfos.InfosCompl) + "'"
                 + " WHERE tblInfos.IdInfos = " + + m_siteInfos.Id ;
 
 
@@ -2645,6 +2654,7 @@ namespace Gestion_Mtps
             string szAND_Catego = string.Empty;
             string szAND_SousCatego = string.Empty;
             string szAND_Site = string.Empty;
+            string szORDERBY = string.Empty;
             szSelect = "SELECT tblInfos.* FROM tblInfos INNER JOIN jctTblInfos ON tblInFos.IdInfos = jctTblInfos.IdInfos "
                 + "WHERE jctTblInfos.IdUsager = " + usager.IdUsager;
             if (usager.IdCategorie­ > 0)
@@ -2659,7 +2669,8 @@ namespace Gestion_Mtps
             {
                 szAND_Site = " AND jctTblInfos.IdSite = " + usager.IdSite;
             }
-            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site;
+            szORDERBY = " ORDER BY tblInfos.NomSite";
+            szSelect += szAND_Catego + szAND_SousCatego + szAND_Site + szORDERBY;
 
             m_DataTable = new DataTable();
             m_DataTable.Clear();
@@ -2684,7 +2695,6 @@ namespace Gestion_Mtps
                 
             }
         }
-
         internal string ObtenirInfosComplementaires(object unid)
         {
             string szSelect;

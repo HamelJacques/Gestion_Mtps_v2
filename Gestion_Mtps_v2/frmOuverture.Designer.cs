@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOuverture));
             this.btnFermer = new System.Windows.Forms.Button();
             this.lblChBD = new System.Windows.Forms.Label();
             this.lblmessage = new System.Windows.Forms.Label();
@@ -112,6 +113,7 @@
             this.Controls.Add(this.lblmessage);
             this.Controls.Add(this.lblChBD);
             this.Controls.Add(this.btnFermer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmOuverture";
             this.Text = "Form1";
             this.ResumeLayout(false);
