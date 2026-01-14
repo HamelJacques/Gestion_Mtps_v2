@@ -315,17 +315,20 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                if (!string.IsNullOrEmpty((string)lstBxSites.SelectedItem))
+                if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
                 {
                     string lecture = lstBxSites.SelectedItem.ToString();
                     m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
+
                     ListerLesInfosSites();
                     ActiveBtns();
                 }
-                    
+                
             }
-            catch (Exception ex) { 
-                Logger lg = new Logger(ex.ToString(), m_CheminLog);
+            catch (Exception ex) 
+            { 
+                string msg = ex.Message.ToString();
+                Logger lg = new Logger(msg, m_CheminLog);
             }
             
         }

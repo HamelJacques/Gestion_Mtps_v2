@@ -51,10 +51,15 @@ namespace Gestion_Mtps_v2
             lblUsagers.Text = "Les usagers inscrits";
             btnAjout.Text = "Ajouter un utilisateur";
             m_lesUsagers = new List<string>();
-            
+
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
+            //m_CheminLog = O.ChExe + "application.log";
+            m_CheminLog = ConfigurationManager.AppSettings["CheminLog"];
+            LogUtilisateurWindows(m_CheminLog);
             //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
-            O = new Ouverture(m_Chemin_BD);
+
+
+            O = new Ouverture(m_Chemin_BD, m_CheminLog);
 
             foreach (ConnectionStringSettings cs in ConfigurationManager.ConnectionStrings)
             {
@@ -64,6 +69,8 @@ namespace Gestion_Mtps_v2
             string connStr = ConfigurationManager.ConnectionStrings["MaBaseLocale"].ConnectionString;
 
             ConnectBD();
+
+
             
 
             m_CheminLog = O.ChExe + "application.log";
@@ -73,6 +80,16 @@ namespace Gestion_Mtps_v2
             AjusteCouleurFenere();
             AfficheUsagers();
         }
+
+        private static void LogUtilisateurWindows(string chlog)
+        {
+            //string chLog = ConfigurationManager.AppSettings["CheminLog"];
+            //m_CheminLog = chLog;
+            string userName = Environment.UserName;
+            //MessageBox.Show("Chemin log = " + chLog + Environment.NewLine + "Usager Windows = " + userName);
+            Logger lg = new Logger(userName, chlog);
+        }
+
         //private void ObtenirCheminExe()
         //{
         //    m_CheminExe = AppContext.BaseDirectory;

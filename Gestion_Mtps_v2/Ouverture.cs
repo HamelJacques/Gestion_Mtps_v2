@@ -13,6 +13,8 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_CheminExe;
         private string m_Chemin_BD;
+        private string m_Chemin_Log;
+        
         private CBase m_LaBase;
         private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_List_Usagers;
@@ -23,9 +25,10 @@ namespace Gestion_Mtps_v2
         {
             InitOuverture();
         }
-        public Ouverture(string chBD)
+        public Ouverture(string chBD, string chlog)
         {
             m_Chemin_BD = chBD;
+            m_Chemin_Log = chlog;
             InitOuverture();
             
         }
@@ -71,7 +74,7 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                m_LaBase = new CBase(m_Chemin_BD);
+                m_LaBase = new CBase(m_Chemin_BD, m_Chemin_Log);
             }
             catch(Exception ex)
             {
