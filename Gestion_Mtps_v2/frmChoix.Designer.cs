@@ -254,6 +254,7 @@
             this.txtInfosSupp.Location = new System.Drawing.Point(329, 265);
             this.txtInfosSupp.Multiline = true;
             this.txtInfosSupp.Name = "txtInfosSupp";
+            this.txtInfosSupp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtInfosSupp.Size = new System.Drawing.Size(1010, 228);
             this.txtInfosSupp.TabIndex = 6;
             // 
