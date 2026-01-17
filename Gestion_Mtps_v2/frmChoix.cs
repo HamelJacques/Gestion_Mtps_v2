@@ -315,11 +315,12 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                if (!string.IsNullOrEmpty((string)lstBxSousCategories.SelectedItem))
+                if (!string.IsNullOrEmpty((string)lstBxSites.SelectedItem))
                 {
                     string lecture = lstBxSites.SelectedItem.ToString();
                     m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
+                    ListerLesSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }
