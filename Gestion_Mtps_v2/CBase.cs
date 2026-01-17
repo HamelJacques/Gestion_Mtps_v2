@@ -2063,7 +2063,7 @@ namespace Gestion_Mtps
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
-            lg = new Logger("dbPath = " + dbPath, m_cheminLog);
+            lg = new Logger(userName + " accède à " + dbPath, m_cheminLog);
 
             try
             {
