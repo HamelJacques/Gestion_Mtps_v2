@@ -144,6 +144,7 @@
             this.txtInfosComplementaires.Location = new System.Drawing.Point(163, 169);
             this.txtInfosComplementaires.Multiline = true;
             this.txtInfosComplementaires.Name = "txtInfosComplementaires";
+            this.txtInfosComplementaires.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtInfosComplementaires.Size = new System.Drawing.Size(623, 131);
             this.txtInfosComplementaires.TabIndex = 10;
             // 
