@@ -97,7 +97,7 @@
             this.lstBxCategories.ItemHeight = 18;
             this.lstBxCategories.Location = new System.Drawing.Point(10, 23);
             this.lstBxCategories.Name = "lstBxCategories";
-            this.lstBxCategories.Size = new System.Drawing.Size(184, 94);
+            this.lstBxCategories.Size = new System.Drawing.Size(184, 130);
             this.lstBxCategories.TabIndex = 2;
             this.lstBxCategories.Click += new System.EventHandler(this.lstBxCategories_Click);
             // 
@@ -106,7 +106,7 @@
             this.grbxSousCategories.Controls.Add(this.btnAjoutSousCatego);
             this.grbxSousCategories.Controls.Add(this.lstBxSousCategories);
             this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxSousCategories.Location = new System.Drawing.Point(12, 177);
+            this.grbxSousCategories.Location = new System.Drawing.Point(12, 182);
             this.grbxSousCategories.Name = "grbxSousCategories";
             this.grbxSousCategories.Size = new System.Drawing.Size(284, 159);
             this.grbxSousCategories.TabIndex = 2;
@@ -129,7 +129,7 @@
             this.lstBxSousCategories.ItemHeight = 18;
             this.lstBxSousCategories.Location = new System.Drawing.Point(10, 23);
             this.lstBxSousCategories.Name = "lstBxSousCategories";
-            this.lstBxSousCategories.Size = new System.Drawing.Size(184, 94);
+            this.lstBxSousCategories.Size = new System.Drawing.Size(184, 130);
             this.lstBxSousCategories.TabIndex = 2;
             this.lstBxSousCategories.Click += new System.EventHandler(this.lstBxSousCategories_Click);
             // 
@@ -161,7 +161,7 @@
             this.lstBxSites.ItemHeight = 18;
             this.lstBxSites.Location = new System.Drawing.Point(10, 23);
             this.lstBxSites.Name = "lstBxSites";
-            this.lstBxSites.Size = new System.Drawing.Size(184, 94);
+            this.lstBxSites.Size = new System.Drawing.Size(184, 130);
             this.lstBxSites.TabIndex = 2;
             this.lstBxSites.Click += new System.EventHandler(this.lstBxSites_Click);
             // 
