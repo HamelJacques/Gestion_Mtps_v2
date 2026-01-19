@@ -59,6 +59,7 @@ namespace Gestion_Mtps_v2
         private void InitFenetre(FormStartPosition pos, int m_mode)
         {
             btnFermer.Text = "Fermer";
+            lblErr.Text = "";
             if(m_mode == (int)Mode.Ajout)
             {
                 this.BackColor = Color.LightSalmon;
@@ -110,6 +111,8 @@ namespace Gestion_Mtps_v2
         private void btnSauvegarde_Click(object sender, EventArgs e)
         {
             bool reussite = false;
+            frmTimer timer = new frmTimer();
+            
             // Récolter les informations
             LireLaPage();
             m_ASI = new AjoutSiteInfos();
@@ -133,12 +136,18 @@ namespace Gestion_Mtps_v2
                 }
                 if (reussite)
                 {
+                    timer.ShowDialog();
                     this.Close();
+                }
+                else
+                {
+                    lblErr.Text = "Une erreur est survenue";
                 }
             }
             catch (Exception ex)
             {
                 Logger lg = new Logger(ex.ToString(), m_cheminLog);
+                lblErr.Text = "Une erreur est survenue au cours de l'enregistrement";
             }
             
         }

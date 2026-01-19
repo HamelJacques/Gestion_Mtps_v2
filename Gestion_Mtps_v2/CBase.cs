@@ -1503,8 +1503,7 @@ namespace Gestion_Mtps
             }
             catch (Exception ex)
             {
-                string err = string.Empty;
-                err = ex.ToString();
+                string err = ex.ToString(); 
             }
             //FROM(tblSousCatego INNER JOIN jctSousCatego ON tblSousCatego.IdSousCatego = jctSousCatego.IdSousCatego)
             //INNER JOIN tblUsagers ON jctSousCatego.IdUsager = tblUsagers.IdUsager
@@ -2006,9 +2005,9 @@ namespace Gestion_Mtps
             int i = 0;
             string szSelect;
             string szFROM;
-            string szAND;
+            //string szAND;
             string JOINT1, JOINT2, JOINT3;
-            string szWHERE, szWHEREUsager, szWHERECategorie, szWHERESouscategorie;
+            string szWHERE;//zWHEREUsager,,  szWHERECategorie, szWHERESouscategorie
 
             szSelect = "SELECT DISTINCT tblSites.NomSite ";
             szFROM = "FROM (jctCategorieSousCategorie ";
@@ -2342,7 +2341,7 @@ namespace Gestion_Mtps
 
         internal bool ajouterSousCatgorie_v2(string text, ref Usager_v2 u, ref string message)
         {
-            string szSelect;
+            //string szSelect;
             bool retour = false;
             int idSousCategorie = 0;
             try
