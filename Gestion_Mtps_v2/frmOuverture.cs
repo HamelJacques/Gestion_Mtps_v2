@@ -55,7 +55,7 @@ namespace Gestion_Mtps_v2
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
             //m_CheminLog = O.ChExe + "application.log";
             m_CheminLog = ConfigurationManager.AppSettings["CheminLog"];
-            LogUtilisateurWindows(m_CheminLog);
+            //LogUtilisateurWindows(m_CheminLog);
             //MessageBox.Show("m_Chemin_BD = " + m_Chemin_BD);
 
 
