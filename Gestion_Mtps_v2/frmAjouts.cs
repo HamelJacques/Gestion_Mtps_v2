@@ -249,6 +249,7 @@ namespace Gestion_Mtps_v2
             AjoutOk = m_Ajouts.Ajouter(m_Type, txtNouvelleValeur.Text, ref m_Usager);
             if (AjoutOk) 
             {
+                frmTimer tmr = new frmTimer();
                 this.Close();
             }
             else
