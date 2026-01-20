@@ -250,6 +250,7 @@ namespace Gestion_Mtps_v2
             if (AjoutOk) 
             {
                 frmTimer tmr = new frmTimer();
+                tmr.ShowDialog();
                 this.Close();
             }
             else
