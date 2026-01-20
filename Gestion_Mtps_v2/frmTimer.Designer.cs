@@ -38,9 +38,11 @@
             // 
             this.progressB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.progressB.Location = new System.Drawing.Point(12, 16);
+            this.progressB.BackColor = System.Drawing.Color.Yellow;
+            this.progressB.Location = new System.Drawing.Point(8, 15);
+            this.progressB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.progressB.Name = "progressB";
-            this.progressB.Size = new System.Drawing.Size(776, 32);
+            this.progressB.Size = new System.Drawing.Size(1045, 30);
             this.progressB.TabIndex = 0;
             // 
             // timer1
@@ -49,10 +51,13 @@
             // 
             // frmTimer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 64);
+            this.BackColor = System.Drawing.Color.Red;
+            this.ClientSize = new System.Drawing.Size(1062, 59);
             this.Controls.Add(this.progressB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmTimer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Timer";

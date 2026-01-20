@@ -191,6 +191,7 @@ namespace Gestion_Mtps_v2
             if(aj.AjoutOk)
             {
                 ListerCategories();
+                Refresh();
             }
         }
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
@@ -206,6 +207,7 @@ namespace Gestion_Mtps_v2
                 if (aj.AjoutOk)
                 {
                     ListerSousCategories();
+                    Refresh();
                 }
                 return;
             }
@@ -236,6 +238,12 @@ namespace Gestion_Mtps_v2
 
                     frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
                     aj.ShowDialog();
+
+                    if (aj.AjoutOk)
+                    {
+                        ListerLesSites();
+                        Refresh();
+                    }
                 }
             }
         }
