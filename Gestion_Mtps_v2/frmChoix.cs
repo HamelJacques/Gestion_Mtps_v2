@@ -191,6 +191,7 @@ namespace Gestion_Mtps_v2
             if(aj.AjoutOk)
             {
                 ListerCategories();
+                Refresh();
             }
         }
         private void btnAjoutSousCatego_Click(object sender, EventArgs e)
@@ -206,6 +207,7 @@ namespace Gestion_Mtps_v2
                 if (aj.AjoutOk)
                 {
                     ListerSousCategories();
+                    Refresh();
                 }
                 return;
             }
@@ -236,6 +238,12 @@ namespace Gestion_Mtps_v2
 
                     frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
                     aj.ShowDialog();
+
+                    if (aj.AjoutOk)
+                    {
+                        ListerLesSites();
+                        Refresh();
+                    }
                 }
             }
         }
@@ -244,14 +252,16 @@ namespace Gestion_Mtps_v2
             // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
             // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
             frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
-            AjoutSiteInfos .ShowDialog();
-            
+            AjoutSiteInfos.ShowDialog();
+            ListerLesInfosSites();
+
         }
         private void btnModifInfos_Click(object sender, EventArgs e)
         {
             // appeler la fenêtre AjoutSiteInfos en mode modification
             frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog, m_NumSiteEnModif);
             ModifSiteInfos.ShowDialog();
+            ListerLesInfosSites();
         }
 
         #endregion
@@ -320,7 +330,7 @@ namespace Gestion_Mtps_v2
                     string lecture = lstBxSites.SelectedItem.ToString();
                     m_usager.IdSite = m_Choix.ObtenirIdSite(lecture);
 
-                    ListerLesSites();
+                    //ListerLesSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }

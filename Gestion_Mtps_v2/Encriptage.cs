@@ -8,7 +8,7 @@ namespace TestEncription
 {
     internal class Encriptage
     {
-        private int m_Ofset = 30;
+        //private int m_Ofset = 30;
         public Encriptage() { }
         public string Encripte(string mot)
         {
