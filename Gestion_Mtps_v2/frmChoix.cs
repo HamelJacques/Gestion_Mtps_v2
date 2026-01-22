@@ -76,6 +76,9 @@ namespace Gestion_Mtps_v2
             grbxSites.BackColor = Color.LavenderBlush;
             btnAjoutSite.Text = "Ajouter";
             btnAjoutSite.BackColor = Color.LightGreen;
+            btnModifSites.Text = "Renommer";
+            btnModifSites.Enabled = false;
+            btnModifSites.BackColor = Color.LightBlue;
             ListerLesSites();
         }
         private void InitInfoSites()
