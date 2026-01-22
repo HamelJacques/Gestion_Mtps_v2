@@ -147,28 +147,38 @@ namespace Gestion_Mtps_v2
 
         private void lstUsagers_DoubleClick(object sender, EventArgs e)
         {
-            m_UsagerSelectionne = new Usager_v2();
-            string selection = lstUsagers.SelectedItems[0].ToString();
-            // Obtenir le id de la sélection
-            Int32 iSelect = O.ObtenirIdUsager(selection);
-            if (iSelect == 0)
+            try
             {
-                MessageBox.Show("Faites un choix d'usager"); 
-            }
-            else
-            {
-                DialogResult dr = new DialogResult();
-                m_UsagerSelectionne.IdUsager = iSelect;
-                //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
-                // Ouvrir la nouvelle fenêtre de choix
-                this.Hide();
-                dr = fen.ShowDialog();
-                if (dr == DialogResult.OK)
+                m_UsagerSelectionne = new Usager_v2();
+                string selection = lstUsagers.SelectedItems[0].ToString();
+                // Obtenir le id de la sélection
+                Int32 iSelect = O.ObtenirIdUsager(selection);
+                if (iSelect == 0)
                 {
-                    this.Show();
+                    MessageBox.Show("Faites un choix d'usager");
+                }
+                else
+                {
+                    DialogResult dr = new DialogResult();
+                    m_UsagerSelectionne.IdUsager = iSelect;
+
+                    string motDansBD = O.ObtenirMotPssUsager(iSelect);
+                    //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
+                    frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
+                    // Ouvrir la nouvelle fenêtre de choix
+                    this.Hide();
+                    dr = fen.ShowDialog();
+                    if (dr == DialogResult.OK)
+                    {
+                        this.Show();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+            
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
         }
     }

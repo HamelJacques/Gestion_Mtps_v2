@@ -2746,6 +2746,29 @@ namespace Gestion_Mtps
             }
         }
 
+        internal string ExtraireMpsUsager(int iSelect)
+        {
+            string szSelect = string.Empty;
+            szSelect = "SELECT MotSecret from tblMtpsUsager WHERE tblMtpsUsager.IdUsager = " + iSelect;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            try
+            {
+                m_dataAdatper.Fill(m_DataTable);
+                int i = 0;
+                i = 9;
+                return szSelect;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            
+        }
+
 
 
 
