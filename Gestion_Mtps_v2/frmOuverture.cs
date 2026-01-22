@@ -163,14 +163,26 @@ namespace Gestion_Mtps_v2
                     m_UsagerSelectionne.IdUsager = iSelect;
 
                     string motDansBD = O.ObtenirMotPssUsager(iSelect);
+                    
+                    frmMonInputBx IB = new frmMonInputBx();
+                    IB.ShowDialog();
+                    string motDemande =  IB.MotSaisi;
                     //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
                     frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
-                    // Ouvrir la nouvelle fenêtre de choix
-                    this.Hide();
-                    dr = fen.ShowDialog();
-                    if (dr == DialogResult.OK)
+
+                    if( motDansBD == motDemande) 
                     {
-                        this.Show();
+                        // Ouvrir la nouvelle fenêtre de choix
+                        this.Hide();
+                        dr = fen.ShowDialog();
+                        if (dr == DialogResult.OK)
+                        {
+                            this.Show();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mauvais mot de passe.", "Vérification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

@@ -2757,10 +2757,15 @@ namespace Gestion_Mtps
             OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
             try
             {
+                string retour = string.Empty;
                 m_dataAdatper.Fill(m_DataTable);
-                int i = 0;
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    retour = m_DataTable.Rows[0]["MotSecret"].ToString();
+                }
+                    int i = 0;
                 i = 9;
-                return szSelect;
+                return retour;
             }
             catch(Exception ex)
             {
