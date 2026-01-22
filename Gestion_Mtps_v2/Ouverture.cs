@@ -13,14 +13,24 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_CheminExe;
         private string m_Chemin_BD;
+        private string m_Chemin_Log;
+        
         private CBase m_LaBase;
         private const string NOM_BD = "G_Mtps.accdb";
         private List<string> m_List_Usagers;
+        private Logger lg;
         #endregion
         #region CONSTRUCTEURS
         public Ouverture() 
         {
             InitOuverture();
+        }
+        public Ouverture(string chBD, string chlog)
+        {
+            m_Chemin_BD = chBD;
+            m_Chemin_Log = chlog;
+            InitOuverture();
+            
         }
         #region PROPRIÉTÉS
         public string ChExe
@@ -48,9 +58,13 @@ namespace Gestion_Mtps_v2
         #region MÉTHODES PRIVÉES    
         private void InitOuverture()
         {
+            
+            
             m_CheminExe = string.Empty;
-            TestModifString("Chemin exe");
+            //m_Chemin_BD= string.Empty;
+            //TestModifString("Chemin exe");
             ObtenirCheminExe();
+            //lg = new Logger("Dans InitOuverture()", m_CheminExe + "application.log");
             m_List_Usagers = new List<string>();
             Init_LaBD();
             ObtenirLesUsagers();
@@ -60,11 +74,12 @@ namespace Gestion_Mtps_v2
         {
             try
             {
-                m_LaBase = new CBase(m_Chemin_BD);
+                m_LaBase = new CBase(m_Chemin_BD, m_Chemin_Log);
             }
             catch(Exception ex)
             {
                 string msg = ex.Message;
+                lg = new Logger(msg, m_CheminExe + "application.log");
             }
             //throw new NotImplementedException();
         }
@@ -83,7 +98,7 @@ namespace Gestion_Mtps_v2
             //Directory.GetParent(m_CheminExe).FullName, "Base\\");
 
 
-            m_Chemin_BD = cheminBase + NOM_BD;
+            //m_Chemin_BD = cheminBase + NOM_BD;
         }
         private void TestModifString(string modifString)
         {
@@ -95,10 +110,9 @@ namespace Gestion_Mtps_v2
             
         }
 
-        internal void AjoutUsager()
+        internal int ObtenirIdUsager(string selection)
         {
-
-            throw new NotImplementedException();
+            return m_LaBase.ObtenirIdUsager(selection);
         }
         #endregion
     }
