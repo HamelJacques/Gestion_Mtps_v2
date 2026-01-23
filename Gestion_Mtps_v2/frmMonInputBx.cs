@@ -13,6 +13,13 @@ namespace Gestion_Mtps_v2
     public partial class frmMonInputBx : Form
     {
         public string MotSaisi;
+        private enum Mode
+        { 
+            Ajout = 0,
+            modif,
+            verif
+        }
+        private Mode mode;
         public frmMonInputBx()
         {
             InitializeComponent();
@@ -21,6 +28,7 @@ namespace Gestion_Mtps_v2
 
         private void initFenetre()
         {
+            mode = Mode.verif;
             lblMessInput.Text = "Saisissez votre mot de passe";
             txtInput.Text = string.Empty;
             txtInput.Left = lblMessInput.Left + lblMessInput.Width + 15;

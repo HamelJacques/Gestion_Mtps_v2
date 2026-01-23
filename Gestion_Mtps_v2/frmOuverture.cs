@@ -49,7 +49,14 @@ namespace Gestion_Mtps_v2
             m_Titre = "Ouverture par " + userName;
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
+            
             btnAjout.Text = "Ajouter un utilisateur";
+            btnModifUser.Text = "Modifier un utilisateur";
+            btnModifUser.Enabled = false;
+            btnModifMps.Text = "Modifier un mot de passe";
+            btnModifMps.Enabled = false;
+
+
             m_lesUsagers = new List<string>();
 
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
@@ -110,6 +117,8 @@ namespace Gestion_Mtps_v2
             this.BackColor = Color.LightPink;
             btnFermer.BackColor = Color.LightGreen;
             btnAjout.BackColor = Color.LightYellow;
+            btnModifUser .BackColor = Color.LightGreen;
+            btnModifMps .BackColor = Color.LightYellow;
         }
         private void ConnectBD()
         {
@@ -163,6 +172,7 @@ namespace Gestion_Mtps_v2
                     m_UsagerSelectionne.IdUsager = iSelect;
 
                     string motDansBD = O.ObtenirMotPssUsager(iSelect);
+                    // 
                     
                     frmMonInputBx IB = new frmMonInputBx();
                     IB.ShowDialog();
@@ -192,6 +202,21 @@ namespace Gestion_Mtps_v2
             }
             
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
+        }
+
+        private void lstUsagers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string selection = lstUsagers.SelectedItems[0].ToString();
+                Int32 isel = lstUsagers.SelectedIndex;
+                btnModifUser.Enabled = true;
+                btnModifMps.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }            
         }
     }
 }

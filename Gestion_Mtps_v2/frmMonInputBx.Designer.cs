@@ -31,46 +31,77 @@
             this.lblMessInput = new System.Windows.Forms.Label();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.btnSoumettre = new System.Windows.Forms.Button();
+            this.txtAncienmps = new System.Windows.Forms.TextBox();
+            this.lblAncienmps = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblMessInput
             // 
             this.lblMessInput.AutoSize = true;
             this.lblMessInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessInput.Location = new System.Drawing.Point(25, 30);
+            this.lblMessInput.Location = new System.Drawing.Point(19, 43);
+            this.lblMessInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMessInput.Name = "lblMessInput";
-            this.lblMessInput.Size = new System.Drawing.Size(122, 25);
+            this.lblMessInput.Size = new System.Drawing.Size(99, 20);
             this.lblMessInput.TabIndex = 0;
             this.lblMessInput.Text = "lblMessInput";
             // 
             // txtInput
             // 
             this.txtInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInput.Location = new System.Drawing.Point(192, 30);
+            this.txtInput.Location = new System.Drawing.Point(144, 43);
+            this.txtInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(437, 30);
+            this.txtInput.Size = new System.Drawing.Size(329, 26);
             this.txtInput.TabIndex = 1;
             // 
             // btnSoumettre
             // 
+            this.btnSoumettre.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSoumettre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSoumettre.Location = new System.Drawing.Point(192, 96);
+            this.btnSoumettre.Location = new System.Drawing.Point(11, 118);
+            this.btnSoumettre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSoumettre.Name = "btnSoumettre";
-            this.btnSoumettre.Size = new System.Drawing.Size(164, 32);
+            this.btnSoumettre.Size = new System.Drawing.Size(571, 41);
             this.btnSoumettre.TabIndex = 2;
             this.btnSoumettre.Text = "btnSoumettre";
             this.btnSoumettre.UseVisualStyleBackColor = true;
             this.btnSoumettre.Click += new System.EventHandler(this.btnSoumettre_Click);
             // 
+            // txtAncienmps
+            // 
+            this.txtAncienmps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAncienmps.Location = new System.Drawing.Point(144, 13);
+            this.txtAncienmps.Margin = new System.Windows.Forms.Padding(2);
+            this.txtAncienmps.Name = "txtAncienmps";
+            this.txtAncienmps.Size = new System.Drawing.Size(329, 26);
+            this.txtAncienmps.TabIndex = 4;
+            // 
+            // lblAncienmps
+            // 
+            this.lblAncienmps.AutoSize = true;
+            this.lblAncienmps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAncienmps.Location = new System.Drawing.Point(19, 13);
+            this.lblAncienmps.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAncienmps.Name = "lblAncienmps";
+            this.lblAncienmps.Size = new System.Drawing.Size(103, 20);
+            this.lblAncienmps.TabIndex = 3;
+            this.lblAncienmps.Text = "lblAncienmps";
+            // 
             // frmMonInputBx
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 209);
+            this.ClientSize = new System.Drawing.Size(593, 170);
+            this.Controls.Add(this.txtAncienmps);
+            this.Controls.Add(this.lblAncienmps);
             this.Controls.Add(this.btnSoumettre);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.lblMessInput);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmMonInputBx";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmMonInputBx";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -82,5 +113,7 @@
         private System.Windows.Forms.Label lblMessInput;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.Button btnSoumettre;
+        private System.Windows.Forms.TextBox txtAncienmps;
+        private System.Windows.Forms.Label lblAncienmps;
     }
 }
