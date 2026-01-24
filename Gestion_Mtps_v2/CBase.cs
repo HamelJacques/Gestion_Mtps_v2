@@ -2774,6 +2774,15 @@ namespace Gestion_Mtps
             
         }
 
+        internal bool ModifierUnMotDePasse(int idUsager, string ancienMot, string motSaisi)
+        {
+            bool succes = false;
+            string szUpdate = string.Empty;
+            szUpdate = "UPDATE MotSecret from tblMtpsUsager SET MotSecret = '" + motSaisi + "' WHERE tblMtpsUsager.IdUsager = " + idUsager;
+
+            return succes;
+        }
+
 
 
 

@@ -116,6 +116,7 @@
             this.btnModifUser.TabIndex = 6;
             this.btnModifUser.Text = "btnModifUser";
             this.btnModifUser.UseVisualStyleBackColor = true;
+            this.btnModifUser.Click += new System.EventHandler(this.btnModifUser_Click);
             // 
             // btnModifMps
             // 
@@ -127,6 +128,7 @@
             this.btnModifMps.TabIndex = 7;
             this.btnModifMps.Text = "btnModifMps";
             this.btnModifMps.UseVisualStyleBackColor = true;
+            this.btnModifMps.Click += new System.EventHandler(this.btnModifMps_Click);
             // 
             // frmOuverture
             // 

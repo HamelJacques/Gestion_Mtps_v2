@@ -117,8 +117,8 @@ namespace Gestion_Mtps_v2
             this.BackColor = Color.LightPink;
             btnFermer.BackColor = Color.LightGreen;
             btnAjout.BackColor = Color.LightYellow;
-            btnModifUser .BackColor = Color.LightGreen;
-            btnModifMps .BackColor = Color.LightYellow;
+            btnModifUser .BackColor = Color.LightSlateGray;
+            btnModifMps .BackColor = Color.LightSlateGray;
         }
         private void ConnectBD()
         {
@@ -174,8 +174,11 @@ namespace Gestion_Mtps_v2
                     string motDansBD = O.ObtenirMotPssUsager(iSelect);
                     // 
                     
-                    frmMonInputBx IB = new frmMonInputBx();
+                    frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase);
                     IB.ShowDialog();
+                    // vérifier le dialog result, doit être = OK
+                    // Si Cancel, juse sortir
+
                     string motDemande =  IB.MotSaisi;
                     //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
                     frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
@@ -212,11 +215,39 @@ namespace Gestion_Mtps_v2
                 Int32 isel = lstUsagers.SelectedIndex;
                 btnModifUser.Enabled = true;
                 btnModifMps.Enabled = true;
+                btnModifMps.BackColor = Color.LightSteelBlue;
+                btnModifUser.BackColor = Color.LightSteelBlue;
             }
             catch (Exception ex)
             {
                 string mess = ex.ToString();
             }            
+        }
+
+        private void btnModifUser_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("En developpement");
+        }
+
+        private void btnModifMps_Click(object sender, EventArgs e)
+        {
+            btnAjout.Enabled = false;
+            string selection = lstUsagers.SelectedItems[0].ToString();
+            // Obtenir le id de la sélection
+            Int32 iSelect = O.ObtenirIdUsager(selection);
+            frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase, 1);
+            DialogResult dr = IB.ShowDialog();
+
+            // vérifier le dialog result, doit être = OK
+            if(dr == DialogResult.OK)
+            {
+                btnAjout.Enabled = true;
+            }
+            else
+            {
+                btnAjout.Enabled = false;
+            }
+            // Si Cancel, juste sortir
         }
     }
 }

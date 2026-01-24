@@ -33,6 +33,7 @@
             this.btnSoumettre = new System.Windows.Forms.Button();
             this.txtAncienmps = new System.Windows.Forms.TextBox();
             this.lblAncienmps = new System.Windows.Forms.Label();
+            this.btnAnnuler = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblMessInput
@@ -50,7 +51,7 @@
             // 
             this.txtInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtInput.Location = new System.Drawing.Point(144, 43);
-            this.txtInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtInput.Margin = new System.Windows.Forms.Padding(2);
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(329, 26);
             this.txtInput.TabIndex = 1;
@@ -59,9 +60,10 @@
             // 
             this.btnSoumettre.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSoumettre.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSoumettre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSoumettre.Location = new System.Drawing.Point(11, 118);
-            this.btnSoumettre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSoumettre.Location = new System.Drawing.Point(11, 79);
+            this.btnSoumettre.Margin = new System.Windows.Forms.Padding(2);
             this.btnSoumettre.Name = "btnSoumettre";
             this.btnSoumettre.Size = new System.Drawing.Size(571, 41);
             this.btnSoumettre.TabIndex = 2;
@@ -89,17 +91,32 @@
             this.lblAncienmps.TabIndex = 3;
             this.lblAncienmps.Text = "lblAncienmps";
             // 
+            // btnAnnuler
+            // 
+            this.btnAnnuler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAnnuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnAnnuler.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAnnuler.Location = new System.Drawing.Point(11, 124);
+            this.btnAnnuler.Margin = new System.Windows.Forms.Padding(2);
+            this.btnAnnuler.Name = "btnAnnuler";
+            this.btnAnnuler.Size = new System.Drawing.Size(571, 41);
+            this.btnAnnuler.TabIndex = 5;
+            this.btnAnnuler.Text = "btnAnnuler";
+            this.btnAnnuler.UseVisualStyleBackColor = true;
+            // 
             // frmMonInputBx
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 170);
+            this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.txtAncienmps);
             this.Controls.Add(this.lblAncienmps);
             this.Controls.Add(this.btnSoumettre);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.lblMessInput);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmMonInputBx";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmMonInputBx";
@@ -115,5 +132,6 @@
         private System.Windows.Forms.Button btnSoumettre;
         private System.Windows.Forms.TextBox txtAncienmps;
         private System.Windows.Forms.Label lblAncienmps;
+        private System.Windows.Forms.Button btnAnnuler;
     }
 }
