@@ -49,7 +49,14 @@ namespace Gestion_Mtps_v2
             m_Titre = "Ouverture par " + userName;
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
+            
             btnAjout.Text = "Ajouter un utilisateur";
+            btnModifUser.Text = "Modifier un utilisateur";
+            btnModifUser.Enabled = false;
+            btnModifMps.Text = "Modifier un mot de passe";
+            btnModifMps.Enabled = false;
+
+
             m_lesUsagers = new List<string>();
 
             m_Chemin_BD = ConfigurationManager.AppSettings["CheminBD"];
@@ -110,6 +117,8 @@ namespace Gestion_Mtps_v2
             this.BackColor = Color.LightPink;
             btnFermer.BackColor = Color.LightGreen;
             btnAjout.BackColor = Color.LightYellow;
+            btnModifUser .BackColor = Color.LightSlateGray;
+            btnModifMps .BackColor = Color.LightSlateGray;
         }
         private void ConnectBD()
         {
@@ -147,29 +156,114 @@ namespace Gestion_Mtps_v2
 
         private void lstUsagers_DoubleClick(object sender, EventArgs e)
         {
-            m_UsagerSelectionne = new Usager_v2();
+            try
+            {
+                m_UsagerSelectionne = new Usager_v2();
+                string selection = lstUsagers.SelectedItems[0].ToString();
+                // Obtenir le id de la sélection
+                Int32 iSelect = O.ObtenirIdUsager(selection);
+                if (iSelect == 0)
+                {
+                    MessageBox.Show("Faites un choix d'usager");
+                }
+                else
+                {
+                    DialogResult dr = new DialogResult();
+                    m_UsagerSelectionne.IdUsager = iSelect;
+
+                    string motDansBD = O.ObtenirMotPssUsager(iSelect);
+                    // 
+                    
+                    frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog,2);
+                    IB.ShowDialog();
+                    // vérifier le dialog result, doit être = OK
+                    // Si Cancel, juse sortir
+
+                    string motDemande =  IB.MotSaisi;
+                    //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
+                    
+
+                    if( motDansBD == motDemande) 
+                    {
+                        frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
+                        // Ouvrir la nouvelle fenêtre de choix
+                        this.Hide();
+                        dr = fen.ShowDialog();
+                        if (dr == DialogResult.OK)
+                        {
+                            this.Show();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mauvais mot de passe.", "Vérification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }
+            
+                //MessageBox.Show("En développement" + Environment.NewLine + selection);
+        }
+
+        private void lstUsagers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string selection = lstUsagers.SelectedItems[0].ToString();
+                Int32 isel = lstUsagers.SelectedIndex;
+                btnModifUser.Enabled = true;
+                btnModifMps.Enabled = true;
+                btnModifMps.BackColor = Color.LightSteelBlue;
+                btnModifUser.BackColor = Color.LightSteelBlue;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+            }            
+        }
+
+        private void btnModifUser_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("En developpement");
+        }
+
+        private void btnModifMps_Click(object sender, EventArgs e)
+        {
+           
+            btnAjout.Enabled = false;
             string selection = lstUsagers.SelectedItems[0].ToString();
             // Obtenir le id de la sélection
             Int32 iSelect = O.ObtenirIdUsager(selection);
-            if (iSelect == 0)
+
+            // Vérifier si l'usager a un mot de passe
+            // si non, forcer l'ajout
+            string motDansBD = O.ObtenirMotPssUsager(iSelect);
+            frmMonInputBx IB;
+            if (motDansBD.Length > 0)
             {
-                MessageBox.Show("Faites un choix d'usager"); 
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog, 1);
             }
             else
             {
-                DialogResult dr = new DialogResult();
-                m_UsagerSelectionne.IdUsager = iSelect;
-                //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
-                // Ouvrir la nouvelle fenêtre de choix
-                this.Hide();
-                dr = fen.ShowDialog();
-                if (dr == DialogResult.OK)
-                {
-                    this.Show();
-                }
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog);
             }
-                //MessageBox.Show("En développement" + Environment.NewLine + selection);
+
+            
+            DialogResult dr = IB.ShowDialog();
+
+            // vérifier le dialog result, doit être = OK
+            if(dr == DialogResult.OK)
+            {
+                btnAjout.Enabled = true;
+            }
+            else
+            {
+                btnAjout.Enabled = false;
+            }
+            // Si Cancel, juste sortir
         }
     }
 }

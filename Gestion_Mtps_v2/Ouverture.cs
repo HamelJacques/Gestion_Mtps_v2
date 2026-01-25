@@ -57,9 +57,7 @@ namespace Gestion_Mtps_v2
         #endregion
         #region MÉTHODES PRIVÉES    
         private void InitOuverture()
-        {
-            
-            
+        {   
             m_CheminExe = string.Empty;
             //m_Chemin_BD= string.Empty;
             //TestModifString("Chemin exe");
@@ -114,6 +112,12 @@ namespace Gestion_Mtps_v2
         {
             return m_LaBase.ObtenirIdUsager(selection);
         }
+
+        internal string ObtenirMotPssUsager(int iSelect)
+        {
+            return m_LaBase.ExtraireMpsUsager(iSelect);
+        }
+
         #endregion
     }
 
