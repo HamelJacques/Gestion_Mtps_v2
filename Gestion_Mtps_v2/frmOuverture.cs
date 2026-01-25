@@ -174,17 +174,18 @@ namespace Gestion_Mtps_v2
                     string motDansBD = O.ObtenirMotPssUsager(iSelect);
                     // 
                     
-                    frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase);
+                    frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog,2);
                     IB.ShowDialog();
                     // vérifier le dialog result, doit être = OK
                     // Si Cancel, juse sortir
 
                     string motDemande =  IB.MotSaisi;
                     //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                    frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
+                    
 
                     if( motDansBD == motDemande) 
                     {
+                        frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
                         // Ouvrir la nouvelle fenêtre de choix
                         this.Hide();
                         dr = fen.ShowDialog();
@@ -231,11 +232,26 @@ namespace Gestion_Mtps_v2
 
         private void btnModifMps_Click(object sender, EventArgs e)
         {
+           
             btnAjout.Enabled = false;
             string selection = lstUsagers.SelectedItems[0].ToString();
             // Obtenir le id de la sélection
             Int32 iSelect = O.ObtenirIdUsager(selection);
-            frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase, 1);
+
+            // Vérifier si l'usager a un mot de passe
+            // si non, forcer l'ajout
+            string motDansBD = O.ObtenirMotPssUsager(iSelect);
+            frmMonInputBx IB;
+            if (motDansBD.Length > 0)
+            {
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog, 1);
+            }
+            else
+            {
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog);
+            }
+
+            
             DialogResult dr = IB.ShowDialog();
 
             // vérifier le dialog result, doit être = OK

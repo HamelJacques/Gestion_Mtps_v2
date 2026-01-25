@@ -17,6 +17,7 @@ namespace Gestion_Mtps_v2
         private Int32 m_IdUsager;
         public string MotSaisi;
         public string AncienMot;
+        private string m_ChLog;
 
         private enum Mode
         { 
@@ -25,11 +26,12 @@ namespace Gestion_Mtps_v2
             verif
         }
         private Mode mode;
-        public frmMonInputBx(Int32 idUsager, CBase labase, Int32 lemode = 0)
+        public frmMonInputBx(Int32 idUsager, CBase labase, string chlog, Int32 lemode = 0)
         {
             InitializeComponent();
             m_LaBase= labase;
             m_IdUsager = idUsager;
+            m_ChLog= chlog;
             initFenetre(lemode);
         }
 
@@ -67,13 +69,15 @@ namespace Gestion_Mtps_v2
 
                         MotSaisi = txtInput.Text;
                         AncienMot  = txtAncienmps.Text.Trim();
-                        bool reussite = m_LaBase.ModifierUnMotDePasse(m_IdUsager, AncienMot, MotSaisi);
+                        //bool reussite = m_LaBase.ModifierUnMotDePasse(m_IdUsager, AncienMot, MotSaisi);
 
                         this.BackColor = Color.LightGoldenrodYellow;
                         return;
                     }
                 case Mode.verif:
                     {
+                        lblAncienmps.Visible = false;
+                        txtAncienmps.Visible = false;
                         return;
                     }
             }
@@ -82,32 +86,45 @@ namespace Gestion_Mtps_v2
         private void btnSoumettre_Click(object sender, EventArgs e)
         {
             MotSaisi = txtInput.Text;
-            // selon le mode
-            switch (mode)
+            try
             {
-                case Mode.Ajout:
-                    {
-                        // Ajouter id et libellé
-                        return;
-                    }
-                case Mode.modif:
-                    {
-                        lblAncienmps.Text = "Ancien mot de passe";
-                        lblMessInput.Text = "Nouveau mot de passe";
+                // selon le mode
+                switch (mode)
+                {
+                    case Mode.Ajout:
+                        {
+                            // Ajouter id et libellé
+                            //Int32 unid = m_LaBase.ObtenirIdUsager("");
+                            bool reussite = m_LaBase.AjouterMtpsUsager_v2(m_IdUsager, txtInput.Text);
+                            this.Close();
+                            return;
+                        }
+                    case Mode.modif:
+                        {
+                            lblAncienmps.Text = "Ancien mot de passe";
+                            lblMessInput.Text = "Nouveau mot de passe";
 
-                        txtInput.Left = lblMessInput.Left + lblMessInput.Width + 15;
-                        txtAncienmps.Left = txtInput.Left;
+                            txtInput.Left = lblMessInput.Left + lblMessInput.Width + 15;
+                            txtAncienmps.Left = txtInput.Left;
 
-                        this.BackColor = Color.LightGoldenrodYellow;
-                        return;
-                    }
-                case Mode.verif:
-                    {
-                        return;
-                    }
+                            this.BackColor = Color.LightGoldenrodYellow;
+
+                            bool reussite = m_LaBase.ModifierUnMotDePasse(m_IdUsager, AncienMot, MotSaisi);
+                            this.Close();
+                            return;
+                        }
+                    case Mode.verif:
+                        {
+                            this.Close();
+                            return;
+                        }
+                }
             }
-
-            this.Close();
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Logger lg = new Logger(msg,m_ChLog);
+            }
         }
     }
 }
