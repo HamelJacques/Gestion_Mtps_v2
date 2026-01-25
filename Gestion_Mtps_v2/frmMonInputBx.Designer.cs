@@ -104,6 +104,7 @@
             this.btnAnnuler.TabIndex = 5;
             this.btnAnnuler.Text = "btnAnnuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
+            this.btnAnnuler.Click += new System.EventHandler(this.btnAnnuler_Click);
             // 
             // frmMonInputBx
             // 

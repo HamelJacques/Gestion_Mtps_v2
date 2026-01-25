@@ -175,29 +175,32 @@ namespace Gestion_Mtps_v2
                     // 
                     
                     frmMonInputBx IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog,2);
-                    IB.ShowDialog();
+                    dr = IB.ShowDialog();
                     // vérifier le dialog result, doit être = OK
                     // Si Cancel, juse sortir
-
-                    string motDemande =  IB.MotSaisi;
-                    //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
-                    
-
-                    if( motDansBD == motDemande) 
+                    if (dr == DialogResult.OK)
                     {
-                        frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
-                        // Ouvrir la nouvelle fenêtre de choix
-                        this.Hide();
-                        dr = fen.ShowDialog();
-                        if (dr == DialogResult.OK)
+                        string motDemande = IB.MotSaisi;
+                        //m_lg = new Logger("Sélectionné " + iSelect .ToString(), m_CheminLog);
+
+
+                        if (motDansBD == motDemande)
                         {
-                            this.Show();
+                            frmChoix fen = new frmChoix(ref m_UsagerSelectionne, O.LaBase, m_CheminLog, this.Icon);
+                            // Ouvrir la nouvelle fenêtre de choix
+                            this.Hide();
+                            dr = fen.ShowDialog();
+                            if (dr == DialogResult.OK)
+                            {
+                                this.Show();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Mauvais mot de passe.", "Vérification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Mauvais mot de passe.", "Vérification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    
                 }
             }
             catch (Exception ex)
