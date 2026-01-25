@@ -42,6 +42,8 @@ namespace Gestion_Mtps_v2
             txtInput.Text = string.Empty;
             txtInput.Left = lblMessInput.Left + lblMessInput.Width + 15;
             btnSoumettre.Text = "Soumettre";
+            btnAnnuler.Text = "Annuler";
+            btnAnnuler.BackColor = Color.LightSalmon;
             MotSaisi = txtInput.Text;
             
             AjusteFentre();
@@ -55,6 +57,8 @@ namespace Gestion_Mtps_v2
                     {
                         lblAncienmps.Visible = false;
                         txtAncienmps.Visible = false;
+                        this.BackColor = Color.LightYellow;
+                        this.Text = "Ajouter";
                         return;
                     }                    
                 case Mode.modif:
@@ -71,6 +75,8 @@ namespace Gestion_Mtps_v2
                         AncienMot  = txtAncienmps.Text.Trim();
                         //bool reussite = m_LaBase.ModifierUnMotDePasse(m_IdUsager, AncienMot, MotSaisi);
 
+                        btnSoumettre.BackColor = Color.LightSeaGreen;
+                        this.Text = "Modifier";
                         this.BackColor = Color.LightGoldenrodYellow;
                         return;
                     }
@@ -78,6 +84,10 @@ namespace Gestion_Mtps_v2
                     {
                         lblAncienmps.Visible = false;
                         txtAncienmps.Visible = false;
+                        btnSoumettre.BackColor = Color.LightCyan;
+                        
+                        this.BackColor = Color.LightGreen;
+                        this.Text = "Vérifier";
                         return;
                     }
             }
@@ -125,6 +135,11 @@ namespace Gestion_Mtps_v2
                 string msg = ex.Message;
                 Logger lg = new Logger(msg,m_ChLog);
             }
+        }
+
+        private void btnAnnuler_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
