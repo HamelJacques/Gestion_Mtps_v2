@@ -2746,6 +2746,98 @@ namespace Gestion_Mtps
             }
         }
 
+        internal string ExtraireMpsUsager(int iSelect)
+        {
+            string szSelect = string.Empty;
+            szSelect = "SELECT MotSecret from tblMtpsUsager WHERE tblMtpsUsager.IdUsager = " + iSelect;
+
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            try
+            {
+                string retour = string.Empty;
+                m_dataAdatper.Fill(m_DataTable);
+                if (m_DataTable.Rows.Count == 1)
+                {
+                    retour = m_DataTable.Rows[0]["MotSecret"].ToString();
+                }
+                    int i = 0;
+                i = 9;
+                return retour;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            
+        }
+
+        internal bool ModifierUnMotDePasse(int idUsager, string ancienMot, string motSaisi)
+        {
+            bool succes = false;
+            string szUpdate = string.Empty;
+            szUpdate = "UPDATE tblMtpsUsager SET MotSecret = '" + motSaisi + "' WHERE tblMtpsUsager.IdUsager = " + idUsager;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szUpdate, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+
+            try
+            {
+                using (OleDbConnection connection = new OleDbConnection(m_maconnetionstring))
+                {
+
+                    string retour = string.Empty;
+                    OleDbCommand command = new OleDbCommand();
+                    command.CommandText = "";
+                    command.CommandText = szUpdate;
+                    // Set the Connection to the new OleDbConnection.
+                    command.Connection = connection;
+                    connection.Open();
+
+                    command.ExecuteNonQuery();
+                    succes = true;
+                }
+                    
+
+                //m_dataAdatper.Fill(m_DataTable);
+                //if (m_DataTable.Rows.Count == 1)
+                //{
+                //    retour = m_DataTable.Rows[0]["MotSecret"].ToString();
+                //}
+                //int i = 0;
+                //i = 9;
+                return succes;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        internal bool AjouterUsager_v2(int m_IdUsager, string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool AjouterMtpsUsager_v2(int m_IdUsager, string text)
+        {
+            string szInsert = "INSERT INTO tblMtpsUsager VALUES(" + m_IdUsager + ", '" + text + "')";
+            OleDbCommand command = new OleDbCommand(szInsert, m_cnADONetConnection);
+            try
+            {
+                command.ExecuteNonQuery();                
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
+            return true;
+        }
+
 
 
 
