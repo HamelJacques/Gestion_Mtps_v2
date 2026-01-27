@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnFermer = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnFermer
+            // 
+            this.btnFermer.Location = new System.Drawing.Point(12, 387);
+            this.btnFermer.Name = "btnFermer";
+            this.btnFermer.Size = new System.Drawing.Size(776, 51);
+            this.btnFermer.TabIndex = 0;
+            this.btnFermer.Text = "btnFermer";
+            this.btnFermer.UseVisualStyleBackColor = true;
+            // 
+            // frmModifFiltres
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnFermer);
+            this.Name = "frmModifFiltres";
             this.Text = "frmModifFiltres";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnFermer;
     }
 }

@@ -12,9 +12,21 @@ namespace Gestion_Mtps_v2
 {
     public partial class frmModifFiltres : Form
     {
+        #region CONSTRUCTEUR
         public frmModifFiltres()
         {
             InitializeComponent();
+            InitFenetre();
         }
+
+
+        #endregion
+
+        #region MÉTHODES PRIVÉES
+        private void InitFenetre()
+        {
+            this.Text = "";
+        }
+        #endregion
     }
 }

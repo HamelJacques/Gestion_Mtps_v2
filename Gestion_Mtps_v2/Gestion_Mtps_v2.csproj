@@ -114,6 +114,9 @@
     <EmbeddedResource Include="frmChoix.resx">
       <DependentUpon>frmChoix.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmModifFiltres.resx">
+      <DependentUpon>frmModifFiltres.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMonInputBx.resx">
       <DependentUpon>frmMonInputBx.cs</DependentUpon>
     </EmbeddedResource>
