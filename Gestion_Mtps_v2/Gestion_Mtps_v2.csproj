@@ -75,6 +75,12 @@
     <Compile Include="frmChoix.Designer.cs">
       <DependentUpon>frmChoix.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmModifFiltres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModifFiltres.Designer.cs">
+      <DependentUpon>frmModifFiltres.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMonInputBx.cs">
       <SubType>Form</SubType>
     </Compile>

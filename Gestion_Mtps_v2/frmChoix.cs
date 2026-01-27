@@ -370,8 +370,8 @@ namespace Gestion_Mtps_v2
         }
         private void btnModifSites_Click(object sender, EventArgs e)
         {
-            //frmModifications Modif = new frmModifications(ref m_usager, ref m_maBD);
-            //Modif.ShowDialog();
+            frmModifFiltres Modif = new frmModifFiltres();
+            Modif.ShowDialog();
         }
         private void btnModifInfos_Click(object sender, EventArgs e)
         {
