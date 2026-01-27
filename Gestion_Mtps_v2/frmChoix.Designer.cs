@@ -36,6 +36,7 @@
             this.btnAjoutSousCatego = new System.Windows.Forms.Button();
             this.lstBxSousCategories = new System.Windows.Forms.ListBox();
             this.grbxSites = new System.Windows.Forms.GroupBox();
+            this.btnModifSites = new System.Windows.Forms.Button();
             this.btnAjoutSite = new System.Windows.Forms.Button();
             this.lstBxSites = new System.Windows.Forms.ListBox();
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
@@ -48,7 +49,6 @@
             this.MotPass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAjoutInfos = new System.Windows.Forms.Button();
             this.txtInfosSupp = new System.Windows.Forms.TextBox();
-            this.btnModifSites = new System.Windows.Forms.Button();
             this.grbxCategories.SuspendLayout();
             this.grbxSousCategories.SuspendLayout();
             this.grbxSites.SuspendLayout();
@@ -146,6 +146,16 @@
             this.grbxSites.TabIndex = 4;
             this.grbxSites.TabStop = false;
             this.grbxSites.Text = "grbxSites";
+            // 
+            // btnModifSites
+            // 
+            this.btnModifSites.Location = new System.Drawing.Point(200, 67);
+            this.btnModifSites.Name = "btnModifSites";
+            this.btnModifSites.Size = new System.Drawing.Size(95, 37);
+            this.btnModifSites.TabIndex = 4;
+            this.btnModifSites.Text = "btnModifSites";
+            this.btnModifSites.UseVisualStyleBackColor = true;
+            this.btnModifSites.Click += new System.EventHandler(this.btnModifSites_Click);
             // 
             // btnAjoutSite
             // 
@@ -259,15 +269,6 @@
             this.txtInfosSupp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtInfosSupp.Size = new System.Drawing.Size(1010, 228);
             this.txtInfosSupp.TabIndex = 6;
-            // 
-            // btnModifSites
-            // 
-            this.btnModifSites.Location = new System.Drawing.Point(200, 67);
-            this.btnModifSites.Name = "btnModifSites";
-            this.btnModifSites.Size = new System.Drawing.Size(95, 37);
-            this.btnModifSites.TabIndex = 4;
-            this.btnModifSites.Text = "btnModifSites";
-            this.btnModifSites.UseVisualStyleBackColor = true;
             // 
             // frmChoix
             // 

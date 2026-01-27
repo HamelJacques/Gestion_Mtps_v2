@@ -102,6 +102,8 @@ namespace Gestion_Mtps_v2
             // Pour ajouter un ensemble d'informations, on doit avoir les 4 niveaux de sélectionnés
             btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
                 && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
+            
+            btnModifSites.Enabled =(m_usager.IdSite > 0);
 
             btnModifInfos.Enabled=false;
         }
@@ -366,6 +368,11 @@ namespace Gestion_Mtps_v2
             ListerLesInfosSites();
 
         }
+        private void btnModifSites_Click(object sender, EventArgs e)
+        {
+            //frmModifications Modif = new frmModifications(ref m_usager, ref m_maBD);
+            //Modif.ShowDialog();
+        }
         private void btnModifInfos_Click(object sender, EventArgs e)
         {
             // appeler la fenêtre AjoutSiteInfos en mode modification
@@ -405,5 +412,7 @@ namespace Gestion_Mtps_v2
                 this.DialogResult = DialogResult.OK;
             }
         }
+
+        
     }
 }

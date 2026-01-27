@@ -40,19 +40,7 @@ namespace Gestion_Mtps_v2
             this.Text = type;
             
         }
-        public frmAjouts(string type, CBase bd)
-        {
-            InitializeComponent();
-            this.Text = type + " avec un objer BD";
-            switch (type)
-            {
-                case "Usager":
-                    InitAjouts(type);
-                    //ObtenirLesUsagers();
-                    break;
-            }
-            
-        }
+       
         public frmAjouts(string type, CBase bd, ref List<string> lst)
         {
             InitializeComponent();
