@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestion_Mtps;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,26 +16,30 @@ namespace Gestion_Mtps_v2
         #region DONNÉES MEMBRES
         private string m_Filtre;
         private string m_NomFiltreA_Modifier;
+        private CBase m_maBase;
+        private Usager_v2 m_Usager;
         #endregion
         #region CONSTRUCTEUR
-        public frmModifFiltres(string filtre, string nomfiltreAmodifier)
+        public frmModifFiltres(ref Usager_v2 U, string filtre, string nomfiltreAmodifier, ref CBase labase)
         {
             InitializeComponent();
-            InitFenetre(filtre, nomfiltreAmodifier);
+            m_Usager = U;
+            m_maBase=labase;
+            m_Filtre = filtre;
+            txtAncienNom.Text = nomfiltreAmodifier;
+            InitFenetre();
         }
 
 
         #endregion
 
         #region MÉTHODES PRIVÉES
-        private void InitFenetre(string filtre, string nomfiltreAmodifier)
-        {
-            m_Filtre = filtre;
+        private void InitFenetre()
+        {            
             this.Text = "Modification d'un libellé de " + m_Filtre;
             this.BackColor = Color.Aquamarine;
             lblAncienNom.Text  = "Libellé actuel :";
-            lblNouveauNom.Text = "Nouveau libellé :";
-            txtAncienNom.Text=  nomfiltreAmodifier;
+            lblNouveauNom.Text = "Nouveau libellé :";            
 
             btnSoumettre.Text = "Soumettre";
             btnSoumettre.BackColor = Color.LightSeaGreen;
@@ -59,8 +64,23 @@ namespace Gestion_Mtps_v2
 
         private void btnSoumettre_Click(object sender, EventArgs e)
         {
+            string sztext = string.Empty;
+            string sztitre = string.Empty;
+
             // préparer un messagebox pour s'assurer que le changement est vraiment ce qui est souhaité
-            DialogResult = MessageBox.Show("text","Caption",MessageBoxButtons.OKCancel ,MessageBoxIcon.Question);
+            sztext = string.Format("Vous être sur le point de modifier le mot {0} pour {1}{2}{3}", 
+                txtAncienNom.Text, txtNouveauNom.Text, Environment.NewLine, "Désires-vous poursuivre?");
+            sztitre = string.Format("Modification de {0}", m_Filtre);
+
+            DialogResult dg = MessageBox.Show(sztext, sztitre, MessageBoxButtons.YesNoCancel ,MessageBoxIcon.Question);
+
+            // vérifier le retour
+            if(dg == DialogResult.Yes)
+            {
+                // appeler modif
+                bool retour = m_maBase.ModifierUnFiltre(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+
+            }
         }
     }
 }

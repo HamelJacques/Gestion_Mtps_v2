@@ -100,6 +100,10 @@ namespace Gestion_Mtps
             }
         }
 
+        internal bool ModifierUnFiltre(ref Usager_v2 m_Usager,string filtre, string nouveauNom)
+        {
+            return false;
+        }
         //internal bool ModifierUneCategorie(ref Usager m_Usager, string nouveauNom)
         //{
         //    bool success = false;

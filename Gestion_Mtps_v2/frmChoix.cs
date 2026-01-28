@@ -395,7 +395,7 @@ namespace Gestion_Mtps_v2
                     break;
             }
 
-            frmModifFiltres Modif = new frmModifFiltres(filtre, nomFiltre);
+            frmModifFiltres Modif = new frmModifFiltres( ref m_usager , filtre, nomFiltre, ref m_maBD);
             Modif.ShowDialog();
         }
         private void btnModifInfos_Click(object sender, EventArgs e)
