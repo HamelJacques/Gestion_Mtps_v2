@@ -368,9 +368,34 @@ namespace Gestion_Mtps_v2
             ListerLesInfosSites();
 
         }
-        private void btnModifSites_Click(object sender, EventArgs e)
+        
+        /// <summary>
+        /// Méthode partagée pour appeler la modification des libellés des filtres
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModifLibelleFiltres(object sender, EventArgs e)
         {
-            frmModifFiltres Modif = new frmModifFiltres();
+            Button btn = sender as Button;
+            string nom;
+            string texte;
+            string filtre = string.Empty;
+            string nomFiltre = string.Empty;
+            if (btn != null)
+            {
+                nom = btn.Name;       // Nom du bouton
+                texte = btn.Text;     // Texte affiché
+                filtre = btn.Tag.ToString();
+                                             // ... ton code ici
+            }
+            switch (filtre)
+            {
+                case "Site":
+                    nomFiltre = lstBxSites.SelectedItem .ToString();
+                    break;
+            }
+
+            frmModifFiltres Modif = new frmModifFiltres(filtre, nomFiltre);
             Modif.ShowDialog();
         }
         private void btnModifInfos_Click(object sender, EventArgs e)
@@ -411,8 +436,6 @@ namespace Gestion_Mtps_v2
             {
                 this.DialogResult = DialogResult.OK;
             }
-        }
-
-        
+        }        
     }
 }

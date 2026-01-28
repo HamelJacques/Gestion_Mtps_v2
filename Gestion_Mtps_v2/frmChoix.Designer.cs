@@ -153,9 +153,10 @@
             this.btnModifSites.Name = "btnModifSites";
             this.btnModifSites.Size = new System.Drawing.Size(95, 37);
             this.btnModifSites.TabIndex = 4;
+            this.btnModifSites.Tag = "Site";
             this.btnModifSites.Text = "btnModifSites";
             this.btnModifSites.UseVisualStyleBackColor = true;
-            this.btnModifSites.Click += new System.EventHandler(this.btnModifSites_Click);
+            this.btnModifSites.Click += new System.EventHandler(this.ModifLibelleFiltres);
             // 
             // btnAjoutSite
             // 
