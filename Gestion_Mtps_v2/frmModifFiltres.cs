@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,14 +19,16 @@ namespace Gestion_Mtps_v2
         private string m_NomFiltreA_Modifier;
         private CBase m_maBase;
         private Usager_v2 m_Usager;
+        private string m_ChLog;
         #endregion
         #region CONSTRUCTEUR
-        public frmModifFiltres(ref Usager_v2 U, string filtre, string nomfiltreAmodifier, ref CBase labase)
+        public frmModifFiltres(ref Usager_v2 U, string filtre, string nomfiltreAmodifier, ref CBase labase, string chlog)
         {
             InitializeComponent();
             m_Usager = U;
             m_maBase=labase;
             m_Filtre = filtre;
+            m_ChLog = chlog;
             txtAncienNom.Text = nomfiltreAmodifier;
             InitFenetre();
         }
@@ -78,8 +81,15 @@ namespace Gestion_Mtps_v2
             if(dg == DialogResult.Yes)
             {
                 // appeler modif
-                bool retour = m_maBase.ModifierUnFiltre(ref m_Usager, m_Filtre, txtNouveauNom.Text);
-
+                try
+                {
+                    bool retour = m_maBase.ModifierUnFiltre(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                }
+                catch (Exception ex)
+                {
+                    string mess = ex.Message;
+                    Logger lg = new Logger(ex.ToString(), m_ChLog);
+                }
             }
         }
     }

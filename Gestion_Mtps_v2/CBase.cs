@@ -102,7 +102,44 @@ namespace Gestion_Mtps
 
         internal bool ModifierUnFiltre(ref Usager_v2 m_Usager,string filtre, string nouveauNom)
         {
+            // Vérifier si la valeur à modifier est utilisée par plus de 1 usager
+            Int32 nUsers = NbUsagersPourFiltre(ref m_Usager, filtre);
+
+            // Déterminer quelle table est visée, quel enregistrement, selon le filtre
+            string select = ConstruireSelectModifFiltre(ref m_Usager ,filtre, nouveauNom);
             return false;
+        }
+        private Int32 NbUsagersPourFiltre(ref Usager_v2 U, string filtre)
+        {
+            string table = string.Empty;
+            string nomId = string.Empty;
+            string select = string.Empty;
+
+            switch (filtre)
+            {
+                case "Site":
+                    table = "jctSousCategorieSite";
+                    nomId = "IdSite";
+                    break;
+            }
+            select = "SELECT COUNT(IdUsager) FROM " + table + " WHERE " + nomId + " = " + U.IdSite;
+            Int32 nUser = 0;
+            nUser = ObtenirNbUtilisateurs(select);
+            return 0;
+        }
+
+        private int ObtenirNbUtilisateurs(string select)
+        {
+            throw new NotImplementedException();
+        }
+
+        private string ConstruireSelectModifFiltre(ref Usager_v2 U,string filtre,string nouveaunom)
+        {
+            string latable = string.Empty;
+            latable = "tbl" + filtre;
+            string szSelect = "";
+            szSelect = "SELECT";
+            return "";
         }
         //internal bool ModifierUneCategorie(ref Usager m_Usager, string nouveauNom)
         //{
