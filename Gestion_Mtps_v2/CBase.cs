@@ -10,11 +10,13 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using Application = System.Windows.Forms.Application;
 
@@ -113,7 +115,7 @@ namespace Gestion_Mtps
         {
             string table = string.Empty;
             string nomId = string.Empty;
-            string select = string.Empty;
+            string szSelect = string.Empty;
 
             switch (filtre)
             {
@@ -122,15 +124,29 @@ namespace Gestion_Mtps
                     nomId = "IdSite";
                     break;
             }
-            select = "SELECT COUNT(IdUsager) FROM " + table + " WHERE " + nomId + " = " + U.IdSite;
-            Int32 nUser = 0;
-            nUser = ObtenirNbUtilisateurs(select);
-            return 0;
+
+            try
+            {
+                szSelect = "SELECT COUNT(IdUsager) FROM " + table + " WHERE " + nomId + " = " + U.IdSite;
+                Int32 nUser = ObtenirNbUtilisateurs(szSelect);
+
+                //nUser = ObtenirNbUtilisateurs(szSelect);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
 
-        private int ObtenirNbUtilisateurs(string select)
+        private string ConstruireSelect(ref Usager_v2 U, string filtre, string nouveaunom)
         {
-            throw new NotImplementedException();
+            string latable = string.Empty;
+            latable = "tbl" + filtre;
+            string szSelect = "";
+            szSelect = "SELECT IdUsager FROM " + latable + " WHERE Id" + filtre + " = " + U.IdSite;
+            return szSelect;
         }
 
         private string ConstruireSelectModifFiltre(ref Usager_v2 U,string filtre,string nouveaunom)
@@ -138,7 +154,7 @@ namespace Gestion_Mtps
             string latable = string.Empty;
             latable = "tbl" + filtre;
             string szSelect = "";
-            szSelect = "SELECT";
+            szSelect = "SELECT IdUsager FROM " + latable;
             return "";
         }
         //internal bool ModifierUneCategorie(ref Usager m_Usager, string nouveauNom)
@@ -863,6 +879,28 @@ namespace Gestion_Mtps
             //throw new NotImplementedException();
         }
 
+        
+        private int ObtenirNbUtilisateurs(string select)
+        {
+            string szSelect = select;
+            int i;
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+
+                i = Convert.ToInt32(m_DataTable.Rows[0][0]);
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public List<string> ObtenirUsagers()
         {
             int i = 0;
@@ -2041,6 +2079,14 @@ namespace Gestion_Mtps
                 string szmess = ex.ToString();
             }
         }
+        public List<string> ObtenirListeUsagerSite(ref Usager_v2 U, string filtre, string valeur)
+        {
+            List<string> unelst = new List<string>();
+            // Construire la requête
+            string select = ConstruireSelect(ref U,filtre,valeur);
+            // obtenir la liste
+            return unelst;
+        }
         internal void ObtenirListeSites(ref List<string> lst, Usager_v2 m_usager)
         {
             int i = 0;
@@ -2877,6 +2923,24 @@ namespace Gestion_Mtps
             }
 
             return true;
+        }
+
+        internal List<string> ObtenirListeUsagers(ref Usager_v2 U, string filtre, string text)
+        {
+            string table = string.Empty;
+            string nomId = string.Empty;
+            string szSelect = string.Empty;
+            List<string> lalst = new List<string>();
+            switch (filtre)
+            {
+                case "Site":
+                    table = "jctSousCategorieSite";
+                    nomId = "IdSite";
+                    //szSelect= ConstruireSelectModifFiltre(ref U, filtre, text);
+                    break;
+            }
+            return lalst;
+            //throw new NotImplementedException();
         }
 
 
