@@ -2084,9 +2084,39 @@ namespace Gestion_Mtps
             List<string> unelst = new List<string>();
             // Construire la requête
             string select = ConstruireSelect(ref U,filtre,valeur);
+            unelst = ObtenirListeUsagers(select);
             // obtenir la liste
             return unelst;
         }
+
+        private List<string> ObtenirListeUsagers(string select)
+        {
+            List<string> lst = new List<string>();
+            int i = 0;
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(select, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        //lst.Add(m_DataTable.Rows[i]["NomSite"].ToString());
+                    }
+                }
+                return lst;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
         internal void ObtenirListeSites(ref List<string> lst, Usager_v2 m_usager)
         {
             int i = 0;
