@@ -36,6 +36,7 @@
             this.btnAjoutSousCatego = new System.Windows.Forms.Button();
             this.lstBxSousCategories = new System.Windows.Forms.ListBox();
             this.grbxSites = new System.Windows.Forms.GroupBox();
+            this.btnModifSites = new System.Windows.Forms.Button();
             this.btnAjoutSite = new System.Windows.Forms.Button();
             this.lstBxSites = new System.Windows.Forms.ListBox();
             this.grbxInfosSites = new System.Windows.Forms.GroupBox();
@@ -63,7 +64,7 @@
             this.btnFermer.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(22, 518);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(1317, 50);
+            this.btnFermer.Size = new System.Drawing.Size(1345, 50);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "btnFermer";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -76,7 +77,7 @@
             this.grbxCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbxCategories.Location = new System.Drawing.Point(12, 12);
             this.grbxCategories.Name = "grbxCategories";
-            this.grbxCategories.Size = new System.Drawing.Size(284, 159);
+            this.grbxCategories.Size = new System.Drawing.Size(306, 159);
             this.grbxCategories.TabIndex = 1;
             this.grbxCategories.TabStop = false;
             this.grbxCategories.Text = "grbxCategories";
@@ -85,7 +86,7 @@
             // 
             this.btnAjoutCatego.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutCatego.Name = "btnAjoutCatego";
-            this.btnAjoutCatego.Size = new System.Drawing.Size(71, 38);
+            this.btnAjoutCatego.Size = new System.Drawing.Size(95, 38);
             this.btnAjoutCatego.TabIndex = 3;
             this.btnAjoutCatego.Text = "btnAjoutCatego";
             this.btnAjoutCatego.UseVisualStyleBackColor = true;
@@ -108,7 +109,7 @@
             this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbxSousCategories.Location = new System.Drawing.Point(12, 182);
             this.grbxSousCategories.Name = "grbxSousCategories";
-            this.grbxSousCategories.Size = new System.Drawing.Size(284, 159);
+            this.grbxSousCategories.Size = new System.Drawing.Size(306, 159);
             this.grbxSousCategories.TabIndex = 2;
             this.grbxSousCategories.TabStop = false;
             this.grbxSousCategories.Text = "grbxSousCategories";
@@ -117,7 +118,7 @@
             // 
             this.btnAjoutSousCatego.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutSousCatego.Name = "btnAjoutSousCatego";
-            this.btnAjoutSousCatego.Size = new System.Drawing.Size(71, 38);
+            this.btnAjoutSousCatego.Size = new System.Drawing.Size(95, 38);
             this.btnAjoutSousCatego.TabIndex = 3;
             this.btnAjoutSousCatego.Text = "btnAjoutSousCatego";
             this.btnAjoutSousCatego.UseVisualStyleBackColor = true;
@@ -135,21 +136,33 @@
             // 
             // grbxSites
             // 
+            this.grbxSites.Controls.Add(this.btnModifSites);
             this.grbxSites.Controls.Add(this.btnAjoutSite);
             this.grbxSites.Controls.Add(this.lstBxSites);
             this.grbxSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbxSites.Location = new System.Drawing.Point(12, 353);
             this.grbxSites.Name = "grbxSites";
-            this.grbxSites.Size = new System.Drawing.Size(284, 159);
+            this.grbxSites.Size = new System.Drawing.Size(306, 159);
             this.grbxSites.TabIndex = 4;
             this.grbxSites.TabStop = false;
             this.grbxSites.Text = "grbxSites";
+            // 
+            // btnModifSites
+            // 
+            this.btnModifSites.Location = new System.Drawing.Point(200, 67);
+            this.btnModifSites.Name = "btnModifSites";
+            this.btnModifSites.Size = new System.Drawing.Size(95, 37);
+            this.btnModifSites.TabIndex = 4;
+            this.btnModifSites.Tag = "Site";
+            this.btnModifSites.Text = "btnModifSites";
+            this.btnModifSites.UseVisualStyleBackColor = true;
+            this.btnModifSites.Click += new System.EventHandler(this.ModifLibelleFiltres);
             // 
             // btnAjoutSite
             // 
             this.btnAjoutSite.Location = new System.Drawing.Point(200, 23);
             this.btnAjoutSite.Name = "btnAjoutSite";
-            this.btnAjoutSite.Size = new System.Drawing.Size(71, 38);
+            this.btnAjoutSite.Size = new System.Drawing.Size(95, 38);
             this.btnAjoutSite.TabIndex = 3;
             this.btnAjoutSite.Text = "btnAjoutSite";
             this.btnAjoutSite.UseVisualStyleBackColor = true;
@@ -174,9 +187,9 @@
             this.grbxInfosSites.Controls.Add(this.dgInfos);
             this.grbxInfosSites.Controls.Add(this.btnAjoutInfos);
             this.grbxInfosSites.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grbxInfosSites.Location = new System.Drawing.Point(323, 20);
+            this.grbxInfosSites.Location = new System.Drawing.Point(341, 20);
             this.grbxInfosSites.Name = "grbxInfosSites";
-            this.grbxInfosSites.Size = new System.Drawing.Size(1016, 218);
+            this.grbxInfosSites.Size = new System.Drawing.Size(1026, 218);
             this.grbxInfosSites.TabIndex = 5;
             this.grbxInfosSites.TabStop = false;
             this.grbxInfosSites.Text = "grbxInfosSites";
@@ -205,7 +218,7 @@
             this.MotPass});
             this.dgInfos.Location = new System.Drawing.Point(113, 11);
             this.dgInfos.Name = "dgInfos";
-            this.dgInfos.Size = new System.Drawing.Size(892, 201);
+            this.dgInfos.Size = new System.Drawing.Size(902, 201);
             this.dgInfos.TabIndex = 1;
             this.dgInfos.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgInfos_RowHeaderMouseClick);
             // 
@@ -251,7 +264,7 @@
             // txtInfosSupp
             // 
             this.txtInfosSupp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInfosSupp.Location = new System.Drawing.Point(329, 265);
+            this.txtInfosSupp.Location = new System.Drawing.Point(347, 265);
             this.txtInfosSupp.Multiline = true;
             this.txtInfosSupp.Name = "txtInfosSupp";
             this.txtInfosSupp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -262,7 +275,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1369, 579);
+            this.ClientSize = new System.Drawing.Size(1379, 579);
             this.Controls.Add(this.txtInfosSupp);
             this.Controls.Add(this.grbxInfosSites);
             this.Controls.Add(this.grbxSites);
@@ -304,5 +317,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Identifiant;
         private System.Windows.Forms.DataGridViewTextBoxColumn MotPass;
         private System.Windows.Forms.Button btnModifInfos;
+        private System.Windows.Forms.Button btnModifSites;
     }
 }

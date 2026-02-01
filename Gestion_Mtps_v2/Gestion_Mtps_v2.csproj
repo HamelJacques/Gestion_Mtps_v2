@@ -75,6 +75,12 @@
     <Compile Include="frmChoix.Designer.cs">
       <DependentUpon>frmChoix.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmModifFiltres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModifFiltres.Designer.cs">
+      <DependentUpon>frmModifFiltres.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMonInputBx.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmChoix.resx">
       <DependentUpon>frmChoix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModifFiltres.resx">
+      <DependentUpon>frmModifFiltres.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMonInputBx.resx">
       <DependentUpon>frmMonInputBx.cs</DependentUpon>
