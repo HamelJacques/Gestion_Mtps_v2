@@ -104,13 +104,38 @@ namespace Gestion_Mtps
 
         internal bool ModifierUnFiltre(ref Usager_v2 m_Usager,string filtre, string nouveauNom)
         {
-            // Vérifier si la valeur à modifier est utilisée par plus de 1 usager
-            Int32 nUsers = NbUsagersPourFiltre(ref m_Usager, filtre);
+            try
+            {
+                // Vérifier si la valeur à modifier est utilisée par plus de 1 usager
+                Int32 nUsers = NbUsagersPourFiltre(ref m_Usager, filtre);
 
-            // Déterminer quelle table est visée, quel enregistrement, selon le filtre
-            string select = ConstruireSelectModifFiltre(ref m_Usager ,filtre, nouveauNom);
-            return false;
+                // Déterminer quelle table est visée, quel enregistrement, selon le filtre
+                string leupdate = ConstruireUpdateFiltre(ref m_Usager, filtre, nouveauNom);
+                bool success = UpdateFiltre(leupdate);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
+
+        private bool UpdateFiltre(string leupdate)
+        {
+            bool ok = false;
+            string szUpdate = leupdate;
+            try
+            {
+                OleDbCommand command = new OleDbCommand(szUpdate, m_cnADONetConnection);
+                command.ExecuteNonQuery();
+                return ok;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
         private Int32 NbUsagersPourFiltre(ref Usager_v2 U, string filtre)
         {
             string table = string.Empty;
@@ -143,19 +168,23 @@ namespace Gestion_Mtps
         private string ConstruireSelect(ref Usager_v2 U, string filtre, string nouveaunom)
         {
             string latable = string.Empty;
-            latable = "tbl" + filtre;
+            latable = "tbl" + filtre + "s";
             string szSelect = "";
             szSelect = "SELECT IdUsager FROM " + latable + " WHERE Id" + filtre + " = " + U.IdSite;
             return szSelect;
         }
 
-        private string ConstruireSelectModifFiltre(ref Usager_v2 U,string filtre,string nouveaunom)
+        private string ConstruireUpdateFiltre(ref Usager_v2 U,string filtre,string nouveaunom)
         {
             string latable = string.Empty;
-            latable = "tbl" + filtre;
-            string szSelect = "";
-            szSelect = "SELECT IdUsager FROM " + latable;
-            return "";
+            string nomfiltre = string.Empty;
+            string szupdate = "";
+                        
+            latable = "tbl" + filtre + "s";
+            nomfiltre = "nom" + filtre;
+            
+            szupdate = "UPDATE " +  latable + " SET " + nomfiltre + " = '" + nouveaunom + "'" + " WHERE Id" + filtre + " = " + U.IdSite;
+            return szupdate;
         }
         //internal bool ModifierUneCategorie(ref Usager m_Usager, string nouveauNom)
         //{

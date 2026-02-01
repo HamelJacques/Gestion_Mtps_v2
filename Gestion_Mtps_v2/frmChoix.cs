@@ -79,7 +79,7 @@ namespace Gestion_Mtps_v2
             btnModifSites.Text = "Renommer";
             btnModifSites.Enabled = false;
             btnModifSites.BackColor = Color.LightBlue;
-            ListerLesSites();
+            ListerSites();
         }
         private void InitInfoSites()
         {
@@ -120,7 +120,7 @@ namespace Gestion_Mtps_v2
             List<Int32 > lst = new List<Int32>();
             lst = m_Choix.ObtenirListeIdInfos(m_usager);
         }
-        private void ListerLesSites()
+        private void ListerSites()
         {
             List<string> lst = new List<string>();
             lstBxSites.Items.Clear();
@@ -196,7 +196,7 @@ namespace Gestion_Mtps_v2
 
                     // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
                     ListerSousCategories();
-                    ListerLesSites();
+                    ListerSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }
@@ -226,7 +226,7 @@ namespace Gestion_Mtps_v2
                     {
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
-                    ListerLesSites();
+                    ListerSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }                
@@ -353,7 +353,7 @@ namespace Gestion_Mtps_v2
 
                     if (aj.AjoutOk)
                     {
-                        ListerLesSites();
+                        ListerSites();
                         Refresh();
                     }
                 }
@@ -397,6 +397,16 @@ namespace Gestion_Mtps_v2
 
             frmModifFiltres Modif = new frmModifFiltres( ref m_usager , filtre, nomFiltre, ref m_maBD, m_CheminLog);
             Modif.ShowDialog();
+
+            if (Modif.m_ModificationOK == true)
+            {   // Rafraichir la liste
+                switch (filtre)
+                {
+                    case "Site":
+                        ListerSites();
+                        break;
+                }
+            }
         }
         private void btnModifInfos_Click(object sender, EventArgs e)
         {

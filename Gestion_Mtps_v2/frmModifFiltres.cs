@@ -20,6 +20,7 @@ namespace Gestion_Mtps_v2
         private CBase m_maBase;
         private Usager_v2 m_Usager;
         private string m_ChLog;
+        public bool m_ModificationOK;
         #endregion
         #region CONSTRUCTEUR
         public frmModifFiltres(ref Usager_v2 U, string filtre, string nomfiltreAmodifier, ref CBase labase, string chlog)
@@ -49,6 +50,7 @@ namespace Gestion_Mtps_v2
             btnSoumettre.Enabled = false;
             btnFermer.Text = "Fermer";
             btnFermer.BackColor = Color.LightSteelBlue;
+            m_ModificationOK = false;
         }
         #endregion
 
@@ -88,13 +90,18 @@ namespace Gestion_Mtps_v2
                     // si oui, avertir
                     lstUagersimplique = new List<string>();
                     //lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
-                    lstUagersimplique = m_maBase.ObtenirListeUsagerSite(ref m_Usager, m_Filtre, txtNouveauNom.Text);
-                    if (lstUagersimplique.Count > 1)
-                    {
-                        // avertir
-                    }
+                    //lstUagersimplique = m_maBase.ObtenirListeUsagerSite(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                    //if (lstUagersimplique.Count > 1)
+                    //{
+                    //    // avertir
+                    //}
                     // sinon, 
                     bool retour = m_maBase.ModifierUnFiltre(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                    if (retour)
+                    {
+                        m_ModificationOK = true;
+                        this.Close();
+                    }
                 }
                 catch (Exception ex)
                 {
