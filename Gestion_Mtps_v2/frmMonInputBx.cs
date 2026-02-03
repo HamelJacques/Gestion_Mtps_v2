@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Gestion_Mtps_v2
 {
@@ -82,12 +83,17 @@ namespace Gestion_Mtps_v2
                     }
                 case Mode.verif:
                     {
+                        txtAncienmps.PasswordChar = '*';
                         lblAncienmps.Visible = false;
                         txtAncienmps.Visible = false;
                         btnSoumettre.BackColor = Color.LightCyan;
                         
                         this.BackColor = Color.LightGreen;
                         this.Text = "Vérifier";
+
+                        
+
+
                         return;
                     }
             }
@@ -140,6 +146,13 @@ namespace Gestion_Mtps_v2
         private void btnAnnuler_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtAncienmps_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //txtInput.Multiline = false;
+            //txtInput.UseSystemPasswordChar = false;
+            txtInput.PasswordChar = '*';
         }
     }
 }
