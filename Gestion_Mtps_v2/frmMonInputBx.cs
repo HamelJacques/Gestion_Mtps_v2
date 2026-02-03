@@ -91,8 +91,7 @@ namespace Gestion_Mtps_v2
                         this.BackColor = Color.LightGreen;
                         this.Text = "Vérifier";
 
-                        
-
+                        txtInput.PasswordChar = '*';
 
                         return;
                     }
@@ -131,6 +130,7 @@ namespace Gestion_Mtps_v2
                         }
                     case Mode.verif:
                         {
+                            
                             this.Close();
                             return;
                         }
@@ -152,7 +152,7 @@ namespace Gestion_Mtps_v2
         {
             //txtInput.Multiline = false;
             //txtInput.UseSystemPasswordChar = false;
-            txtInput.PasswordChar = '*';
+            //txtInput.PasswordChar = '*';
         }
     }
 }
