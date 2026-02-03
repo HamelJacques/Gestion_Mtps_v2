@@ -53,6 +53,7 @@
             this.txtInput.Location = new System.Drawing.Point(144, 43);
             this.txtInput.Margin = new System.Windows.Forms.Padding(2);
             this.txtInput.Name = "txtInput";
+            this.txtInput.PasswordChar = '*';
             this.txtInput.Size = new System.Drawing.Size(329, 26);
             this.txtInput.TabIndex = 1;
             // 
@@ -79,6 +80,7 @@
             this.txtAncienmps.Name = "txtAncienmps";
             this.txtAncienmps.Size = new System.Drawing.Size(329, 26);
             this.txtAncienmps.TabIndex = 4;
+            this.txtAncienmps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAncienmps_KeyPress);
             // 
             // lblAncienmps
             // 
