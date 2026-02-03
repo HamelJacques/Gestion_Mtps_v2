@@ -76,7 +76,10 @@ namespace Gestion_Mtps_v2
             grbxSites.BackColor = Color.LavenderBlush;
             btnAjoutSite.Text = "Ajouter";
             btnAjoutSite.BackColor = Color.LightGreen;
-            ListerLesSites();
+            btnModifSites.Text = "Renommer";
+            btnModifSites.Enabled = false;
+            btnModifSites.BackColor = Color.LightBlue;
+            ListerSites();
         }
         private void InitInfoSites()
         {
@@ -99,6 +102,8 @@ namespace Gestion_Mtps_v2
             // Pour ajouter un ensemble d'informations, on doit avoir les 4 niveaux de sélectionnés
             btnAjoutInfos.Enabled = (m_usager.IdUsager > 0 
                 && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
+            
+            btnModifSites.Enabled =(m_usager.IdSite > 0);
 
             btnModifInfos.Enabled=false;
         }
@@ -115,7 +120,7 @@ namespace Gestion_Mtps_v2
             List<Int32 > lst = new List<Int32>();
             lst = m_Choix.ObtenirListeIdInfos(m_usager);
         }
-        private void ListerLesSites()
+        private void ListerSites()
         {
             List<string> lst = new List<string>();
             lstBxSites.Items.Clear();
@@ -175,96 +180,7 @@ namespace Gestion_Mtps_v2
             //return lst;
         }
 
-        #region LES BOUTONS
-        private void btnFermer_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
-            btnFermer.Tag = "1";
-            this.Close();
-        }
-        private void btnAjoutCatego_Click(object sender, EventArgs e)
-        {
-            List<string> lst = new List<string>();
-            // passer par la classe Ajouts pour ajouter une catégorie
-            frmAjouts aj = new frmAjouts("Categorie", m_maBD, ref lst, ref m_usager);
-            aj.ShowDialog();
-            if(aj.AjoutOk)
-            {
-                ListerCategories();
-                Refresh();
-            }
-        }
-        private void btnAjoutSousCatego_Click(object sender, EventArgs e)
-        {
-            // Vérifier si une catégorie est sélectionnée, forcer la sélection
-            bool selectione = lstBxCategories.SelectedIndex >= 0;
-            if (lstBxCategories.SelectedIndex >= 0)
-            {
-                List<string> lst = new List<string>();
-                frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
-                aj.ShowDialog();
-
-                if (aj.AjoutOk)
-                {
-                    ListerSousCategories();
-                    Refresh();
-                }
-                return;
-            }
-
-            MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void btnAjoutSite_Click(object sender, EventArgs e)
-        {
-            string message = string.Empty;
-            // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
-            bool selectione = lstBxSousCategories.SelectedIndex >= 0;
-            if(m_usager.IdCategorie == 0)
-            {
-                message = "Vous devez sélectionner une catégorie pour poursuivre.";
-                MessageBox.Show(message,"OUPS",MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-            else
-            {
-                if (m_usager.IdSousCategorie == 0)
-                {
-                    message = "Vous devez sélectionner une sous-catégorie pour poursuivre.";
-                    MessageBox.Show(message, "OUPS", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    List<string> lst = new List<string>();
-
-                    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
-                    aj.ShowDialog();
-
-                    if (aj.AjoutOk)
-                    {
-                        ListerLesSites();
-                        Refresh();
-                    }
-                }
-            }
-        }
-        private void btnAjoutInfos_Click(object sender, EventArgs e)
-        {
-            // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
-            // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
-            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition,(int)Mode.Ajout, m_CheminLog);
-            AjoutSiteInfos.ShowDialog();
-            ListerLesInfosSites();
-
-        }
-        private void btnModifInfos_Click(object sender, EventArgs e)
-        {
-            // appeler la fenêtre AjoutSiteInfos en mode modification
-            frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog, m_NumSiteEnModif);
-            ModifSiteInfos.ShowDialog();
-            ListerLesInfosSites();
-        }
-
-        #endregion
+        
         #region LES LISTBOXES
         private void lstBxCategories_Click(object sender, EventArgs e)
         {
@@ -280,7 +196,7 @@ namespace Gestion_Mtps_v2
 
                     // Afficher les sous catégories pour cet usager et la catégorie sélectionnée
                     ListerSousCategories();
-                    ListerLesSites();
+                    ListerSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }
@@ -310,7 +226,7 @@ namespace Gestion_Mtps_v2
                     {
                         m_usager.IdCategorie = m_Choix.ObtenirIdCategorie_UsagerSousCatego(m_usager);
                     }
-                    ListerLesSites();
+                    ListerSites();
                     ListerLesInfosSites();
                     ActiveBtns();
                 }                
@@ -376,6 +292,137 @@ namespace Gestion_Mtps_v2
 
         #endregion
 
+        #region LES BOUTONS
+        
+        private void btnAjoutCatego_Click(object sender, EventArgs e)
+        {
+            List<string> lst = new List<string>();
+            // passer par la classe Ajouts pour ajouter une catégorie
+            frmAjouts aj = new frmAjouts("Categorie", m_maBD, ref lst, ref m_usager);
+            aj.ShowDialog();
+            if (aj.AjoutOk)
+            {
+                ListerCategories();
+                Refresh();
+            }
+        }
+        private void btnAjoutSousCatego_Click(object sender, EventArgs e)
+        {
+            // Vérifier si une catégorie est sélectionnée, forcer la sélection
+            bool selectione = lstBxCategories.SelectedIndex >= 0;
+            if (lstBxCategories.SelectedIndex >= 0)
+            {
+                List<string> lst = new List<string>();
+                frmAjouts aj = new frmAjouts("SousCategorie", m_maBD, ref lst, ref m_usager);
+                aj.ShowDialog();
+
+                if (aj.AjoutOk)
+                {
+                    ListerSousCategories();
+                    Refresh();
+                }
+                return;
+            }
+
+            MessageBox.Show("Vous devez sélectionner une catégorie", "Ajout de sous catégorie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void btnAjoutSite_Click(object sender, EventArgs e)
+        {
+            string message = string.Empty;
+            // Vérifier si une sous-catégorie est sélectionnée, forcer la sélection
+            bool selectione = lstBxSousCategories.SelectedIndex >= 0;
+            if (m_usager.IdCategorie == 0)
+            {
+                message = "Vous devez sélectionner une catégorie pour poursuivre.";
+                MessageBox.Show(message, "OUPS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                if (m_usager.IdSousCategorie == 0)
+                {
+                    message = "Vous devez sélectionner une sous-catégorie pour poursuivre.";
+                    MessageBox.Show(message, "OUPS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    List<string> lst = new List<string>();
+
+                    frmAjouts aj = new frmAjouts("Site", m_maBD, ref lst, ref m_usager);
+                    aj.ShowDialog();
+
+                    if (aj.AjoutOk)
+                    {
+                        ListerSites();
+                        Refresh();
+                    }
+                }
+            }
+        }
+        private void btnAjoutInfos_Click(object sender, EventArgs e)
+        {
+            // On a un usager, on veux ajouter une ligne de jctTblInfos et une ligne tblInfos
+            // J'aurai besoin d'iune fenêtre frmAjoutSiteInfos
+            frmAjoutSiteInfos AjoutSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Ajout, m_CheminLog);
+            AjoutSiteInfos.ShowDialog();
+            ListerLesInfosSites();
+
+        }
+        
+        /// <summary>
+        /// Méthode partagée pour appeler la modification des libellés des filtres
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModifLibelleFiltres(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            string nom;
+            string texte;
+            string filtre = string.Empty;
+            string nomFiltre = string.Empty;
+            if (btn != null)
+            {
+                nom = btn.Name;       // Nom du bouton
+                texte = btn.Text;     // Texte affiché
+                filtre = btn.Tag.ToString();
+                                             // ... ton code ici
+            }
+            switch (filtre)
+            {
+                case "Site":
+                    nomFiltre = lstBxSites.SelectedItem .ToString();
+                    break;
+            }
+
+            frmModifFiltres Modif = new frmModifFiltres( ref m_usager , filtre, nomFiltre, ref m_maBD, m_CheminLog);
+            Modif.ShowDialog();
+
+            if (Modif.m_ModificationOK == true)
+            {   // Rafraichir la liste
+                switch (filtre)
+                {
+                    case "Site":
+                        ListerSites();
+                        break;
+                }
+            }
+        }
+        private void btnModifInfos_Click(object sender, EventArgs e)
+        {
+            // appeler la fenêtre AjoutSiteInfos en mode modification
+            frmAjoutSiteInfos ModifSiteInfos = new frmAjoutSiteInfos(ref m_usager, ref m_maBD, this.StartPosition, (int)Mode.Modif, m_CheminLog, m_NumSiteEnModif);
+            ModifSiteInfos.ShowDialog();
+            ListerLesInfosSites();
+        }
+        private void btnFermer_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            btnFermer.Tag = "1";
+            this.Close();
+        }
+        #endregion
+
         private void frmChoix_FormClosing(object sender, FormClosingEventArgs e)
         {
             var btn = btnFermer.Tag;
@@ -399,6 +446,6 @@ namespace Gestion_Mtps_v2
             {
                 this.DialogResult = DialogResult.OK;
             }
-        }
+        }        
     }
 }
