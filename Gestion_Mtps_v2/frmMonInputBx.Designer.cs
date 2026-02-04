@@ -79,6 +79,7 @@
             this.txtAncienmps.Name = "txtAncienmps";
             this.txtAncienmps.Size = new System.Drawing.Size(329, 26);
             this.txtAncienmps.TabIndex = 4;
+            this.txtAncienmps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAncienmps_KeyPress);
             // 
             // lblAncienmps
             // 

@@ -77,9 +77,6 @@ namespace Gestion_Mtps_v2
 
             ConnectBD();
 
-
-            
-
             m_CheminLog = O.ChExe + "application.log";
             //m_lg = new Logger("Ouverture par " + userName, m_CheminLog);
             this.Text = string.Concat(m_Titre, "   ", Environment.MachineName);
@@ -267,6 +264,12 @@ namespace Gestion_Mtps_v2
                 btnAjout.Enabled = false;
             }
             // Si Cancel, juste sortir
+        }
+
+        private void lstUsagers_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application");
         }
     }
 }
