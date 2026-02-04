@@ -1239,7 +1239,30 @@ namespace Gestion_Mtps
             return presence;
         }
 
-      
+        internal void ObtenirSitesPourAjouts(ref List<string> lstSousCategories, Usager_v2 U)
+        {
+            int i;
+            string szSelect, szFROM, szFrom2, szWHERE, szWHERE2, szORDERBY;
+
+            // le select pour obtenir la liste des site disponibles, ceux des autres usagers
+//            SELECT DISTINCT tblSites.NomSite
+//FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
+//WHERE(((tblSites.NomSite)Not In(SELECT DISTINCT tblSites.NomSite
+//FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
+//WHERE(((jctSousCategorieSite.IdUsager) = 2)))));
+
+            szSelect = "SELECT DISTINCT tblSites.NomSite ";
+            szFROM = "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
+            szWHERE = "WHERE(((tblSites.NomSite)Not In(SELECT DISTINCT tblSites.NomSite ";
+            szFrom2 = "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
+            szWHERE2 = "WHERE(((jctSousCategorieSite.IdUsager) = " + U.IdUsager + "))))) ";
+            szORDERBY = "ORDER BY tblSites.NomSite";
+
+            szSelect += szFROM + szWHERE + szFrom2 + szWHERE2 + szORDERBY;
+
+        }
+
+
         internal void ObtenirSousCategoriesPourAjouts(ref List<string> lstSousCategories, Usager_v2 U)
         {
             int i;
@@ -1277,6 +1300,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                throw;
             }
         }
 
@@ -1348,10 +1372,15 @@ namespace Gestion_Mtps
             string szSelect;
             string szANDcatego = string.Empty;
             string szAndSousCatego = string.Empty;
+            string szEgal = string.Empty;
+
+            szEgal = " = ";
+            if (!moimeme) szEgal = " <> ";
 
             szSelect = "SELECT DISTINCT tblSites.NomSite "
                 + "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie "
-                + "WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
+                + "WHERE (((jctSousCategorieSite.IdUsager)" + szEgal + U.IdUsager + "))";
+            //+"WHERE (((jctSousCategorieSite.IdUsager)=" + U.IdUsager + "))";
 
             if (U.IdCategorie > 0)
             {
