@@ -647,7 +647,19 @@ namespace Gestion_Mtps
         }
         public bool AjouterSousCategorie_v2(string nouveauNom, ref Usager_v2 U, int idexiste = 0)
         {
-            return false;
+            bool retour = false;
+            int nb;
+            int idSousCategorie = 0;
+            try
+            {//vérifier si la valeur existe déjà
+                nb = ValeurUtiliseeParPlusieurs(U.IdUsager, "SousCategorie", nouveauNom);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                string mess = ex.ToString();
+                return false;
+            }            
         }
 
         //private bool ModifierUnNomDeSite(Usager m_Usager)
@@ -1006,6 +1018,31 @@ namespace Gestion_Mtps
             }
         }
 
+        internal string ObtenirNomSousCategorie(int id)
+        {
+            string szSelect;
+            string retour = string.Empty;
+            szSelect = "SELECT NomSosCategorie " + " FROM tblSousCategories where IdSousCategorie = " + id;
+
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                //i = m_DataTable.Rows.Count;
+                retour = (string)m_DataTable.Rows[0]["NomSousCategorie"];
+                return retour;
+
+            }
+            catch (Exception ex)
+            {
+                //string mess = ex.ToString();
+                throw;
+            }
+        }
+
         internal string ObtenirNomCategorie(int idcategorie)
         {
             string retour = string.Empty;
@@ -1126,8 +1163,23 @@ namespace Gestion_Mtps
             return (Int32)m_DataTable.Rows[0][0];
         }
 
-        internal int ValeurUtiliseeParPlusieurs()
+        internal int ValeurUtiliseeParPlusieurs(int IdUsager, string filtre, string valeur)
         {
+            int nUser = 0;
+            string szSelect ,szWhere = string.Empty, szAnd = string.Empty, tblJct = string.Empty;
+            string leftjion = string.Empty;
+            switch (filtre)
+            {
+                case "Categorie":
+                    break;
+                case "SousCategorie":
+                    tblJct = "jctCategorieSousCategorie" ;
+                    szWhere = " WHERE IdUsager = " + IdUsager;
+                    szAnd = " AND IdSousCategorie = " + ObtenirIdSousCategorie(valeur);
+                    leftjion = " LEFT JOIN jctUsagerCategorie ON tblCategories.IdCategorie = jctUsagerCategorie.IdCategorie ";
+                    break;
+            }
+            szSelect = "SELECT COUNT(iDUsager) FROM " + tblJct + szWhere ;
             return -1;
         }
         internal bool VerifierPresenceCombinaison(int IdUsager, string nomCatego)
@@ -1725,7 +1777,7 @@ namespace Gestion_Mtps
                     Int32 unid = ObtenirIdSousCategorie(text);
                     idSousCategorie = unid;  
                     message = "Cette sous catégorie est déjà présente";
-                    return retour;
+                    //return retour;
                 }
                 else //on ajoute la sous catégorie, et on s'assure des jounctions
                 {
