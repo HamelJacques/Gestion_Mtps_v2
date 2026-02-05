@@ -1243,13 +1243,14 @@ namespace Gestion_Mtps
         {
             int i;
             string szSelect, szFROM, szFrom2, szWHERE, szWHERE2, szORDERBY;
-
+            #region commenté
             // le select pour obtenir la liste des site disponibles, ceux des autres usagers
-//            SELECT DISTINCT tblSites.NomSite
-//FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
-//WHERE(((tblSites.NomSite)Not In(SELECT DISTINCT tblSites.NomSite
-//FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
-//WHERE(((jctSousCategorieSite.IdUsager) = 2)))));
+            //            SELECT DISTINCT tblSites.NomSite
+            //FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
+            //WHERE(((tblSites.NomSite)Not In(SELECT DISTINCT tblSites.NomSite
+            //FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager)
+            //WHERE(((jctSousCategorieSite.IdUsager) = 2)))));
+            #endregion
 
             szSelect = "SELECT DISTINCT tblSites.NomSite ";
             szFROM = "FROM jctUsagerCategorie INNER JOIN(jctCategorieSousCategorie INNER JOIN(tblSites INNER JOIN jctSousCategorieSite ON tblSites.IdSite = jctSousCategorieSite.IdSite) ON(jctCategorieSousCategorie.IdCategorie = jctSousCategorieSite.IdCategorie) AND(jctCategorieSousCategorie.IdSousCategorie = jctSousCategorieSite.IdSousCategorie)) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
@@ -1918,7 +1919,7 @@ namespace Gestion_Mtps
                     Int32 unid = ObtenirIdSite(text);
                     idSite = unid;
                     messageRetour = "Cette sous catégorie est déjà présente";
-                    return ret;
+                    //return ret;
                 }
                 else //on ajoute la sous catégorie, et on s'assure des jounctions
                 {
