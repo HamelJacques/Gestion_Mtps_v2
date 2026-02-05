@@ -1239,7 +1239,7 @@ namespace Gestion_Mtps
             return presence;
         }
 
-        internal void ObtenirSitesPourAjouts(ref List<string> lstSousCategories, Usager_v2 U)
+        internal void ObtenirSitesPourAjouts(ref List<string> lstSites, Usager_v2 U)
         {
             int i;
             string szSelect, szFROM, szFrom2, szWHERE, szWHERE2, szORDERBY;
@@ -1260,6 +1260,28 @@ namespace Gestion_Mtps
 
             szSelect += szFROM + szWHERE + szFrom2 + szWHERE2 + szORDERBY;
 
+            try
+            {
+                m_DataTable = new DataTable();
+                m_DataTable.Clear();
+                m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+                OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+                m_dataAdatper.Fill(m_DataTable);
+                i = m_DataTable.Rows.Count;
+                i = m_DataTable.Rows.Count;
+                if (i > 0)
+                {
+                    for (i = 0; i < m_DataTable.Rows.Count; i++)
+                    {
+                        lstSites.Add(m_DataTable.Rows[i]["NomSite"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string szmess = ex.ToString();
+                Logger lg = new Logger(szmess, m_cheminLog);
+            }
         }
 
 
