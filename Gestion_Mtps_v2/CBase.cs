@@ -104,13 +104,31 @@ namespace Gestion_Mtps
 
         internal bool ModifierUnFiltre(ref Usager_v2 m_Usager,string filtre, string nouveauNom)
         {
+            string table = string.Empty;
+            string nomId = string.Empty;
+            int idDuFiltre = 0;
+
+            switch (filtre)
+            {
+                case "Site":
+                    table = "jctSousCategorieSite";
+                    nomId = "IdSite";
+                    idDuFiltre = m_Usager.IdSite;
+                    break;
+                // Ajouter un case SousCategorie
+                case "SousCategorie":
+                    table = "jctCategorieSousCategorie";
+                    nomId = "IdSousCategorie";
+                    idDuFiltre = m_Usager.IdSousCategorie;
+                    break;
+            }
             try
             {
                 // Vérifier si la valeur à modifier est utilisée par plus de 1 usager
-                Int32 nUsers = NbUsagersPourFiltre(ref m_Usager, filtre);
+                Int32 nUsers = NbUsagersPourFiltre(ref m_Usager, filtre, table, nomId, idDuFiltre);
 
                 // Déterminer quelle table est visée, quel enregistrement, selon le filtre
-                string leupdate = ConstruireUpdateFiltre(ref m_Usager, filtre, nouveauNom);
+                string leupdate = ConstruireUpdateFiltre(ref m_Usager, filtre, nouveauNom, idDuFiltre);
                 bool success = UpdateFiltre(leupdate);
                 return true;
             }
@@ -136,27 +154,32 @@ namespace Gestion_Mtps
             }
         }
 
-        private Int32 NbUsagersPourFiltre(ref Usager_v2 U, string filtre)
+        private Int32 NbUsagersPourFiltre(ref Usager_v2 U, string filtre, string table, string nomId, int idDuFiltre)
         {
-            string table = string.Empty;
-            string nomId = string.Empty;
             string szSelect = string.Empty;
 
-            switch (filtre)
-            {
-                case "Site":
-                    table = "jctSousCategorieSite";
-                    nomId = "IdSite";
-                    break;
-            }
+            //switch (filtre)
+            //{
+            //    case "Site":
+            //        table = "jctSousCategorieSite";
+            //        nomId = "IdSite";
+            //        idDuFiltre = U.IdSite;
+            //        break;
+            //    // Ajouter un case SousCategorie
+            //    case "SousCategorie":
+            //        table = "jctCategorieSousCategorie";
+            //        nomId = "IdSousCategorie";
+            //        idDuFiltre = U.IdSousCategorie;
+            //        break;
+            //}
 
             try
             {
-                szSelect = "SELECT COUNT(IdUsager) FROM " + table + " WHERE " + nomId + " = " + U.IdSite;
+                szSelect = "SELECT COUNT(IdUsager) FROM " + table + " WHERE " + nomId + " = " + idDuFiltre;
                 Int32 nUser = ObtenirNbUtilisateurs(szSelect);
 
                 //nUser = ObtenirNbUtilisateurs(szSelect);
-                return 0;
+                return nUser;
             }
             catch (Exception ex)
             {
@@ -174,16 +197,16 @@ namespace Gestion_Mtps
             return szSelect;
         }
 
-        private string ConstruireUpdateFiltre(ref Usager_v2 U,string filtre,string nouveaunom)
+        private string ConstruireUpdateFiltre(ref Usager_v2 U,string filtre,string nouveaunom, int idFiltre)
         {
             string latable = string.Empty;
             string nomfiltre = string.Empty;
             string szupdate = "";
                         
             latable = "tbl" + filtre + "s";
-            nomfiltre = "nom" + filtre;
+            nomfiltre = "Nom" + filtre;
             
-            szupdate = "UPDATE " +  latable + " SET " + nomfiltre + " = '" + nouveaunom + "'" + " WHERE Id" + filtre + " = " + U.IdSite;
+            szupdate = "UPDATE " +  latable + " SET " + nomfiltre + " = '" + nouveaunom + "'" + " WHERE Id" + filtre + " = " + idFiltre;
             return szupdate;
         }
         //internal bool ModifierUneCategorie(ref Usager m_Usager, string nouveauNom)
@@ -1077,7 +1100,7 @@ namespace Gestion_Mtps
         {
             int i = 0;
             string szSelect;
-            szSelect = "SELECT IdSousCatgorie " + " FROM tblSousCategories where NomSousCategorie = '" + mSousCategorie + "'";
+            szSelect = "SELECT IdSousCategorie " + " FROM tblSousCategories where NomSousCategorie = '" + mSousCategorie + "'";
             try
             {
                 m_DataTable = new DataTable();
@@ -1089,7 +1112,7 @@ namespace Gestion_Mtps
 
                 if (i > 0)
                 {
-                    return (Int32)m_DataTable.Rows[0]["IdSousCatgorie"];
+                    return (Int32)m_DataTable.Rows[0]["IdSousCategorie"];
                 }
                 else
                 {
@@ -1293,9 +1316,9 @@ namespace Gestion_Mtps
             string szSelect, szFROM, szFrom2, szWHERE, szWHERE2, szORDERBY;
 
             szSelect = "SELECT DISTINCT tblSousCategories.NomSousCategorie ";
-            szFROM = "FROM tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie ";
+            szFROM = "FROM tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCategorie = jctCategorieSousCategorie.IdSousCategorie ";
             szWHERE = "WHERE(((tblSousCategories.NomSousCategorie)Not In(SELECT DISTINCT tblSousCategories.NomSousCategorie ";
-            szFrom2 = "FROM jctUsagerCategorie INNER JOIN(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie ";
+            szFrom2 = "FROM jctUsagerCategorie INNER JOIN(tblSousCategories INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCategorie = jctCategorieSousCategorie.IdSousCategorie) ON jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie ";
             szWHERE2 = "WHERE(((jctCategorieSousCategorie.IdUsager) = " + U.IdUsager + "))))) ";
             szORDERBY = "ORDER BY tblSousCategories.NomSousCategorie";
 
@@ -1343,7 +1366,7 @@ namespace Gestion_Mtps
             szFROM = "FROM jctUsagerCategorie ";
             
             szJOIN1 = "INNER JOIN(tblSousCategories ";
-            szJOIN2 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCatgorie = jctCategorieSousCategorie.IdSousCategorie) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
+            szJOIN2 = "INNER JOIN jctCategorieSousCategorie ON tblSousCategories.IdSousCategorie = jctCategorieSousCategorie.IdSousCategorie) ON(jctUsagerCategorie.IdCategorie = jctCategorieSousCategorie.IdCategorie) AND(jctUsagerCategorie.IdUsager = jctCategorieSousCategorie.IdUsager) ";
             szWhere = "WHERE(((jctCategorieSousCategorie.IdUsager) = " + usager.IdUsager + ")";
 
             if (usager.IdCategorie > 0)
@@ -1647,7 +1670,7 @@ namespace Gestion_Mtps
         {
             string szSelect;
 
-            szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories";
+            szSelect = "SELECT COUNT (IdSousCategorie) FROM tblSousCategories";
             m_DataTable = new DataTable();
             m_DataTable.Clear();
             m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
@@ -1661,7 +1684,7 @@ namespace Gestion_Mtps
             else
             {
                 m_DataTable.Clear();
-                szSelect = "SELECT MAX(IdSousCatgorie) FROM tblSousCategories";// where IdSousCatgorie > 0";
+                szSelect = "SELECT MAX(IdSousCategorie) FROM tblSousCategories";// where IdSousCategorie > 0";
                 m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
                 m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
                 m_dataAdatper.Fill(m_DataTable);
@@ -1677,8 +1700,8 @@ namespace Gestion_Mtps
             //int nb;
             //string szSelect = string.Empty;
             //string szWhere = string.Empty;
-            //szWhere = " WHERE IdSousCatgorie > 0";
-            //szSelect = "SELECT Max(tblSousCategories.IdSousCatgorie) FROM tblSousCategories";
+            //szWhere = " WHERE IdSousCategorie > 0";
+            //szSelect = "SELECT Max(tblSousCategories.IdSousCategorie) FROM tblSousCategories";
             //m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
 
             //OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
@@ -1688,7 +1711,7 @@ namespace Gestion_Mtps
             //nb = Convert.ToInt32(m_DataTable.Rows[0][0]);
             //return Convert.ToInt32(m_DataTable.Rows[0][0]) + 1;
 
-            //szSelect = "SELECT COUNT (IdSousCatgorie) FROM tblSousCategories" + szWhere;
+            //szSelect = "SELECT COUNT (IdSousCategorie) FROM tblSousCategories" + szWhere;
             //m_DataTable = new DataTable();
             //m_DataTable.Clear();
             //m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);

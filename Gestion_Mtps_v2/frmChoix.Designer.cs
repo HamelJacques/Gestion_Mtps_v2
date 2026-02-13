@@ -33,6 +33,7 @@
             this.btnAjoutCatego = new System.Windows.Forms.Button();
             this.lstBxCategories = new System.Windows.Forms.ListBox();
             this.grbxSousCategories = new System.Windows.Forms.GroupBox();
+            this.btnModifSousCategorie = new System.Windows.Forms.Button();
             this.btnAjoutSousCatego = new System.Windows.Forms.Button();
             this.lstBxSousCategories = new System.Windows.Forms.ListBox();
             this.grbxSites = new System.Windows.Forms.GroupBox();
@@ -104,6 +105,7 @@
             // 
             // grbxSousCategories
             // 
+            this.grbxSousCategories.Controls.Add(this.btnModifSousCategorie);
             this.grbxSousCategories.Controls.Add(this.btnAjoutSousCatego);
             this.grbxSousCategories.Controls.Add(this.lstBxSousCategories);
             this.grbxSousCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -113,6 +115,17 @@
             this.grbxSousCategories.TabIndex = 2;
             this.grbxSousCategories.TabStop = false;
             this.grbxSousCategories.Text = "grbxSousCategories";
+            // 
+            // btnModifSousCategorie
+            // 
+            this.btnModifSousCategorie.Location = new System.Drawing.Point(200, 67);
+            this.btnModifSousCategorie.Name = "btnModifSousCategorie";
+            this.btnModifSousCategorie.Size = new System.Drawing.Size(95, 37);
+            this.btnModifSousCategorie.TabIndex = 4;
+            this.btnModifSousCategorie.Tag = "SousCategorie";
+            this.btnModifSousCategorie.Text = "btnModifSousCategorie";
+            this.btnModifSousCategorie.UseVisualStyleBackColor = true;
+            this.btnModifSousCategorie.Click += new System.EventHandler(this.ModifLibelleFiltres);
             // 
             // btnAjoutSousCatego
             // 
@@ -318,5 +331,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MotPass;
         private System.Windows.Forms.Button btnModifInfos;
         private System.Windows.Forms.Button btnModifSites;
+        private System.Windows.Forms.Button btnModifSousCategorie;
     }
 }
