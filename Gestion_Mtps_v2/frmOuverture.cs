@@ -273,7 +273,7 @@ namespace Gestion_Mtps_v2
         private void lstUsagers_MouseHover(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
-            tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application");
+            tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application,"+  Environment.NewLine + " ou click droit et sélectionnez Ouvrir");
         }
 
         private void MenuItemOuvrir_Click(object sender, EventArgs e)
@@ -282,7 +282,8 @@ namespace Gestion_Mtps_v2
             {
                 string selection = lstUsagers.SelectedItems[0].ToString();               
             }
-            MessageBox.Show("En développement");
+            //MessageBox.Show("En développement");
+            lstUsagers_DoubleClick(sender, e);
         }
 
         private void lstUsagers_MouseDown(object sender, MouseEventArgs e)
