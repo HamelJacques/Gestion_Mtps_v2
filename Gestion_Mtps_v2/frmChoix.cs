@@ -68,6 +68,9 @@ namespace Gestion_Mtps_v2
             grbxSousCategories.BackColor = Color.LightCyan;
             btnAjoutSousCatego.Text = "Ajouter";
             btnAjoutSousCatego.BackColor = Color.LightGreen;
+            btnModifSousCategorie.BackColor = Color.LightBlue;
+            btnModifSousCategorie.Enabled = false;
+            btnModifSousCategorie.Text = "Renommer";
             ListerSousCategories();
         }
         private void InitSites()
@@ -104,6 +107,7 @@ namespace Gestion_Mtps_v2
                 && m_usager.IdCategorie > 0 && m_usager.IdSousCategorie > 0 && m_usager.IdSite > 0);
             
             btnModifSites.Enabled =(m_usager.IdSite > 0);
+            btnModifSousCategorie.Enabled = (m_usager.IdSousCategorie > 0);
 
             btnModifInfos.Enabled=false;
         }
@@ -393,8 +397,11 @@ namespace Gestion_Mtps_v2
                 case "Site":
                     nomFiltre = lstBxSites.SelectedItem .ToString();
                     break;
+                case "SousCategorie":
+                    nomFiltre = lstBxSousCategories.SelectedItem.ToString();
+                    break;
             }
-
+            //
             frmModifFiltres Modif = new frmModifFiltres( ref m_usager , filtre, nomFiltre, ref m_maBD, m_CheminLog);
             Modif.ShowDialog();
 
@@ -404,6 +411,9 @@ namespace Gestion_Mtps_v2
                 {
                     case "Site":
                         ListerSites();
+                        break;
+                    case "SousCategorie":
+                        ListerSousCategories();
                         break;
                 }
             }
