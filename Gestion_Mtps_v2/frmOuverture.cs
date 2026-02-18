@@ -214,6 +214,10 @@ namespace Gestion_Mtps_v2
             {
                 string selection = lstUsagers.SelectedItems[0].ToString();
                 Int32 isel = lstUsagers.SelectedIndex;
+                // Obtenir le id de la sélection
+                Int32 iSelect = O.ObtenirIdUsager(selection);
+                m_UsagerSelectionne.IdUsager = iSelect;
+
                 btnModifUser.Enabled = true;
                 btnModifMps.Enabled = true;
                 btnModifMps.BackColor = Color.LightSteelBlue;
@@ -269,7 +273,66 @@ namespace Gestion_Mtps_v2
         private void lstUsagers_MouseHover(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
-            tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application");
+            tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application,"+  Environment.NewLine + " ou click droit et sélectionnez Ouvrir");
         }
+
+        private void MenuItemOuvrir_Click(object sender, EventArgs e)
+        {
+            if (lstUsagers.SelectedItem != null)
+            {
+                string selection = lstUsagers.SelectedItems[0].ToString();               
+            }
+            //MessageBox.Show("En développement");
+            lstUsagers_DoubleClick(sender, e);
+        }
+
+        private void lstUsagers_MouseDown(object sender, MouseEventArgs e)
+        {
+            //try
+            //{
+            //    //if(e.Button == MouseButtons.Left)
+            //    //{
+            //    //    int i = 0;
+            //    //}
+            //    if (lstUsagers.SelectedItem == null)
+            //    {
+            //        return;
+            //    }
+            //    if (e.Button == MouseButtons.Right)
+            //    {
+            //        if (lstUsagers.SelectedItem != null)
+            //        {
+            //            contextMenuOuverture.Text = "Ouvrir " + lstUsagers.SelectedItem;
+            //            //this.lstUsagers.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUsagers_MouseDown);
+            //            //string selection = lstUsagers.SelectedItems[0].ToString();
+            //            //contextMenuOuverture.Text = "Ouvrir " + lstUsagers.SelectedItem;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    //Logger erreur
+            //}
+
+            //try
+            //{
+            //    if (lstBxCategories.SelectedItem != null)
+
+        }
+
+        private void contextMenuOuverture_Opening(object sender, CancelEventArgs e)
+        {
+            if (lstUsagers.SelectedIndex == -1)
+            {
+                e.Cancel = true; // Empêche l'ouverture du menu
+                MessageBox.Show("Veuillez sélectionner un usager.");
+            }
+            //if (lstUsagers.SelectedItem != null)
+            //{
+            //    contextMenuOuverture.Text = "Ouvrir " + lstUsagers.SelectedItem;
+            //}
+        }
+
     }
 }
