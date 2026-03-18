@@ -49,7 +49,9 @@ namespace Gestion_Mtps_v2
             m_Titre = "Ouverture par " + userName;
             this.Text = m_Titre;
             lblUsagers.Text = "Les usagers inscrits";
-            
+
+            btnOuvrir.Text = "Ouvrir";
+            btnOuvrir.Enabled = false;
             btnAjout.Text = "Ajouter un utilisateur";
             btnModifUser.Text = "Modifier un utilisateur";
             btnModifUser.Enabled = false;
@@ -112,6 +114,7 @@ namespace Gestion_Mtps_v2
         private void AjusteCouleurFenere()
         {
             this.BackColor = Color.LightPink;
+            btnOuvrir.BackColor = Color.LightGray;
             btnFermer.BackColor = Color.LightGreen;
             btnAjout.BackColor = Color.LightYellow;
             btnModifUser .BackColor = Color.LightSlateGray;
@@ -144,12 +147,7 @@ namespace Gestion_Mtps_v2
 
         #endregion
 
-        private void btnAjout_Click(object sender, EventArgs e)
-        {
-            frmAjouts A = new frmAjouts("Usager", O.LaBase, ref m_lesUsagers);
-            A.ShowDialog();
-            AfficheUsagers();
-        }
+       
 
         private void lstUsagers_DoubleClick(object sender, EventArgs e)
         {
@@ -207,7 +205,6 @@ namespace Gestion_Mtps_v2
             
                 //MessageBox.Show("En développement" + Environment.NewLine + selection);
         }
-
         private void lstUsagers_Click(object sender, EventArgs e)
         {
             try
@@ -218,6 +215,8 @@ namespace Gestion_Mtps_v2
                 Int32 iSelect = O.ObtenirIdUsager(selection);
                 m_UsagerSelectionne.IdUsager = iSelect;
 
+                btnOuvrir.Enabled = isel != -1;
+                btnOuvrir.BackColor = Color.LightGreen;
                 btnModifUser.Enabled = true;
                 btnModifMps.Enabled = true;
                 btnModifMps.BackColor = Color.LightSteelBlue;
@@ -227,65 +226,12 @@ namespace Gestion_Mtps_v2
             {
                 string mess = ex.ToString();
             }            
-        }
-
-        private void btnModifUser_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("En developpement");
-        }
-
-        private void btnModifMps_Click(object sender, EventArgs e)
-        {
-           
-            btnAjout.Enabled = false;
-            string selection = lstUsagers.SelectedItems[0].ToString();
-            // Obtenir le id de la sélection
-            Int32 iSelect = O.ObtenirIdUsager(selection);
-
-            // Vérifier si l'usager a un mot de passe
-            // si non, forcer l'ajout
-            string motDansBD = O.ObtenirMotPssUsager(iSelect);
-            frmMonInputBx IB;
-            if (motDansBD.Length > 0)
-            {
-                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog, 1);
-            }
-            else
-            {
-                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog);
-            }
-
-            
-            DialogResult dr = IB.ShowDialog();
-
-            // vérifier le dialog result, doit être = OK
-            if(dr == DialogResult.OK)
-            {
-                btnAjout.Enabled = true;
-            }
-            else
-            {
-                btnAjout.Enabled = false;
-            }
-            // Si Cancel, juste sortir
-        }
-
+        }       
         private void lstUsagers_MouseHover(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
             tt.SetToolTip(lstUsagers, "Double click sur un nom pour accéder à l'application,"+  Environment.NewLine + " ou click droit et sélectionnez Ouvrir");
-        }
-
-        private void MenuItemOuvrir_Click(object sender, EventArgs e)
-        {
-            if (lstUsagers.SelectedItem != null)
-            {
-                string selection = lstUsagers.SelectedItems[0].ToString();               
-            }
-            //MessageBox.Show("En développement");
-            lstUsagers_DoubleClick(sender, e);
-        }
-
+        }        
         private void lstUsagers_MouseDown(object sender, MouseEventArgs e)
         {
             //try
@@ -333,6 +279,65 @@ namespace Gestion_Mtps_v2
             //    contextMenuOuverture.Text = "Ouvrir " + lstUsagers.SelectedItem;
             //}
         }
+        private void MenuItemOuvrir_Click(object sender, EventArgs e)
+        {
+            if (lstUsagers.SelectedItem != null)
+            {
+                string selection = lstUsagers.SelectedItems[0].ToString();
+            }
+            //MessageBox.Show("En développement");
+            lstUsagers_DoubleClick(sender, e);
+        }
 
+
+        private void btnOuvrir_Click(object sender, EventArgs e)
+        {
+            lstUsagers_DoubleClick(sender, e);
+        }
+        private void btnModifUser_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("En developpement");
+        }
+        private void btnModifMps_Click(object sender, EventArgs e)
+        {
+
+            btnAjout.Enabled = false;
+            string selection = lstUsagers.SelectedItems[0].ToString();
+            // Obtenir le id de la sélection
+            Int32 iSelect = O.ObtenirIdUsager(selection);
+
+            // Vérifier si l'usager a un mot de passe
+            // si non, forcer l'ajout
+            string motDansBD = O.ObtenirMotPssUsager(iSelect);
+            frmMonInputBx IB;
+            if (motDansBD.Length > 0)
+            {
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog, 1);
+            }
+            else
+            {
+                IB = new frmMonInputBx(iSelect, O.LaBase, m_CheminLog);
+            }
+
+
+            DialogResult dr = IB.ShowDialog();
+
+            // vérifier le dialog result, doit être = OK
+            if (dr == DialogResult.OK)
+            {
+                btnAjout.Enabled = true;
+            }
+            else
+            {
+                btnAjout.Enabled = false;
+            }
+            // Si Cancel, juste sortir
+        }
+        private void btnAjout_Click(object sender, EventArgs e)
+        {
+            frmAjouts A = new frmAjouts("Usager", O.LaBase, ref m_lesUsagers);
+            A.ShowDialog();
+            AfficheUsagers();
+        }
     }
 }
