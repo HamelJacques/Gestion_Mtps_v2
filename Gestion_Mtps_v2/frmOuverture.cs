@@ -6,11 +6,13 @@ using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 namespace Gestion_Mtps_v2
@@ -187,12 +189,14 @@ namespace Gestion_Mtps_v2
                             dr = fen.ShowDialog();
                             if (dr == DialogResult.OK)
                             {
+                                m_lg = new Logger("Accède aux données de " + selection, m_CheminLog);
                                 this.Show();
                             }
                         }
                         else
                         {
                             MessageBox.Show("Mauvais mot de passe.", "Vérification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            m_lg = new Logger("A tenté d'accéder aux données de " + selection, m_CheminLog);
                         }
                     }
                     
