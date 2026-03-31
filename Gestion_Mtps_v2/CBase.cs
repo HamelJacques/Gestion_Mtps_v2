@@ -1561,7 +1561,7 @@ namespace Gestion_Mtps
 
             string dbPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\Base\G_Mtps.accdb"));
              
-            lg = new Logger(userName + " accède à " + dbPath, m_cheminLog);
+            //lg = new Logger(userName + " accède à " + dbPath, m_cheminLog);
 
             try
             {
@@ -1574,8 +1574,8 @@ namespace Gestion_Mtps
                 {
                     m_estConnectee = true;
                 }
-                
-                lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
+                lg = new Logger(userName + " accède à " + dbPath, m_cheminLog);
+                //lg = new Logger("G_Mtps.accdb connecté = " + m_estConnectee.ToString(), m_cheminLog);
                 //string cheminexe = connectionString;
                 //Console.WriteLine(m_cheminLog);
                 // Résultat : D:\Develop\Gestion\Gestion\bin
