@@ -40,19 +40,20 @@
             // 
             this.lblMessInput.AutoSize = true;
             this.lblMessInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessInput.Location = new System.Drawing.Point(25, 53);
+            this.lblMessInput.Location = new System.Drawing.Point(19, 43);
+            this.lblMessInput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMessInput.Name = "lblMessInput";
-            this.lblMessInput.Size = new System.Drawing.Size(122, 25);
+            this.lblMessInput.Size = new System.Drawing.Size(99, 20);
             this.lblMessInput.TabIndex = 0;
             this.lblMessInput.Text = "lblMessInput";
             // 
             // txtInput
             // 
             this.txtInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInput.Location = new System.Drawing.Point(192, 53);
-            this.txtInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtInput.Location = new System.Drawing.Point(144, 43);
+            this.txtInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(437, 30);
+            this.txtInput.Size = new System.Drawing.Size(329, 26);
             this.txtInput.TabIndex = 1;
             // 
             // btnSoumettre
@@ -61,10 +62,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSoumettre.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSoumettre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSoumettre.Location = new System.Drawing.Point(15, 97);
-            this.btnSoumettre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSoumettre.Location = new System.Drawing.Point(11, 79);
+            this.btnSoumettre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSoumettre.Name = "btnSoumettre";
-            this.btnSoumettre.Size = new System.Drawing.Size(761, 50);
+            this.btnSoumettre.Size = new System.Drawing.Size(571, 41);
             this.btnSoumettre.TabIndex = 2;
             this.btnSoumettre.Text = "btnSoumettre";
             this.btnSoumettre.UseVisualStyleBackColor = true;
@@ -73,10 +74,10 @@
             // txtAncienmps
             // 
             this.txtAncienmps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAncienmps.Location = new System.Drawing.Point(192, 16);
-            this.txtAncienmps.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtAncienmps.Location = new System.Drawing.Point(144, 13);
+            this.txtAncienmps.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtAncienmps.Name = "txtAncienmps";
-            this.txtAncienmps.Size = new System.Drawing.Size(437, 30);
+            this.txtAncienmps.Size = new System.Drawing.Size(329, 26);
             this.txtAncienmps.TabIndex = 4;
             this.txtAncienmps.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAncienmps_KeyPress);
             // 
@@ -84,9 +85,10 @@
             // 
             this.lblAncienmps.AutoSize = true;
             this.lblAncienmps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAncienmps.Location = new System.Drawing.Point(25, 16);
+            this.lblAncienmps.Location = new System.Drawing.Point(19, 13);
+            this.lblAncienmps.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAncienmps.Name = "lblAncienmps";
-            this.lblAncienmps.Size = new System.Drawing.Size(129, 25);
+            this.lblAncienmps.Size = new System.Drawing.Size(103, 20);
             this.lblAncienmps.TabIndex = 3;
             this.lblAncienmps.Text = "lblAncienmps";
             // 
@@ -96,10 +98,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAnnuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAnnuler.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAnnuler.Location = new System.Drawing.Point(15, 153);
-            this.btnAnnuler.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAnnuler.Location = new System.Drawing.Point(11, 124);
+            this.btnAnnuler.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAnnuler.Name = "btnAnnuler";
-            this.btnAnnuler.Size = new System.Drawing.Size(761, 50);
+            this.btnAnnuler.Size = new System.Drawing.Size(571, 41);
             this.btnAnnuler.TabIndex = 5;
             this.btnAnnuler.Text = "btnAnnuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
@@ -108,16 +110,17 @@
             // frmMonInputBx
             // 
             this.AcceptButton = this.btnSoumettre;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 209);
+            this.ClientSize = new System.Drawing.Size(593, 170);
             this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.txtAncienmps);
             this.Controls.Add(this.lblAncienmps);
             this.Controls.Add(this.btnSoumettre);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.lblMessInput);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmMonInputBx";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmMonInputBx";
