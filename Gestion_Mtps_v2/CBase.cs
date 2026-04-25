@@ -640,7 +640,7 @@ namespace Gestion_Mtps
 
                         // Commit the transaction.
                         transaction.Commit();
-                        Logger lg = new Logger(ObtenirNomUsager( idusager) + "a ajouté la catégorie " + nouveauNom, m_cheminLog);
+                        Logger lg = new Logger(ObtenirNomUsager( idusager) + " a ajouté la catégorie " + nouveauNom, m_cheminLog);
                     }
                     catch (Exception transEx)
                     {
@@ -1889,7 +1889,7 @@ namespace Gestion_Mtps
                         // Commit the transaction.
                         transaction.Commit();
                         retour = true;
-                        lg = new Logger(ObtenirNomUsager(u.IdUsager) + "a ajouté la SousCatégorie " + CorrigeInput(text), m_cheminLog);
+                        lg = new Logger(ObtenirNomUsager(u.IdUsager) + " a ajouté la SousCatégorie " + CorrigeInput(text), m_cheminLog);
                     }
                     catch (Exception transEx)
                     {
@@ -1979,7 +1979,7 @@ namespace Gestion_Mtps
                         // Commit the transaction.
                         transaction.Commit();
                         ret = true;
-                        lg = new Logger(ObtenirNomUsager(u.IdUsager) + "a ajouté le Site " + CorrigeInput(text), m_cheminLog);
+                        lg = new Logger(ObtenirNomUsager(u.IdUsager) + " a ajouté le Site " + CorrigeInput(text), m_cheminLog);
                     }
                     catch (Exception transEx)
                     {
