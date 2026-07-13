@@ -179,6 +179,7 @@
             this.Controls.Add(this.lblmessage);
             this.Controls.Add(this.lblChBD);
             this.Controls.Add(this.btnFermer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmOuverture";
             this.Text = "Form1";
