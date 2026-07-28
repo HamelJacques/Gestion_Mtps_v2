@@ -56,6 +56,7 @@
     <Compile Include="AjoutSiteInfos.cs" />
     <Compile Include="CBase.cs" />
     <Compile Include="Choix.cs" />
+    <Compile Include="Courriels.cs" />
     <Compile Include="Encriptage.cs" />
     <Compile Include="frmAjouts.cs">
       <SubType>Form</SubType>

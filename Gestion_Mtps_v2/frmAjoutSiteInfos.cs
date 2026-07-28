@@ -112,6 +112,7 @@ namespace Gestion_Mtps_v2
         {
             bool reussite = false;
             frmTimer timer = new frmTimer();
+            string InfoErreur;
             
             // Récolter les informations
             LireLaPage();
@@ -119,7 +120,7 @@ namespace Gestion_Mtps_v2
             //Je veux vérifier si on est en more ajout ou en mode modif
             // puis appeler CBase en conséquence
             try
-            {
+            {                
                 if (m_mode == 0)
                 {
                     // on ajoute
@@ -136,6 +137,7 @@ namespace Gestion_Mtps_v2
                 }
                 if (reussite)
                 {
+                    
                     timer.ShowDialog();
                     this.Close();
                 }
@@ -146,10 +148,17 @@ namespace Gestion_Mtps_v2
             }
             catch (Exception ex)
             {
+                InfoErreur = "Identifiant : " + m_siteInfos.Identifiant + Environment.NewLine +
+                    "NomSite :" + m_siteInfos.NomSite + Environment.NewLine +
+                    "Adresse : " + m_siteInfos.Adresse + Environment.NewLine +
+                    "InfosCompl : " + m_siteInfos.InfosCompl;
                 Logger lg = new Logger(ex.ToString(), m_cheminLog);
-                lblErr.Text = "Une erreur est survenue au cours de l'enregistrement";
+                lg = new Logger(InfoErreur, m_cheminLog);
+
+                lblErr.Text = "Une erreur est survenue au cours de l'enregistrement." + Environment.NewLine + m_cheminLog;
+                Courriels courriels = new Courriels();
+                courriels.EnvoiCourriel(lblErr.Text);
             }
-            
         }
 
         /// <summary>
