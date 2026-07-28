@@ -120,7 +120,7 @@ namespace Gestion_Mtps_v2
             //Je veux vérifier si on est en more ajout ou en mode modif
             // puis appeler CBase en conséquence
             try
-            {
+            {                
                 if (m_mode == 0)
                 {
                     // on ajoute
@@ -155,7 +155,9 @@ namespace Gestion_Mtps_v2
                 Logger lg = new Logger(ex.ToString(), m_cheminLog);
                 lg = new Logger(InfoErreur, m_cheminLog);
 
-                lblErr.Text = "Une erreur est survenue au cours de l'enregistrement";
+                lblErr.Text = "Une erreur est survenue au cours de l'enregistrement." + Environment.NewLine + m_cheminLog;
+                Courriels courriels = new Courriels();
+                courriels.EnvoiCourriel(lblErr.Text);
             }
         }
 
