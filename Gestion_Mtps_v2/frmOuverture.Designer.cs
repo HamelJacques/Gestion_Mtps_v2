@@ -51,7 +51,7 @@
             this.btnFermer.Font = new System.Drawing.Font("Arial Unicode MS", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFermer.Location = new System.Drawing.Point(14, 159);
             this.btnFermer.Name = "btnFermer";
-            this.btnFermer.Size = new System.Drawing.Size(541, 52);
+            this.btnFermer.Size = new System.Drawing.Size(623, 52);
             this.btnFermer.TabIndex = 0;
             this.btnFermer.Text = "Fermer l\'application";
             this.btnFermer.UseVisualStyleBackColor = true;
@@ -123,7 +123,7 @@
             this.btnAjout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAjout.Location = new System.Drawing.Point(374, 39);
             this.btnAjout.Name = "btnAjout";
-            this.btnAjout.Size = new System.Drawing.Size(183, 30);
+            this.btnAjout.Size = new System.Drawing.Size(265, 30);
             this.btnAjout.TabIndex = 5;
             this.btnAjout.Text = "btnAjout";
             this.btnAjout.UseVisualStyleBackColor = true;
@@ -135,7 +135,7 @@
             this.btnModifUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModifUser.Location = new System.Drawing.Point(374, 76);
             this.btnModifUser.Name = "btnModifUser";
-            this.btnModifUser.Size = new System.Drawing.Size(183, 30);
+            this.btnModifUser.Size = new System.Drawing.Size(265, 30);
             this.btnModifUser.TabIndex = 6;
             this.btnModifUser.Text = "btnModifUser";
             this.btnModifUser.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             this.btnModifMps.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModifMps.Location = new System.Drawing.Point(372, 112);
             this.btnModifMps.Name = "btnModifMps";
-            this.btnModifMps.Size = new System.Drawing.Size(183, 30);
+            this.btnModifMps.Size = new System.Drawing.Size(265, 30);
             this.btnModifMps.TabIndex = 7;
             this.btnModifMps.Text = "btnModifMps";
             this.btnModifMps.UseVisualStyleBackColor = true;
@@ -155,7 +155,7 @@
             // 
             // btnOuvrir
             // 
-            this.btnOuvrir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOuvrir.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnOuvrir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOuvrir.Location = new System.Drawing.Point(268, 39);
             this.btnOuvrir.Name = "btnOuvrir";
@@ -169,7 +169,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(571, 244);
+            this.ClientSize = new System.Drawing.Size(653, 244);
             this.Controls.Add(this.btnOuvrir);
             this.Controls.Add(this.btnModifMps);
             this.Controls.Add(this.btnModifUser);
