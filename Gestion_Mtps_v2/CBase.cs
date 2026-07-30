@@ -2342,16 +2342,39 @@ namespace Gestion_Mtps
             string nomId = string.Empty;
             string szSelect = string.Empty;
             List<string> lalst = new List<string>();
-            switch (filtre)
+            try
             {
-                case "Site":
-                    table = "jctSousCategorieSite";
-                    nomId = "IdSite";
-                    //szSelect= ConstruireSelectModifFiltre(ref U, filtre, text);
-                    break;
+                switch (filtre)
+                {
+                    case "Site":
+                        table = "jctSousCategorieSite";
+                        nomId = "IdSite";
+                        szSelect = ConstruireSelectListe(ref U, table, filtre, text);
+                        break;
+                }
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
             return lalst;
             //throw new NotImplementedException();
+        }
+
+        private string ConstruireSelectListe(ref Usager_v2 u, string table, string filtre, string text)
+        {
+            string phrase = string.Empty;
+            string select = string.Format("Select NomUsager from {0} WHERE ", "tblUsager");
+            try
+            {
+                phrase = select;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return phrase;
         }
 
 

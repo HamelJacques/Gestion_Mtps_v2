@@ -89,7 +89,7 @@ namespace Gestion_Mtps_v2
                     // Vérifier si le texte à modifier estutilisé par un autre usager
                     // si oui, avertir
                     lstUagersimplique = new List<string>();
-                    //lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                    lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
                     //lstUagersimplique = m_maBase.ObtenirListeUsagerSite(ref m_Usager, m_Filtre, txtNouveauNom.Text);
                     //if (lstUagersimplique.Count > 1)
                     //{
