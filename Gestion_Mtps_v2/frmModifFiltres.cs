@@ -6,9 +6,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Gestion_Mtps_v2
 {
@@ -69,6 +71,22 @@ namespace Gestion_Mtps_v2
 
         private void btnSoumettre_Click(object sender, EventArgs e)
         {
+            // 1 - Déterminer quel niveau est en modification
+            switch (m_Filtre)
+            {
+                case "Site":
+                    // Obtenir le Id du nom à modifier
+                    int idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
+                    // Obtenir le nombre d'occurences
+                    int nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
+                    break;
+            }
+            string test = m_Filtre + "; " + txtAncienNom.Text;
+            
+
+            // 2 - Vérifier si ce libellé est utilisé par un autre filtre
+
+
             string sztext = string.Empty;
             string sztitre = string.Empty;
 

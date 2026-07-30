@@ -1772,6 +1772,26 @@ namespace Gestion_Mtps
             }
             //return 0;
         }
+        internal int ObtenirNbOccurences(string table, int idfiltre)
+        {
+            //int i = 0;
+            string szSelect;
+            szSelect = "Select COUNT(IdSite) FROM " + table +" WHERE IdSite = " + idfiltre;
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand(szSelect, m_cnADONetConnection);
+                cmd.Parameters.AddWithValue("@p1", idfiltre);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                string err = string.Empty;
+                err = ex.ToString();
+            }
+            return 0;
+        }
         internal int UnSeulSite(int idsite)
         {
             int i = 0;
