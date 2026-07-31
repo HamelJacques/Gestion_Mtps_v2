@@ -71,20 +71,25 @@ namespace Gestion_Mtps_v2
 
         private void btnSoumettre_Click(object sender, EventArgs e)
         {
+            int nbOccurences = 0;
             // 1 - Déterminer quel niveau est en modification
             switch (m_Filtre)
             {
                 case "Site":
                     // Obtenir le Id du nom à modifier
                     int idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
-                    // Obtenir le nombre d'occurences
-                    int nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
+                    // Obtenir le nombre d'occurences (utilisé par un autre filtre)
+                    nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
                     break;
             }
             string test = m_Filtre + "; " + txtAncienNom.Text;
             
 
-            // 2 - Vérifier si ce libellé est utilisé par un autre filtre
+            // 2 - Si ce libellé est utilisé par un autre filtre, avertir l'usager et sortir
+            if(nbOccurences > 1)
+            {
+
+            }
 
 
             string sztext = string.Empty;
