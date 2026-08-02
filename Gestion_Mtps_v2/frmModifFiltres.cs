@@ -80,17 +80,16 @@ namespace Gestion_Mtps_v2
                     int idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
                     // Obtenir le nombre d'occurences (utilisé par un autre filtre)
                     nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
+                    // 2 - Si ce libellé est utilisé par un autre filtre, avertir l'usager et sortir
+                    if (nbOccurences > 1)
+                    {
+                        // Obenir une liste des propriétaires de liens 
+                        List<string> retlst = new List<string>();
+                        retlst = m_maBase.ObtenirListLiens("jctSousCategorieSite", idfiltre);
+                    }
                     break;
             }
             string test = m_Filtre + "; " + txtAncienNom.Text;
-            
-
-            // 2 - Si ce libellé est utilisé par un autre filtre, avertir l'usager et sortir
-            if(nbOccurences > 1)
-            {
-
-            }
-
 
             string sztext = string.Empty;
             string sztitre = string.Empty;
