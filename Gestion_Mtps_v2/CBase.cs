@@ -1777,6 +1777,7 @@ namespace Gestion_Mtps
             List<string> retlst = new List<string>();
             string szSelect;
             szSelect = "SELECT * FROM " + table;
+            // Donnera les Ids 
             return retlst;
         }
         internal int ObtenirNbOccurences(string table, int idfiltre)
