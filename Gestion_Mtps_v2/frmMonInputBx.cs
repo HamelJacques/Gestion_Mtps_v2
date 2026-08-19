@@ -125,6 +125,7 @@ namespace Gestion_Mtps_v2
                             this.BackColor = Color.LightGoldenrodYellow;
 
                             bool reussite = m_LaBase.ModifierUnMotDePasse(m_IdUsager, AncienMot, MotSaisi);
+                            Logger lg = new Logger("L'Usager " + m_IdUsager.ToString () + " a mdifié son mot de passse", m_ChLog);
                             this.Close();
                             return;
                         }
