@@ -71,14 +71,22 @@ namespace Gestion_Mtps_v2
 
         private void btnSoumettre_Click(object sender, EventArgs e)
         {
+            int idfiltre = 0;
+            int nbOccurences = 0;
             // 1 - Déterminer quel niveau est en modification
             switch (m_Filtre)
             {
                 case "Site":
                     // Obtenir le Id du nom à modifier
-                    int idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
+                    idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
                     // Obtenir le nombre d'occurences
-                    int nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
+                    nbOccurences = m_maBase.ObtenirNbOccurences("jctSousCategorieSite", idfiltre);
+                    break;
+                case "SousCategorie":
+                    // Obtenir le Id du nom à modifier
+                    idfiltre = m_maBase.ObtenirIdSousCategorie(txtAncienNom.Text);
+                    // Obtenir le nombre d'Usagers
+                    nbOccurences = m_maBase.ObtenirNbOccurencesUsagers("jctCategorieSousCategorie", idfiltre);
                     break;
             }
             string test = m_Filtre + "; " + txtAncienNom.Text;

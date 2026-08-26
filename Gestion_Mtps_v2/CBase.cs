@@ -1012,6 +1012,7 @@ namespace Gestion_Mtps
             catch (Exception ex)
             {
                 string mess = ex.ToString();
+                Logger lg = new Logger(mess, m_cheminLog);
             }
 
             return (Int32)m_DataTable.Rows[0]["IdSite"];
@@ -1789,6 +1790,27 @@ namespace Gestion_Mtps
             {
                 string err = string.Empty;
                 err = ex.ToString();
+                Logger lg = new Logger(err, m_cheminLog);
+            }
+            return 0;
+        }
+        internal int ObtenirNbOccurencesUsagers(string table, int idfiltre)
+        {
+            string szSelect;
+            szSelect = "Select COUNT(IdUsager) FROM " + table + " WHERE IdSousCategorie = " + idfiltre;
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand(szSelect, m_cnADONetConnection);
+                cmd.Parameters.AddWithValue("@p1", idfiltre);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                string err = string.Empty;
+                err = ex.ToString();
+                Logger lg = new Logger(err, m_cheminLog);
             }
             return 0;
         }
