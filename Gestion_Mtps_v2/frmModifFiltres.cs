@@ -90,10 +90,6 @@ namespace Gestion_Mtps_v2
                     break;
             }
             string test = m_Filtre + "; " + txtAncienNom.Text;
-            
-
-            // 2 - Vérifier si ce libellé est utilisé par un autre filtre
-
 
             string sztext = string.Empty;
             string sztitre = string.Empty;

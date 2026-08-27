@@ -1773,6 +1773,14 @@ namespace Gestion_Mtps
             }
             //return 0;
         }
+        internal List<string> ObtenirListLiens(string table, int idfiltre)
+        {
+            List<string> retlst = new List<string>();
+            string szSelect;
+            szSelect = "SELECT * FROM " + table;
+            // Donnera les Ids 
+            return retlst;
+        }
         internal int ObtenirNbOccurences(string table, int idfiltre)
         {
             //int i = 0;
