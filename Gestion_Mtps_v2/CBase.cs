@@ -1781,7 +1781,7 @@ namespace Gestion_Mtps
             // Donnera les Ids 
             return retlst;
         }
-        internal int ObtenirNbOccurences(string table, int idfiltre)
+        internal int ObtenirNbOccurencesSites(string table, int idfiltre)
         {
             //int i = 0;
             string szSelect;
