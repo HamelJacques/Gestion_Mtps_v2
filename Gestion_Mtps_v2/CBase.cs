@@ -1781,6 +1781,27 @@ namespace Gestion_Mtps
             // Donnera les Ids 
             return retlst;
         }
+        internal int ObtenirNbOccurences(string recherche, string table, int idfiltre)
+        {
+            //int i = 0;
+            string szSelect;
+            szSelect = "Select COUNT(" + recherche + ") FROM " + table + " WHERE IdSite = " + idfiltre;
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand(szSelect, m_cnADONetConnection);
+                cmd.Parameters.AddWithValue("@p1", idfiltre);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                string err = string.Empty;
+                err = ex.ToString();
+                Logger lg = new Logger(err, m_cheminLog);
+            }
+            return 0;
+        }
         internal int ObtenirNbOccurencesSites(string table, int idfiltre)
         {
             //int i = 0;
@@ -2392,6 +2413,7 @@ namespace Gestion_Mtps
             string nomId = string.Empty;
             string szSelect = string.Empty;
             List<string> lalst = new List<string>();
+
             try
             {
                 switch (filtre)
@@ -2400,6 +2422,7 @@ namespace Gestion_Mtps
                         table = "jctSousCategorieSite";
                         nomId = "IdSite";
                         szSelect = ConstruireSelectListe(ref U, table, filtre, text);
+                        ObtenirListeUsagers(ref lalst, szSelect);
                         break;
                 }
             }
@@ -2412,10 +2435,36 @@ namespace Gestion_Mtps
             //throw new NotImplementedException();
         }
 
+        private void ObtenirListeUsagers(ref List<string> lalst, string szSelect)
+        {
+            int i = 0;
+            m_DataTable = new DataTable();
+            m_DataTable.Clear();
+            m_dataAdatper = new OleDbDataAdapter(szSelect, m_cnADONetConnection);
+            OleDbCommandBuilder m_cbCommandBuilder = new OleDbCommandBuilder(m_dataAdatper);
+            m_dataAdatper.Fill(m_DataTable);
+            i = m_DataTable.Rows.Count;
+            if (i > 0)
+            {
+                for (i = 0; i < m_DataTable.Rows.Count; i++)
+                {
+                    lalst.Add(m_DataTable.Rows[i]["NomUsager"].ToString());
+                }
+            }
+            
+        }
+
         private string ConstruireSelectListe(ref Usager_v2 u, string table, string filtre, string text)
         {
+            //            SELECT tblUsagers.NomUsager, jctSousCategorieSite.IdSite
+            //FROM jctSousCategorieSite INNER JOIN tblUsagers ON jctSousCategorieSite.IdUsager = tblUsagers.IdUsager
+            // WHERE (((jctSousCategorieSite.IdSite)=3) AND ((jctSousCategorieSite.IdUsager)<>1));
+
             string phrase = string.Empty;
-            string select = string.Format("Select NomUsager from {0} WHERE ", "tblUsager");
+            string select = string.Format("Select distinct tblUsagers.NomUsager from {0} " +
+                        "INNER JOIN tblUsagers ON jctSousCategorieSite.IdUsager = tblUsagers.IdUsager " +
+                        "WHERE(((jctSousCategorieSite.IdSite) <> {1}) " +
+                        "AND ((jctSousCategorieSite.IdUsager)<>{2}))  ", table, u.IdSite, u.IdUsager);
             try
             {
                 phrase = select;

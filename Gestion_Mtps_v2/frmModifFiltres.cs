@@ -75,6 +75,9 @@ namespace Gestion_Mtps_v2
             int nbOccurencesSites = 0;
             int nbOccurencesCategories = 0;
             int nbOccurencesUsagers = 0;
+            string sztext = string.Empty;
+            List<string> lstUagersimplique;
+
             // 1 - Déterminer quel niveau est en modification
             switch (m_Filtre)
             {
@@ -82,7 +85,15 @@ namespace Gestion_Mtps_v2
                     // Obtenir le Id du nom à modifier
                     idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
                     // Obtenir le nombre d'occurences
-                    nbOccurencesSites = m_maBase.ObtenirNbOccurencesSites("jctSousCategorieSite", idfiltre);
+                    nbOccurencesSites = m_maBase.ObtenirNbOccurences("IdSite", "jctSousCategorieSite", idfiltre);
+                    if(nbOccurencesSites > 1)
+                    {
+                        // Obtenir la liste des usagers autres que l'usager présent
+                        // qui utilisent ce nom de filtre (site, et informer l'usager)
+                        lstUagersimplique = new List<string>();
+                        lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                        sztext = string.Format("Information");
+                    }
                     break;
                 case "SousCategorie":
                     // Obtenir le Id du nom à modifier
@@ -95,7 +106,7 @@ namespace Gestion_Mtps_v2
             }
             string test = m_Filtre + "; " + txtAncienNom.Text;
 
-            string sztext = string.Empty;
+            
             string sztitre = string.Empty;
 
             // préparer un messagebox pour s'assurer que le changement est vraiment ce qui est souhaité
@@ -111,11 +122,10 @@ namespace Gestion_Mtps_v2
                 // appeler modif
                 try
                 {
-                    List<string> lstUagersimplique;
+                    
                     // Vérifier si le texte à modifier estutilisé par un autre usager
                     // si oui, avertir
-                    lstUagersimplique = new List<string>();
-                    lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                    
                     //lstUagersimplique = m_maBase.ObtenirListeUsagerSite(ref m_Usager, m_Filtre, txtNouveauNom.Text);
                     //if (lstUagersimplique.Count > 1)
                     //{
