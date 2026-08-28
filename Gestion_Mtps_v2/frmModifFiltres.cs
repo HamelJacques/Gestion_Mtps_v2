@@ -92,7 +92,7 @@ namespace Gestion_Mtps_v2
                         // qui utilisent ce nom de filtre (site, et informer l'usager)
                         lstUagersimplique = new List<string>();
                         lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
-                        sztext = string.Format("Information");
+                        sztext = string.Format("Le nom de site {0} est aussi utilisé par {1} ", txtAncienNom.Text, lstUagersimplique[0]);
                     }
                     break;
                 case "SousCategorie":
