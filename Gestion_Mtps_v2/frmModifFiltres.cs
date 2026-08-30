@@ -73,7 +73,7 @@ namespace Gestion_Mtps_v2
         {
             int idfiltre = 0;
             int nbOccurencesSites = 0;
-            int nbOccurencesCategories = 0;
+            int nbOccurencesCategories, nbOccurencesSousCatego = 0;
             int nbOccurencesUsagers = 0;
             string sztext = string.Empty;
             List<string> lstUagersimplique;
@@ -92,15 +92,18 @@ namespace Gestion_Mtps_v2
                         // qui utilisent ce nom de filtre (site, et informer l'usager)
                         lstUagersimplique = new List<string>();
                         lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
+                        nbOccurencesUsagers = lstUagersimplique.Count;
                         sztext = string.Format("Le nom de site {0} est aussi utilisé par {1} ", txtAncienNom.Text, lstUagersimplique[0]);
                     }
                     break;
                 case "SousCategorie":
                     // Obtenir le Id du nom à modifier
                     idfiltre = m_maBase.ObtenirIdSousCategorie(txtAncienNom.Text);
+                    //// Obtenir le nombre d'occurences
+                    //nbOccurencesSousCatego = m_maBase.ObtenirNbOccurences("SousCategorie", "jctCategorieSousCategorie", idfiltre);
                     // Obtenir le nombre d'Usagers qui utilisent ce filtre
                     nbOccurencesUsagers = m_maBase.ObtenirNbOccurencesUsagers("jctCategorieSousCategorie", idfiltre);
-                    // Obtenir le nombre de Cartégories qui utilisent ce filtre
+
                     nbOccurencesCategories = 0;
                     break;
             }
