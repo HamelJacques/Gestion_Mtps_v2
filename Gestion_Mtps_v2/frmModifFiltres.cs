@@ -76,6 +76,7 @@ namespace Gestion_Mtps_v2
             int nbOccurencesCategories, nbOccurencesSousCatego = 0;
             int nbOccurencesUsagers = 0;
             string sztext = string.Empty;
+            string szAvertissement = string.Empty;
             List<string> lstUagersimplique;
 
             // 1 - Déterminer quel niveau est en modification
@@ -94,7 +95,7 @@ namespace Gestion_Mtps_v2
                         lstUagersimplique = new List<string>();
                         lstUagersimplique = m_maBase.ObtenirListeUsagers(ref m_Usager, m_Filtre, txtNouveauNom.Text);
                         nbOccurencesUsagers = lstUagersimplique.Count;
-                        sztext = string.Format("Le nom de site {0} est aussi utilisé par {1} ", txtAncienNom.Text, lstUagersimplique[0]);
+                        szAvertissement = string.Format("Le nom de site {0} est aussi utilisé par {1} et affectera ses choix.", txtAncienNom.Text, lstUagersimplique[0]);
                     }
                     break;
                 case "SousCategorie":
@@ -114,8 +115,10 @@ namespace Gestion_Mtps_v2
             string sztitre = string.Empty;
 
             // préparer un messagebox pour s'assurer que le changement est vraiment ce qui est souhaité
-            sztext = string.Format("Vous être sur le point de modifier le mot {0} pour {1}{2}{3}", 
-                txtAncienNom.Text, txtNouveauNom.Text, Environment.NewLine, "Désires-vous poursuivre?");
+            sztext = string.Format("Vous être sur le point de modifier le mot {0} pour {1}{2}{3}{2} Désires-vous poursuivre?", 
+                txtAncienNom.Text, txtNouveauNom.Text, Environment.NewLine, szAvertissement);
+            //sztext += Environment.NewLine + szAvertissement;
+
             sztitre = string.Format("Modification de {0}", m_Filtre);
 
             DialogResult dg = MessageBox.Show(sztext, sztitre, MessageBoxButtons.YesNoCancel ,MessageBoxIcon.Question);
