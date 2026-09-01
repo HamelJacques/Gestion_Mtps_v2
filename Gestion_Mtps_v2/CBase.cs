@@ -1823,10 +1823,10 @@ namespace Gestion_Mtps
             }
             return 0;
         }
-        internal int ObtenirNbOccurencesUsagers(string table, int idfiltre)
+        internal int ObtenirNbOccurencesUsagers(string table, string champ, int idfiltre)
         {
             string szSelect;
-            szSelect = "Select COUNT(IdUsager) FROM " + table + " WHERE IdSousCategorie = " + idfiltre;
+            szSelect = "Select COUNT(IdUsager) FROM " + table + " WHERE " + champ + " = " + idfiltre;
             try
             {
                 OleDbCommand cmd = new OleDbCommand(szSelect, m_cnADONetConnection);

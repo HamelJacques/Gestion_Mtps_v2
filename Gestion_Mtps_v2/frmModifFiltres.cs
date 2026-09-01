@@ -85,6 +85,7 @@ namespace Gestion_Mtps_v2
                     // Obtenir le Id du nom à modifier
                     idfiltre = m_maBase.ObtenirIdSite(txtAncienNom.Text);
                     // Obtenir le nombre d'occurences
+                    nbOccurencesUsagers = m_maBase.ObtenirNbOccurencesUsagers("jctSousCategorieSite", "IdSite", idfiltre);
                     nbOccurencesSites = m_maBase.ObtenirNbOccurences("IdSite", "jctSousCategorieSite", idfiltre);
                     if(nbOccurencesSites > 1)
                     {
@@ -102,7 +103,7 @@ namespace Gestion_Mtps_v2
                     //// Obtenir le nombre d'occurences
                     //nbOccurencesSousCatego = m_maBase.ObtenirNbOccurences("SousCategorie", "jctCategorieSousCategorie", idfiltre);
                     // Obtenir le nombre d'Usagers qui utilisent ce filtre
-                    nbOccurencesUsagers = m_maBase.ObtenirNbOccurencesUsagers("jctCategorieSousCategorie", idfiltre);
+                    nbOccurencesUsagers = m_maBase.ObtenirNbOccurencesUsagers("jctCategorieSousCategorie", "IdSousCategorie", idfiltre);
 
                     nbOccurencesCategories = 0;
                     break;
